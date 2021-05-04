@@ -1,0 +1,46 @@
+{
+  "pages":[
+    "pages/home/index",
+    "pages/history/index",
+    "pages/info/index"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#EDEDED",
+    "navigationBarTitleText": "Smart Reminder",
+    "navigationBarTextStyle":"black",
+    "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "color": "#6e6d6b",
+    "selectedColor": "#00C261",
+    "borderStyle": "white",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "iconPath": "images/tab/toFinish.png",
+        "selectedIconPath": "images/tab/toFinish_selected.png",
+        "text": "今日待办"
+      },
+      {
+        "pagePath": "pages/history/index",
+        "text": "所有任务",
+        "iconPath": "images/tab/allTask.png",
+        "selectedIconPath": "images/tab/allTask_selected.png"
+      },
+      {
+        "pagePath": "pages/info/index",
+        "text": "我的",
+        "iconPath": "images/tab/personCenter.png",
+        "selectedIconPath": "images/tab/personCenter_selected.png"
+      }
+    ]
+  },
+  "useExtendedLib": {
+    "weui": true
+  },
+  "usingComponents": {
+  },
+  "sitemapLocation": "sitemap.json"
+}

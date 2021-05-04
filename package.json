@@ -1,0 +1,8 @@
+{
+  "name": "reminder",
+  "version": "0.0.1",
+  "description": "smart reminder",
+  "dependencies": {
+    "@vant/weapp": "^1.6.8"
+  }
+}

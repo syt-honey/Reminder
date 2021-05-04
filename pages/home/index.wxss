@@ -1,0 +1,29 @@
+/* pages/home/index.wxss */
+.home--add-task {
+  position: absolute;
+  bottom: 40px;
+  right: 30px;
+}
+
+view .van-dropdown-menu__title:after {
+  opacity: 0;
+}
+
+view .van-dropdown-menu__title {
+  padding: 8px;
+  color: #00C261;
+}
+
+view .van-dropdown-menu__title:last-child {
+  width: 100px;
+}
+
+view .van-dropdown-menu__title:first-child {
+  padding-left: 0;
+}
+
+view .van-button--normal {
+  width: 100%;
+  padding: 0;
+  margin-top: 30px;
+}

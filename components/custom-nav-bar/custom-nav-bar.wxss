@@ -1,0 +1,29 @@
+/* custom-nav-bar/index.wxss */
+/* @import "../../style/index.wxss"; */
+
+.nav-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  width: 100vw;
+  background: var(--main-color);
+  z-index: 2;
+}
+
+.nav-bar--status-bar {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.nav-bar--title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.nav-bar--back-icon {
+  width: 16px;
+  height: 16px;
+  margin-left: 15px;
+}
