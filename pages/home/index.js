@@ -1,11 +1,14 @@
 // pages/home/index.js
+
+import API from "../../api/index.js";
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    openTaskPage: true,
+    openTaskPage: false,
     taskName: "",
     remark: "",
     option1: [
@@ -17,30 +20,72 @@ Page({
     ],
     option2: [
       { text: '一直重复', value: 'a' },
-      { text: '按日期结束', value: 'b' },
-      { text: '按次数重复', value: 'c' },
+      { text: '按次数重复', value: 'b' },
     ],
     value1: 0,
     value2: 'a',
-    date: '',
-    openTimePick: false,
-  },
-
-  onDisplay() {
-    this.setData({ openTimePick: true });
-  },
-  onClose() {
-    this.setData({ openTimePick: false });
-  },
-  formatDate(date) {
-    date = new Date(date);
-    return `${date.getMonth() + 1}/${date.getDate()}`;
-  },
-  onConfirm(event) {
-    this.setData({
-      openTimePick: false,
-      date: this.formatDate(event.detail),
-    });
+    taskList: [
+      {
+        taskName: "07 算法训练营",
+        remark: "明天要检查",
+        time: [{
+          time: '2021-5-6',
+          tag: 1
+        }, {
+          time: '2021-5-7',
+          tag: 1
+        },{
+          time: '2021-5-8',
+          tag: 0
+        },{
+          time: '2021-5-9',
+          tag: 0
+        },{
+          time: '2021-5-10',
+          tag: 0
+        },]
+      },
+      {
+        taskName: "07 算法训练营",
+        remark: "明天要检查",
+        time: [{
+          time: '2021-5-6',
+          tag: 1
+        }, {
+          time: '2021-5-7',
+          tag: 1
+        },{
+          time: '2021-5-8',
+          tag: 0
+        },{
+          time: '2021-5-9',
+          tag: 0
+        },{
+          time: '2021-5-10',
+          tag: 0
+        },]
+      },
+      {
+        taskName: "07 算法训练营",
+        remark: "明天要检查",
+        time: [{
+          time: '2021-5-6',
+          tag: 1
+        }, {
+          time: '2021-5-7',
+          tag: 1
+        },{
+          time: '2021-5-8',
+          tag: 0
+        },{
+          time: '2021-5-9',
+          tag: 0
+        },{
+          time: '2021-5-10',
+          tag: 0
+        },]
+      },
+    ]
   },
 
   /**
@@ -53,6 +98,14 @@ Page({
     this.setData({
       openTaskPage: true
     });
+  },
+
+  addTask: function() {
+    this.setData({
+      openTaskPage: false
+    });
+    // console.log(API.createTask)
+    console.log(this.data.taskName, this.data.value1, this.data.value2, this.data.remark)
   },
 
   onClose: function() {

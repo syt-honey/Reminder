@@ -3,10 +3,17 @@
   <custom-nav-bar
     title="今日待办"
     showCloseIcon="{{true}}"
+    i-bg="i-bg"
   >
   </custom-nav-bar>
 
-  <view>nihao</view>
+  <empty-page style="height: 100%" wx:if="{{taskList.length === 0}}"></empty-page>
+  <block wx:else>
+    <view class="task-container">
+      <task-item wx:for="{{taskList}}" wx:key="index" item="{{item}}"></task-item>
+    </view>
+  </block>
+
 
   <image bindtap="toAddTask" src="../../images/home/addTask.png" style="width: 35px; height: 35px;" class="home--add-task"></image>
 
@@ -30,9 +37,7 @@
         <view slot="input">
           <van-dropdown-menu active-color="#00C261" direction="up">
             <van-dropdown-item model:value="{{ value1 }}" options="{{ option1 }}" />
-            <!-- <van-dropdown-item model:value="{{ value2 }}" options="{{ option2 }}" /> -->
           </van-dropdown-menu>
-          <van-calendar show="{{openTimePick}}" bind:close="onClose" bind:confirm="onConfirm" />
         </view>
       </van-field>
 
@@ -41,12 +46,11 @@
         required
         bind:click-icon="addRule"
       >
-        <view slot="input" style="display: flex; align-items: center;">
+        <view slot="input" style="display: flex; width: 100%; align-items: center; justify-content: space-between;">
           <van-dropdown-menu active-color="#00C261" direction="up">
             <van-dropdown-item model:value="{{ value2 }}" options="{{ option2 }}" />
           </van-dropdown-menu>
-          <van-stepper wx:if="{{value2 === 'c'}}" value="{{ 2 }}" min="2" max="50" />
-          <van-calendar show="{{openTimePick}}" bind:close="onClose" bind:confirm="onConfirm" />
+          <van-stepper wx:if="{{value2 === 'b'}}" value="{{ 2 }}" min="2" max="50" />
         </view>
       </van-field>
 
@@ -59,6 +63,6 @@
       />
     </van-cell-group>
 
-    <van-button type="primary">确认</van-button>
+    <van-button type="primary" bindtap="addTask">确认</van-button>
   </van-popup>
 </view>

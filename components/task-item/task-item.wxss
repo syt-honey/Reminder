@@ -1,0 +1,8 @@
+/* components/task-item/task-item.wxss */
+.task-item {
+  min-height: 40px;
+  margin-top: 10px;
+  padding: 8px 20px;
+  background: #fff;
+  font-size: 18px;
+}

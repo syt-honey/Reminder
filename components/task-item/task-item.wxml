@@ -1,0 +1,9 @@
+<!--components/task-item/task-item.wxml-->
+<view class="task-item">
+  <view>
+    <text>{{item.taskName}}</text>
+    <view class="task-chart">
+      
+    </view>
+  </view>
+</view>

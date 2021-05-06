@@ -1,6 +1,8 @@
 {
   "usingComponents": {
     "custom-nav-bar": "../../components/custom-nav-bar/custom-nav-bar",
+    "empty-page": "../../components/empty-page/empty-page",
+    "task-item": "../../components/task-item/task-item",
     "van-popup": "@vant/weapp/popup/index",
     "van-field": "@vant/weapp/field/index",
     "van-dropdown-menu": "@vant/weapp/dropdown-menu/index",

@@ -1,8 +1,21 @@
 /* pages/home/index.wxss */
+.home {
+  height: 100%;
+}
+
+.i-bg {
+  background: #fff !important;
+}
+
 .home--add-task {
-  position: absolute;
+  position: fixed;
   bottom: 40px;
   right: 30px;
+}
+
+.task-container {
+  display: flex;
+  flex-direction: column;
 }
 
 view .van-dropdown-menu__title:after {
@@ -14,11 +27,8 @@ view .van-dropdown-menu__title {
   color: #00C261;
 }
 
-view .van-dropdown-menu__title:last-child {
-  width: 100px;
-}
-
 view .van-dropdown-menu__title:first-child {
+  width: 90px;
   padding-left: 0;
 }
 
@@ -26,4 +36,8 @@ view .van-button--normal {
   width: 100%;
   padding: 0;
   margin-top: 30px;
+}
+
+view .van-ellipsis{
+  text-overflow: clip;
 }
