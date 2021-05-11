@@ -1,7 +1,22 @@
 // app.js
 App({
   onLaunch() {
+    this.checkAuthorization();
     this.getSystemInfo();
+  },
+  async checkAuthorization() {
+    await wx.getSetting({
+      withSubscriptions: true, // 同时获取用户订阅消息的订阅状态
+      success: (res) => {
+        if (res.authSetting['scope.userInfo']) {
+          // 授权过
+          this.globalData.isAuthorize = true;
+        } else {
+          // 未授权
+          this.globalData.isAuthorize = false;
+        }
+      }
+    })
   },
   // 初始化屏幕宽高、状态栏，确定设备类型、导航栏高度
   getSystemInfo() {
@@ -38,6 +53,6 @@ App({
     statusBarHeight: 20,
     navbarHeight: 44,
     system: "ios",
-    isAuthorize: false
+    isAuthorize: null
   }
 })

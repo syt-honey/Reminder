@@ -1,6 +1,7 @@
 // pages/home/index.js
 
 import API from "../../api/index.js";
+const app = getApp();
 
 Page({
 
@@ -26,7 +27,7 @@ Page({
     value2: 'a',
     taskList: [
       {
-        taskName: "07 算法训练营",
+        taskName: "07 待办列表",
         remark: "明天要检查",
         time: [{
           time: '2021-5-6',
@@ -46,7 +47,7 @@ Page({
         },]
       },
       {
-        taskName: "07 算法训练营",
+        taskName: "07 待办列表",
         remark: "明天要检查",
         time: [{
           time: '2021-5-6',
@@ -66,7 +67,7 @@ Page({
         },]
       },
       {
-        taskName: "07 算法训练营",
+        taskName: "07 待办列表",
         remark: "明天要检查",
         time: [{
           time: '2021-5-6',
@@ -85,7 +86,27 @@ Page({
           tag: 0
         },]
       },
-    ]
+    ],
+    isShow: null,
+  },
+
+  onShow() {
+    wx.getSetting({
+      withSubscriptions: true, // 同时获取用户订阅消息的订阅状态
+      success: (res) => {
+        if (res.authSetting['scope.userInfo']) {
+          // 授权过
+          this.setData({
+            isShow: false
+          });
+        } else {
+          // 未授权
+          this.setData({
+            isShow: true
+          });
+        }
+      }
+    })
   },
 
   /**
@@ -118,18 +139,19 @@ Page({
     console.log("add rule")
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  changeAuthorize(isAuthorize, reason = "授权错误") {
+    if (isAuthorize) {
+      this.setData({
+        isShow: !isAuthorize
+      });
+    } else {
+      wx.showToast({
+        title: reason,
+        icon: 'fail',
+        duration: 1000,
+        mask: true
+      })
+    }
   },
 
   /**

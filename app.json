@@ -41,6 +41,7 @@
     "weui": true
   },
   "usingComponents": {
+    "login": "./components/login/login"
   },
   "sitemapLocation": "sitemap.json"
 }

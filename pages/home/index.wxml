@@ -65,4 +65,8 @@
 
     <van-button type="primary" bindtap="addTask">确认</van-button>
   </van-popup>
+  
+  <van-popup show="{{isShow}}" position="bottom">
+    <login-com bind:changeAuthorize="changeAuthorize"></login-com>
+  </van-popup>
 </view>
