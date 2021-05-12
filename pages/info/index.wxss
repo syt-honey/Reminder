@@ -1,1 +1,40 @@
 /* pages/info/index.wxss */
+@import "../../style/common.wxss";
+
+.info {
+ position: relative;
+ height: 100%;
+ padding-top: 35px;
+}
+
+.info--person-info {
+ display: flex;
+ width: 80%;
+ margin: 0 auto;
+}
+
+.info--person-info .info--person-name {
+ flex: 1;
+ margin-left: 20px;
+}
+
+.info--setting {
+ overflow: hidden;
+ width: 80%;
+ margin: 60px auto;
+}
+
+view .van-cell {
+ margin-top: 30px;
+ border-radius: 4px;
+}
+
+.info--feedback {
+ position: absolute;
+ left: 50%;
+ bottom: 10px;
+ transform: translateX(-50%);
+ white-space: nowrap;
+ font-size: 14px;
+ color: #b5b5b5;
+}

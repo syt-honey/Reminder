@@ -1,0 +1,8 @@
+<!--pages/log/log.wxml-->
+<view>
+ <custom-nav-bar
+    title="成长日志"
+    showCloseIcon="{{true}}"
+  >
+  </custom-nav-bar>
+</view>

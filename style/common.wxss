@@ -1,0 +1,19 @@
+/* 多行打点，默认两行 */
+.multiple-dot-overflow {
+ overflow: hidden;
+ text-overflow: ellipsis;
+ display: -webkit-box;
+ -webkit-box-orient: vertical;
+ -webkit-line-clamp: 2;
+}
+
+/* 单行溢出 */
+.single-dot-overflow {
+ overflow: hidden;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+}
+
+.font-bold {
+ font-weight: bold;
+}

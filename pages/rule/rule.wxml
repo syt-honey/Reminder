@@ -1,0 +1,8 @@
+<!--pages/rule/rule.wxml-->
+<view>
+ <custom-nav-bar
+    title="规则管理"
+    showCloseIcon="{{true}}"
+  >
+  </custom-nav-bar>
+</view>

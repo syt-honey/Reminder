@@ -1,0 +1,8 @@
+<!--pages/about/about.wxml-->
+<view>
+ <custom-nav-bar
+    title="关于我们"
+    showCloseIcon="{{true}}"
+  >
+  </custom-nav-bar>
+</view>

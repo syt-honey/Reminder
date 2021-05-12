@@ -2,7 +2,7 @@
     <view class="nav-bar--status-bar" style="height:{{navbarHeight}}px">
         <view wx:if="{{showCloseIcon}}" class="nav-bar--back-icon" bindtap="goBack">
             <!-- TODO 换成 svg -->
-            <!-- <image style="width: 16px; height: 16px;" src="../../image/nav/back.png"></image> -->
+            <image style="width: 16px; height: 16px;" src="../../images/back.png"></image>
         </view>
         <view class="nav-bar--title">{{ title }}</view>
     </view>

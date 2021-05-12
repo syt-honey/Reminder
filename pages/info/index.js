@@ -5,14 +5,29 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    info: {},
+    email: "5532064.91@163.com",
+    settings: [
+      {
+        name: "提醒规则管理",
+        path: "/pages/rule/rule"
+      }, {
+        name: "成长日志/一览图",
+        path: "/pages/log/log"
+      }, {
+        name: "关于我们",
+        path: "/pages/about/about"
+      }
+    ]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      info: wx.getStorageSync('userInfo') || {}
+    });
   },
 
   /**
