@@ -1,8 +1,17 @@
 // app.js
+import CONSTANT from "./utils/CONSTANT";
 App({
   onLaunch() {
     this.getSystemInfo();
     this.checkAuthorization().then(() => {});
+    this.initCloud();
+  },
+  initCloud() {
+    this.globalData.cloud = new wx.cloud.Cloud({
+      resourceEnv: CONSTANT.ENV_ID,
+      traceUser: true,
+    })
+    this.globalData.cloud.init();
   },
   checkAuthorization() {
     return new Promise((resolve, reject) => {
@@ -63,6 +72,7 @@ App({
     statusBarHeight: 20,
     navbarHeight: 44,
     system: "ios",
-    isAuthorize: null
+    isAuthorize: null,
+    cloud: null
   }
 })

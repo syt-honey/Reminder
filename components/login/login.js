@@ -1,6 +1,5 @@
 // components/login/login.js
 const app = getApp();
-import CONSTANT from "../../utils/CONSTANT";
 
 Component({
   /**
@@ -63,15 +62,6 @@ Component({
       this.login();
     },
     async login() {
-      wx.showLoading({
-        title: '登录中...',
-      })
-      const a = new wx.cloud.Cloud({
-        resourceEnv: CONSTANT.ENV_ID,
-        traceUser: true,
-      })
-      await a.init();
-      wx.hideLoading();
       wx.showToast({
         title: '登录成功',
         icon: 'succes',

@@ -58,6 +58,7 @@
  },
  "isGameTourist": false,
  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+ "cloudbaseRoot": "cloudbase/",
  "condition": {
   "search": {
    "list": []

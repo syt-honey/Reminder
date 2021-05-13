@@ -122,8 +122,17 @@ Page({
     this.setData({
       openTaskPage: false
     });
-    // console.log(API.createTask)
-    console.log(this.data.taskName, this.data.value1, this.data.value2, this.data.remark)
+    const req = {
+      taskName: this.data.taskName, 
+      remark: this.data.remark
+    };
+
+    app.globalData.cloud.callFunction({
+      name: "createTask",
+      data: {...req}
+    }).then(res => {
+      console.log(res, 'finished')
+    })
   },
 
   onClose: function() {
