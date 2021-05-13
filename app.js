@@ -1,30 +1,40 @@
 // app.js
 App({
   onLaunch() {
-    this.checkAuthorization();
     this.getSystemInfo();
+    this.checkAuthorization().then(() => {});
   },
-  async checkAuthorization() {
-    await wx.getSetting({
-      withSubscriptions: true, // 同时获取用户订阅消息的订阅状态
-      success: (res) => {
-        if (res.authSetting['scope.userInfo']) {
-          // 授权过
-          this.globalData.isAuthorize = true;
-        } else {
-          // 未授权
+  checkAuthorization() {
+    return new Promise((resolve, reject) => {
+      wx.getSetting({
+        withSubscriptions: true, // 同时获取用户订阅消息的订阅状态
+        success: (res) => {
+          const userInfo = wx.getStorageSync('userInfo');
+          if (res.authSetting['scope.userInfo'] && userInfo) {
+            // 授权过
+            this.globalData.isAuthorize = true;
+          } else {
+            // 未授权
+            this.globalData.isAuthorize = false;
+          }
+          resolve(0);
+        },
+        fail: () => {
           this.globalData.isAuthorize = false;
+          reject(-1);
         }
-      }
+      });
     })
+
   },
   // 初始化屏幕宽高、状态栏，确定设备类型、导航栏高度
   getSystemInfo() {
     const sysInfo = wx.getSystemInfoSync();
     const menuInfo = wx.getMenuButtonBoundingClientRect();
     // 获取屏幕宽高、状态栏高，计算导航栏高
-    ;[
-      this.globalData.screenWidth, 
+    ;
+    [
+      this.globalData.screenWidth,
       this.globalData.screenHeight,
       this.globalData.statusBarHeight
     ] = [
@@ -33,7 +43,7 @@ App({
       sysInfo.statusBarHeight
     ];
     this.globalData.navbarHeight = menuInfo.height + (menuInfo.top - sysInfo.statusBarHeight) * 2;
-  
+
     // 获取当前设备类型
     const systems = ["ios", "android"];
     const sys = sysInfo.system.toLocaleLowerCase();

@@ -91,22 +91,19 @@ Page({
   },
 
   onShow() {
-    wx.getSetting({
-      withSubscriptions: true, // 同时获取用户订阅消息的订阅状态
-      success: (res) => {
-        if (res.authSetting['scope.userInfo']) {
-          // 授权过
-          this.setData({
-            isShow: false
-          });
-        } else {
-          // 未授权
-          this.setData({
-            isShow: true
-          });
-        }
+    // 每个页面都要去检查一下
+    app.checkAuthorization().then((res) => {
+      console.log(app.globalData.isAuthorize)
+      if (app.globalData.isAuthorize) {
+        this.setData({
+          isShow: false
+        });
+      } else {
+        this.setData({
+          isShow: true
+        });
       }
-    })
+    });
   },
 
   /**

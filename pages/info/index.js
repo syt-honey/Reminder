@@ -29,8 +29,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const userInfo = wx.getStorageSync('userInfo') || {};
+    if (userInfo !== {}) {
+      userInfo.avatarUrl = userInfo.avatarUrl.replace(/\/\d+/, "/0");
+    }
     this.setData({
-      info: wx.getStorageSync('userInfo') || {}
+      info: userInfo
     });
   },
 
