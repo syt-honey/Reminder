@@ -23,7 +23,7 @@ App({
     const sysInfo = wx.getSystemInfoSync();
     const menuInfo = wx.getMenuButtonBoundingClientRect();
     // 获取屏幕宽高、状态栏高，计算导航栏高
-    [
+    ;[
       this.globalData.screenWidth, 
       this.globalData.screenHeight,
       this.globalData.statusBarHeight
@@ -33,7 +33,7 @@ App({
       sysInfo.statusBarHeight
     ];
     this.globalData.navbarHeight = menuInfo.height + (menuInfo.top - sysInfo.statusBarHeight) * 2;
-
+  
     // 获取当前设备类型
     const systems = ["ios", "android"];
     const sys = sysInfo.system.toLocaleLowerCase();

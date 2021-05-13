@@ -1,10 +1,14 @@
 // pages/info/index.js
+const app = getApp();
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    statusBarHeight: app.globalData.statusBarHeight,
+    navbarHeight: app.globalData.navbarHeight,
     info: {},
     email: "5532064.91@163.com",
     settings: [

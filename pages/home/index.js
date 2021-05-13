@@ -87,7 +87,7 @@ Page({
         },]
       },
     ],
-    isShow: null,
+    isShow: null
   },
 
   onShow() {

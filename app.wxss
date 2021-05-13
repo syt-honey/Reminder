@@ -1,7 +1,8 @@
 /**app.wxss**/
 page {
   background: #EDEDED;
-  height: calc(100vh - 60px);
+  overflow: hidden;
+  height: 100%;
 }
 .container {
   height: 100%;

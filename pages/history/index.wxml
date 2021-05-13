@@ -1,2 +1,8 @@
 <!--pages/history/index.wxml-->
-<text>pages/history/index.wxml</text>
+<view>
+ <custom-nav-bar
+    title="历史任务"
+    i-bg="i-bg"
+  >
+  </custom-nav-bar>
+</view>

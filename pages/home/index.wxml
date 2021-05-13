@@ -2,7 +2,6 @@
 <view class="page home">
   <custom-nav-bar
     title="今日待办"
-    showCloseIcon="{{true}}"
     i-bg="i-bg"
   >
   </custom-nav-bar>
