@@ -1,6 +1,5 @@
 // pages/home/index.js
 
-import API from "../../api/index.js";
 const app = getApp();
 
 Page({
@@ -12,21 +11,39 @@ Page({
     openTaskPage: false,
     taskName: "",
     remark: "",
-    option1: [
-      { text: '每天', value: 0 },
-      { text: '每周', value: 1 },
-      { text: '每年', value: 2 },
-      { text: '法定工作日', value: 3 },
-      { text: '艾宾浩斯记忆法', value: 4 },
+    option1: [{
+        text: '每天',
+        value: 0
+      },
+      {
+        text: '每周',
+        value: 1
+      },
+      {
+        text: '每年',
+        value: 2
+      },
+      {
+        text: '法定工作日',
+        value: 3
+      },
+      {
+        text: '艾宾浩斯记忆法',
+        value: 4
+      },
     ],
-    option2: [
-      { text: '一直重复', value: 'a' },
-      { text: '按次数重复', value: 'b' },
+    option2: [{
+        text: '一直重复',
+        value: 'a'
+      },
+      {
+        text: '按次数重复',
+        value: 'b'
+      },
     ],
     value1: 0,
     value2: 'a',
-    taskList: [
-      {
+    taskList: [{
         taskName: "07 待办列表",
         remark: "明天要检查",
         time: [{
@@ -35,16 +52,16 @@ Page({
         }, {
           time: '2021-5-7',
           tag: 1
-        },{
+        }, {
           time: '2021-5-8',
           tag: 0
-        },{
+        }, {
           time: '2021-5-9',
           tag: 0
-        },{
+        }, {
           time: '2021-5-10',
           tag: 0
-        },]
+        }, ]
       },
       {
         taskName: "07 待办列表",
@@ -55,16 +72,16 @@ Page({
         }, {
           time: '2021-5-7',
           tag: 1
-        },{
+        }, {
           time: '2021-5-8',
           tag: 0
-        },{
+        }, {
           time: '2021-5-9',
           tag: 0
-        },{
+        }, {
           time: '2021-5-10',
           tag: 0
-        },]
+        }, ]
       },
       {
         taskName: "07 待办列表",
@@ -75,16 +92,16 @@ Page({
         }, {
           time: '2021-5-7',
           tag: 1
-        },{
+        }, {
           time: '2021-5-8',
           tag: 0
-        },{
+        }, {
           time: '2021-5-9',
           tag: 0
-        },{
+        }, {
           time: '2021-5-10',
           tag: 0
-        },]
+        }, ]
       },
     ],
     isShow: null
@@ -110,38 +127,97 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getTaskList();
   },
 
-  toAddTask: function() {
+  toAddTask() {
+    // TODO 其他字段的 init
     this.setData({
-      openTaskPage: true
+      remark: "",
+      taskName: ""
+    }, () => {
+      this.setData({
+        openTaskPage: true
+      });
     });
   },
 
-  addTask: function() {
+  getTaskList() {
+    wx.showLoading({
+      title: '获取列表...',
+    });
+
+    app.globalData.cloud.callFunction({
+      name: "getTaskList",
+      data: {}
+    }).then((res) => {
+      console.log(res);
+      wx.hideLoading({
+        success: () => {},
+      });
+    }).catch((err) => {
+      wx.hideLoading({
+        success: () => {
+          wx.showToast({
+            title: err,
+            duration: 1000,
+            mask: true
+          });
+        },
+      });
+    });
+  },
+
+  addTask() {
     this.setData({
       openTaskPage: false
     });
     const req = {
-      taskName: this.data.taskName, 
+      taskName: this.data.taskName,
       remark: this.data.remark
     };
 
+    wx.showLoading({
+      title: '任务创建中...',
+    });
+
     app.globalData.cloud.callFunction({
       name: "createTask",
-      data: {...req}
-    }).then(res => {
-      console.log(res, 'finished')
-    })
+      data: {
+        ...req
+      }
+    }).then((res) => {
+      console.log(res);
+      wx.hideLoading({
+        success: () => {
+          wx.showToast({
+            icon: "success",
+            title: res.result.res.data.msg,
+            duration: 1000,
+            mask: true
+          });
+        },
+      });
+    }).catch((err) => {
+      wx.hideLoading({
+        success: () => {
+          wx.showToast({
+            title: err,
+            duration: 1000,
+            mask: true
+          });
+        },
+      });
+    });
   },
 
-  onClose: function() {
+  onClose() {
     this.setData({
       openTaskPage: false
     })
   },
 
-  addRule: function() {
+  addRule() {
     console.log("add rule")
   },
 
