@@ -91,7 +91,10 @@ Page({
       name: "getTaskList",
       data: {}
     }).then((res) => {
-      const { list, count } = res.result.res.data;
+      const {
+        list,
+        count
+      } = res.result.res.data;
       list.length && list.map(item => {
         item.taskName = item.task_name;
         delete item.task_name;
@@ -117,6 +120,13 @@ Page({
   },
 
   addTask() {
+    if (!this.data.taskName) {
+      wx.showToast({
+        icon: "error",
+        title: '任务名不能为空',
+      });
+      return;
+    }
     this.setData({
       openTaskPage: false
     });
@@ -136,7 +146,9 @@ Page({
         ...req
       }
     }).then((res) => {
-      const { msg } = res.result.res;
+      const {
+        msg
+      } = res.result.res;
       wx.hideLoading({
         success: () => {
           wx.showToast({

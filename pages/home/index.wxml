@@ -29,7 +29,7 @@
         placeholder="请输入任务名称"
       />
       <!-- icon="plus" -->
-      <van-field
+      <!-- <van-field
         label="提醒周期"
         required
         bind:click-icon="addRule"
@@ -52,7 +52,7 @@
           </van-dropdown-menu>
           <van-stepper wx:if="{{value2 === 'b'}}" value="{{ 2 }}" min="2" max="50" />
         </view>
-      </van-field>
+      </van-field> -->
 
       <van-field
         model:value="{{ remark }}"
