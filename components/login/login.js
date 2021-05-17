@@ -45,10 +45,15 @@ Component({
           });
           app.globalData.isAuthorize = true;
           this.triggerEvent("changeAuthorize", true);
+          const userInfo = {...res.userInfo};
+          // userInfo.userId = 
           wx.setStorageSync('userInfo', res.userInfo)
           this.login();
         }
       })
+    },
+    addUser() {
+      
     },
     getUserInfo(e) {
       // 不推荐使用getUserInfo获取用户信息，预计自2021年4月13日起，getUserInfo将不再弹出弹窗，并直接返回匿名的用户个人信息

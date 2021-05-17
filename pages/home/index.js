@@ -3,7 +3,6 @@
 const app = getApp();
 
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -43,67 +42,8 @@ Page({
     ],
     value1: 0,
     value2: 'a',
-    taskList: [{
-        taskName: "07 待办列表",
-        remark: "明天要检查",
-        time: [{
-          time: '2021-5-6',
-          tag: 1
-        }, {
-          time: '2021-5-7',
-          tag: 1
-        }, {
-          time: '2021-5-8',
-          tag: 0
-        }, {
-          time: '2021-5-9',
-          tag: 0
-        }, {
-          time: '2021-5-10',
-          tag: 0
-        }, ]
-      },
-      {
-        taskName: "07 待办列表",
-        remark: "明天要检查",
-        time: [{
-          time: '2021-5-6',
-          tag: 1
-        }, {
-          time: '2021-5-7',
-          tag: 1
-        }, {
-          time: '2021-5-8',
-          tag: 0
-        }, {
-          time: '2021-5-9',
-          tag: 0
-        }, {
-          time: '2021-5-10',
-          tag: 0
-        }, ]
-      },
-      {
-        taskName: "07 待办列表",
-        remark: "明天要检查",
-        time: [{
-          time: '2021-5-6',
-          tag: 1
-        }, {
-          time: '2021-5-7',
-          tag: 1
-        }, {
-          time: '2021-5-8',
-          tag: 0
-        }, {
-          time: '2021-5-9',
-          tag: 0
-        }, {
-          time: '2021-5-10',
-          tag: 0
-        }, ]
-      },
-    ],
+    taskList: [],
+    count: 0,
     isShow: null
   },
 
@@ -151,7 +91,15 @@ Page({
       name: "getTaskList",
       data: {}
     }).then((res) => {
-      console.log(res);
+      const { list, count } = res.result.res.data;
+      list.length && list.map(item => {
+        item.taskName = item.task_name;
+        delete item.task_name;
+      });
+      this.setData({
+        taskList: list,
+        count: count
+      });
       wx.hideLoading({
         success: () => {},
       });
@@ -174,7 +122,8 @@ Page({
     });
     const req = {
       taskName: this.data.taskName,
-      remark: this.data.remark
+      remark: this.data.remark,
+      createTime: "" + Date.now()
     };
 
     wx.showLoading({
@@ -187,17 +136,18 @@ Page({
         ...req
       }
     }).then((res) => {
-      console.log(res);
+      const { msg } = res.result.res;
       wx.hideLoading({
         success: () => {
           wx.showToast({
             icon: "success",
-            title: res.result.res.data.msg,
+            title: msg,
             duration: 1000,
             mask: true
           });
         },
       });
+      this.getTaskList();
     }).catch((err) => {
       wx.hideLoading({
         success: () => {

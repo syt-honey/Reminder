@@ -2,6 +2,11 @@
 @import "../../style/common.wxss";
 
 .info {
+ overflow: hidden;
+ height: 100%;
+}
+
+.info-inner {
  position: relative;
  min-height: 100%;
  box-sizing: border-box;

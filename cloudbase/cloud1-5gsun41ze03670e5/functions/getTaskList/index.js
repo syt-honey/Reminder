@@ -22,12 +22,19 @@ exports.main = async (event, context) => {
   }
  };
 
- await db.collection("task").get().then((r) => {
+ await db.collection("task").where({
+  _openid: wxContext.OPENID,
+ }).orderBy('create_time', 'desc').get().then((r) => {
   // 注：如果要写分页逻辑，获取长度的方法需要该
+  const list = r.data;
+  // 不将 _openid 暴露给前端
+  list.length && list.map(item => {
+   item._openid && delete item._openid;
+  });
   res.code = CODE_STATUS.SUCCESS;
   res.msg = "任务创建成功";
-  res.data.list = r.data;
-  res.data.count = r.data.length;
+  res.data.list = list;
+  res.data.count = list.length;
  }).catch((err) => {
   res.code = CODE_STATUS.ERROR;
   res.msg = "任务创建失败：" + err;

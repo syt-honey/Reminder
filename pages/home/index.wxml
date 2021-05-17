@@ -9,7 +9,8 @@
   <empty-page style="height: 100%" wx:if="{{taskList.length === 0}}"></empty-page>
   <block wx:else>
     <view class="task-container">
-      <task-item wx:for="{{taskList}}" wx:key="index" item="{{item}}"></task-item>
+      <task-item wx:for="{{taskList}}" wx:key="_id" item="{{item}}"></task-item>
+      <text wx:if="{{taskList.length > 7}}" class="list-end">到底啦～</text>
     </view>
   </block>
 

@@ -1,18 +1,20 @@
 <!--pages/info/index.wxml-->
-<view class="info" style="padding-top: {{statusBarHeight + navbarHeight + 20}}px">
+<view class="info">
+  <view class="info-inner" style="padding-top: {{statusBarHeight + navbarHeight + 20}}px">
+    <view class="info--person-info">
+      <image class="info--person-avatar" src="{{info.avatarUrl}}" mode="aspectFit" style="width: 120px;height: 100px;">
+      </image>
+      <text class="info--person-name single-dot-overflow">{{info.nickName}}</text>
+    </view>
 
-  <view class="info--person-info">
-    <image class="info--person-avatar" src="{{info.avatarUrl}}" mode="aspectFit" style="width: 120px;height: 100px;"></image>
-    <text class="info--person-name single-dot-overflow">{{info.nickName}}</text>
+    <view class="info--setting">
+      <van-cell-group>
+        <van-cell class="info--setting-item" wx:for="{{settings}}" wx:key="index" title="{{item.name}}" is-link
+          link-type="navigateTo" url="{{item.path}}" />
+      </van-cell-group>
+    </view>
+
+    <text class="info--feedback">反馈与问题：{{email}}</text>
   </view>
-
-  <view class="info--setting">
-    <van-cell-group>
-      <van-cell class="info--setting-item" wx:for="{{settings}}" wx:key="index" title="{{item.name}}" is-link
-        link-type="navigateTo" url="{{item.path}}" />
-    </van-cell-group>
-  </view>
-
-  <text class="info--feedback">反馈与问题：{{email}}</text>
 
 </view>

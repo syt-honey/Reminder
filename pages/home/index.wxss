@@ -16,6 +16,16 @@
 .task-container {
   display: flex;
   flex-direction: column;
+  width: 90%;
+  margin: auto;
+}
+
+.list-end {
+  display: block;
+  padding: 5px 0;
+  text-align: center;
+  color: #b9b9b9;
+  font-size: 14px;
 }
 
 view .van-dropdown-menu__title:after {

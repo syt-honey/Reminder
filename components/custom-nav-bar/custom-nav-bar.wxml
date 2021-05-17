@@ -9,7 +9,4 @@
 </view>
 
 <!-- 占位 -->
-<view
-    class="i-margin"
-    style="margin-bottom: {{statusBarHeight + navbarHeight}}px"
-></view>
+<view class="i-margin" style="margin-bottom: {{statusBarHeight + navbarHeight}}px"></view>
