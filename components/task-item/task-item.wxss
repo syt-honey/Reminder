@@ -19,6 +19,27 @@
     sans-serif;
 }
 
+.task-item--selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 65px;
+  height: 100%;
+  color: #fff;
+}
+
+.task-item__finish {
+  background: #4fc08d;
+}
+
+.task-item__cancel {
+  background: #ababab;
+}
+
+.task-item__delete {
+  background: #ee0a24;
+}
+
 .task-item--chart {
   display: flex;
   padding: 5px 0;

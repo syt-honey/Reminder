@@ -1,14 +1,23 @@
 <!--components/task-item/task-item.wxml-->
-<view class="task-item">
-  <view class="task-item--name single-dot-overflow">{{itemTem.taskName}}</view>
-  <view class="task-item--chart">
-    <view wx:for="{{itemTem.rules}}" wx:key="index"
-      class="task-item--chart--grid {{item.done ? 'task-item--chart--grid__active' : 'task-item--chart--grid__default'}}">
+<!-- <swiper-cell pid="{{pid}}" bindaction="handleSlideDelete" bindtouchmove="handleTouchMove"> -->
+<van-swipe-cell right-width="{{ 65 }}" left-width="{{ 65 }}"  async-close
+  bind:click="onClick">
+  <view slot="left" class="task-item--selector {{item.done ? 'task-item__cancel' : 'task-item__finish'}}">{{item.done ? "取消" : "完成"}}</view>
+  <van-cell-group>
+    <view class="task-item">
+      <view class="task-item--name single-dot-overflow">{{itemTem.taskName}}</view>
+      <view class="task-item--chart">
+        <view wx:for="{{itemTem.rules}}" wx:key="index"
+          class="task-item--chart--grid {{item.done ? 'task-item--chart--grid__active' : 'task-item--chart--grid__default'}}">
+        </view>
+      </view>
+      <view class="task-item--remark" wx:if="{{itemTem.remark}}">
+        <view class="task-remark--item">
+          备注：{{itemTem.remark}}
+        </view>
+      </view>
     </view>
-  </view>
-  <view class="task-item--remark" wx:if="{{itemTem.remark}}">
-    <view class="task-remark--item">
-      备注：{{itemTem.remark}}
-    </view>
-  </view>
-</view>
+  </van-cell-group>
+  <view slot="right" class="task-item--selector task-item__delete">删除</view>
+</van-swipe-cell>
+<!-- </swiper-cell> -->

@@ -7,6 +7,10 @@ Component({
     taskItem: {
       type: Object,
       value: {}
+    },
+    pid: {
+      type: Number,
+      value: 0
     }
   },
 
@@ -27,10 +31,10 @@ Component({
       done: true
     }, {
       date: "1621008000000",
-      done: true
+      done: false
     }, {
       date: "1620921600000",
-      done: true
+      done: false
     }];
     this.setData({
       itemTem: i
@@ -43,6 +47,22 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
+    onClick({
+      detail
+    }) {
+      if (detail === "left") {
+        // 完成/取消
+        this.finishTask();
+      } else if (detail === "right") {
+        // 删除
+        this.deleteTask();
+      }
+    },
+    deleteTask() {
+      console.log('delete')
+    },
+    finishTask() {
+      console.log('finished')
+    }
   }
 })
