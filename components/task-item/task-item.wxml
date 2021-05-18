@@ -1,8 +1,14 @@
 <!--components/task-item/task-item.wxml-->
 <view class="task-item">
-    <text>{{item.taskName}}</text>
-    <view class="task-chart">
-      {{item.remark}}
+  <view class="task-item--name single-dot-overflow">{{itemTem.taskName}}</view>
+  <view class="task-item--chart">
+    <view wx:for="{{itemTem.rules}}" wx:key="index"
+      class="task-item--chart--grid {{item.done ? 'task-item--chart--grid__active' : 'task-item--chart--grid__default'}}">
     </view>
-
+  </view>
+  <view class="task-item--remark" wx:if="{{itemTem.remark}}">
+    <view class="task-remark--item">
+      备注：{{itemTem.remark}}
+    </view>
+  </view>
 </view>

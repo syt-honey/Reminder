@@ -1,4 +1,6 @@
 /**app.wxss**/
+@import "./style/common.wxss";
+
 page {
   background: #EDEDED;
   height: 100%;

@@ -1,71 +1,28 @@
 <!--pages/home/index.wxml-->
 <view class="page home">
-  <custom-nav-bar
-    title="今日待办"
-    i-bg="i-bg"
-  >
+  <custom-nav-bar title="今日待办" i-bg="i-bg">
   </custom-nav-bar>
 
   <empty-page style="height: 100%" wx:if="{{taskList.length === 0}}"></empty-page>
   <block wx:else>
     <view class="task-container">
-      <task-item wx:for="{{taskList}}" wx:key="_id" item="{{item}}"></task-item>
+      <task-item wx:for="{{taskList}}" wx:key="_id" taskItem="{{item}}"></task-item>
       <text wx:if="{{taskList.length > 7}}" class="list-end">到底啦～</text>
     </view>
   </block>
 
-
-  <image bindtap="toAddTask" src="../../images/home/addTask.png" style="width: 35px; height: 35px;" class="home--add-task"></image>
+  <image bindtap="toAddTask" src="../../images/home/addTask.png" style="width: 35px; height: 35px;"
+    class="home--add-task"></image>
 
   <!-- 表单内容 -->
-  <van-popup show="{{ openTaskPage }}" position="bottom"
-  custom-style="padding: 20px" bind:close="onClose">
+  <van-popup show="{{ openTaskPage }}" position="bottom" custom-style="padding: 20px" bind:close="onClose">
     <van-cell-group>
-      <van-field
-        model:value="{{ taskName }}"
-        required
-        clearable
-        label="任务名"
-        placeholder="请输入任务名称"
-      />
-      <!-- icon="plus" -->
-      <!-- <van-field
-        label="提醒周期"
-        required
-        bind:click-icon="addRule"
-      >
-        <view slot="input">
-          <van-dropdown-menu active-color="#00C261" direction="up">
-            <van-dropdown-item model:value="{{ value1 }}" options="{{ option1 }}" />
-          </van-dropdown-menu>
-        </view>
-      </van-field>
-
-      <van-field
-        label="重复周期"
-        required
-        bind:click-icon="addRule"
-      >
-        <view slot="input" style="display: flex; width: 100%; align-items: center; justify-content: space-between;">
-          <van-dropdown-menu active-color="#00C261" direction="up">
-            <van-dropdown-item model:value="{{ value2 }}" options="{{ option2 }}" />
-          </van-dropdown-menu>
-          <van-stepper wx:if="{{value2 === 'b'}}" value="{{ 2 }}" min="2" max="50" />
-        </view>
-      </van-field> -->
-
-      <van-field
-        model:value="{{ remark }}"
-        label="备注"
-        clearable
-        placeholder="请输入备注"
-        border="{{ false }}"
-      />
+      <van-field model:value="{{ taskName }}" required clearable label="任务名" placeholder="请输入任务名称" />
+      <van-field model:value="{{ remark }}" label="备注" clearable placeholder="请输入备注" border="{{ false }}" />
     </van-cell-group>
-
     <van-button type="primary" bindtap="addTask">确认</van-button>
   </van-popup>
-  
+
   <van-popup show="{{isShow}}" position="bottom">
     <login-com bind:changeAuthorize="changeAuthorize"></login-com>
   </van-popup>

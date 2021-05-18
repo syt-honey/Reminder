@@ -1,5 +1,4 @@
 /* custom-nav-bar/index.wxss */
-/* @import "../../style/index.wxss"; */
 
 .nav-bar {
   position: fixed;

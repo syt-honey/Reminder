@@ -1,4 +1,6 @@
 /* components/task-item/task-item.wxss */
+@import "../../style/common.wxss";
+
 .task-item {
   margin: 10px auto;
   margin-bottom: 0;
@@ -6,4 +8,42 @@
   border-radius: 4px;
   background: #fff;
   font-size: 16px;
+  font-family:
+    system-ui,
+    -apple-system,
+    /* Firefox supports this but not yet `system-ui` */
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+.task-item--chart {
+  display: flex;
+  padding: 5px 0;
+  /* border: 1px solid #eee; */
+}
+
+.task-item--chart--grid {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  margin-right: 5px;
+  box-sizing: border-box;
+}
+
+.task-item--chart--grid__default {
+  border: 1px solid #eee;
+  background: none;
+}
+
+.task-item--chart--grid__active {
+  background: #bef5cb;
+  border: none;
+}
+
+.task-item .task-item--remark {
+  color: #b5b4b4;
+  font-size: 13px;
 }

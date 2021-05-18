@@ -10,38 +10,25 @@ Page({
     openTaskPage: false,
     taskName: "",
     remark: "",
-    option1: [{
-        text: '每天',
-        value: 0
-      },
-      {
-        text: '每周',
-        value: 1
-      },
-      {
-        text: '每年',
-        value: 2
-      },
-      {
-        text: '法定工作日',
-        value: 3
-      },
-      {
-        text: '艾宾浩斯记忆法',
-        value: 4
-      },
-    ],
-    option2: [{
-        text: '一直重复',
-        value: 'a'
-      },
-      {
-        text: '按次数重复',
-        value: 'b'
-      },
-    ],
-    value1: 0,
-    value2: 'a',
+    defaultRule: {
+      rules: [
+          {
+            date: "1621301158251",
+            done: false
+          }, {
+            date: "1621180800000",
+            done: false
+          }, {
+            date: "1621008000000",
+            done: false
+          }, {
+            date: "1620921600000",
+            done: false
+          }
+      ],
+      count: 4,
+      done: true // 是否全部完成
+    },
     taskList: [],
     count: 0,
     isShow: null
@@ -50,7 +37,7 @@ Page({
   onShow() {
     // 每个页面都要去检查一下
     app.checkAuthorization().then((res) => {
-      console.log(app.globalData.isAuthorize)
+      // console.log(app.globalData.isAuthorize)
       if (app.globalData.isAuthorize) {
         this.setData({
           isShow: false
@@ -179,10 +166,6 @@ Page({
     })
   },
 
-  addRule() {
-    console.log("add rule")
-  },
-
   changeAuthorize(isAuthorize, reason = "授权错误") {
     if (isAuthorize) {
       this.setData({
@@ -216,7 +199,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+      console.log('lala')
   },
 
   /**
