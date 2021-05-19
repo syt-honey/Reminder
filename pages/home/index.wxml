@@ -1,8 +1,10 @@
 <!--pages/home/index.wxml-->
 <view class="page home">
+  <!-- nav -->
   <custom-nav-bar title="今日待办" i-bg="i-bg">
   </custom-nav-bar>
 
+  <!-- 待办列表 -->
   <empty-page style="height: 100%" wx:if="{{taskList.length === 0}}"></empty-page>
   <block wx:else>
     <view class="home__task-container">
@@ -23,6 +25,7 @@
     <van-button type="primary" bindtap="addTask">确认</van-button>
   </van-popup>
 
+  <!-- 验证弹窗 -->
   <van-popup show="{{isShow}}" position="bottom">
     <login-com bind:changeAuthorize="changeAuthorize"></login-com>
   </van-popup>

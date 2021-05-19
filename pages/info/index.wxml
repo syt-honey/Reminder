@@ -16,4 +16,10 @@
 
     <text class="info__container__feedback">反馈与问题：{{email}}</text>
   </view>
+
+
+  <!-- 验证弹窗 -->
+  <van-popup show="{{isShow}}" position="bottom">
+    <login-com bind:changeAuthorize="changeAuthorize"></login-com>
+  </van-popup>
 </view>

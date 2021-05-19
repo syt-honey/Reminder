@@ -5,4 +5,9 @@
     i-bg="i-bg"
   >
   </custom-nav-bar>
+
+  <!-- 验证弹窗 -->
+  <van-popup show="{{isShow}}" position="bottom">
+    <login-com bind:changeAuthorize="changeAuthorize"></login-com>
+  </van-popup>
 </view>

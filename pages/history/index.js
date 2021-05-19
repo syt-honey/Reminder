@@ -1,11 +1,13 @@
 // pages/history/index.js
+const app = getApp();
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    isShow: null
   },
 
   /**
@@ -26,7 +28,33 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    // 每个页面都要去检查一下
+    app.checkAuthorization().then(() => {
+      if (app.globalData.isAuthorize) {
+        this.setData({
+          isShow: false
+        });
+      } else {
+        this.setData({
+          isShow: true
+        });
+      }
+    });
+  },
 
+  changeAuthorize(isAuthorize, reason = "授权错误") {
+    if (isAuthorize) {
+      this.setData({
+        isShow: !isAuthorize
+      });
+    } else {
+      wx.showToast({
+        title: reason,
+        icon: 'fail',
+        duration: 1000,
+        mask: true
+      })
+    }
   },
 
   /**

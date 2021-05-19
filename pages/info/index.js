@@ -11,18 +11,17 @@ Page({
     navbarHeight: app.globalData.navbarHeight,
     info: {},
     email: "5532064.91@163.com",
-    settings: [
-      {
-        name: "提醒规则管理",
-        path: "/pages/rule/rule"
-      }, {
-        name: "成长日志/一览图",
-        path: "/pages/log/log"
-      }, {
-        name: "关于我们",
-        path: "/pages/about/about"
-      }
-    ]
+    settings: [{
+      name: "提醒规则管理",
+      path: "/pages/rule/rule"
+    }, {
+      name: "成长日志/一览图",
+      path: "/pages/log/log"
+    }, {
+      name: "关于我们",
+      path: "/pages/about/about"
+    }],
+    isShow: null
   },
 
   /**
@@ -49,7 +48,33 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    // 每个页面都要去检查一下
+    app.checkAuthorization().then(() => {
+      if (app.globalData.isAuthorize) {
+        this.setData({
+          isShow: false
+        });
+      } else {
+        this.setData({
+          isShow: true
+        });
+      }
+    });
+  },
 
+  changeAuthorize(isAuthorize, reason = "授权错误") {
+    if (isAuthorize) {
+      this.setData({
+        isShow: !isAuthorize
+      });
+    } else {
+      wx.showToast({
+        title: reason,
+        icon: 'fail',
+        duration: 1000,
+        mask: true
+      })
+    }
   },
 
   /**
