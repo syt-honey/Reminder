@@ -28,7 +28,7 @@
 }
 
 .task-item--delete {
-  background: var(-color-task-btn__delete);
+  background: var(--color-task-btn__delete);
 }
 
 .task-item__chart {
