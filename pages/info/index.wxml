@@ -1,6 +1,6 @@
 <!--pages/info/index.wxml-->
 <view class="info">
-  <view class="info__container" style="padding-top: {{statusBarHeight + navbarHeight + 20}}rpx">
+  <view class="info__container" style="padding-top: {{statusBarHeight + navbarHeight + 40}}rpx">
     <view class="info__container__person-info">
       <image src="{{info.avatarUrl}}" mode="aspectFit" style="width: 240rpx; height: 200rpx;">
       </image>
