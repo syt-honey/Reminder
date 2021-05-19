@@ -1,7 +1,7 @@
 <!--components/empty-page/empty-page.wxml-->
 <view class="page empty">
-  <view class="empty-container">
+  <view class="empty__body">
     <image src="../../images/empty.png" style="width: 32px; height: 32px;"></image>
-    <text class="empty--title">{{title}}</text>
+    <text class="empty__body__title">{{title}}</text>
   </view>
 </view>

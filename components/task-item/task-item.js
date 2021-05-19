@@ -7,10 +7,6 @@ Component({
     taskItem: {
       type: Object,
       value: {}
-    },
-    pid: {
-      type: Number,
-      value: 0
     }
   },
 
@@ -18,7 +14,8 @@ Component({
    * 组件的初始数据
    */
   data: {
-    itemTem: []
+    itemTem: [],
+    openSide: "left"
   },
 
   ready() {
@@ -47,6 +44,20 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    onOpen(event) {
+      const { position } = event.detail;
+      if (position === "left") {
+        // 完成/取消
+        this.setData({
+          openSide: position
+        });
+      } else if (position === "right") {
+        // 删除
+        this.setData({
+          openSide: position
+        });
+      }
+    },
     onClick({
       detail
     }) {

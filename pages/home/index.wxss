@@ -7,14 +7,14 @@
   background: #fff !important;
 }
 
-.home--add-task {
+.home__add-task {
   position: fixed;
   bottom: 40px;
   right: 30px;
   z-index: 2;
 }
 
-.task-container {
+.home__task-container {
   display: flex;
   flex-direction: column;
   width: calc(100% - 20px);

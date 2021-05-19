@@ -5,14 +5,14 @@
 
   <empty-page style="height: 100%" wx:if="{{taskList.length === 0}}"></empty-page>
   <block wx:else>
-    <view class="task-container">
-      <task-item wx:for="{{taskList}}" wx:key="_id" pid="{{index}}" taskItem="{{item}}"></task-item>
+    <view class="home__task-container">
+      <task-item wx:for="{{taskList}}" wx:key="_id" taskItem="{{item}}"></task-item>
       <text wx:if="{{taskList.length > 7}}" class="list-end">到底啦～</text>
     </view>
   </block>
 
   <image bindtap="toAddTask" src="../../images/home/addTask.png" style="width: 35px; height: 35px;"
-    class="home--add-task"></image>
+    class="home__add-task"></image>
 
   <!-- 表单内容 -->
   <van-popup show="{{ openTaskPage }}" position="bottom" custom-style="padding: 20px" bind:close="onClose">

@@ -6,24 +6,24 @@
  height: 100%;
 }
 
-.info-inner {
+.info__container {
  position: relative;
  min-height: 100%;
  box-sizing: border-box;
 }
 
-.info--person-info {
+.info__container__person-info {
  display: flex;
  width: 80%;
  margin: 0 auto;
 }
 
-.info--person-info .info--person-name {
+.info__container__person-info .info__container__person-info__name {
  flex: 1;
  margin-left: 20px;
 }
 
-.info--setting {
+.info__container__setting {
  overflow: hidden;
  width: 80%;
  margin: 60px auto;
@@ -34,7 +34,7 @@ view .van-cell {
  border-radius: 4px;
 }
 
-.info--feedback {
+.info__container__feedback {
  position: absolute;
  bottom: 10px;
  left: 50%;

@@ -8,14 +8,14 @@
   align-items: center;
 }
 
-.empty-container {
+.empty__body {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.empty--title {
+.empty__body__title {
   margin-top: 15px;
   color: #8a8a8a;
 }

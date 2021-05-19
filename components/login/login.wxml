@@ -1,13 +1,13 @@
 <!--components/login/login.wxml-->
-<view class="container">
-  <view class='header'>
-    <image src='/images/wx_login.png'></image>
+<view class="login-container">
+  <view class='login-container__header'>
+    <image src='/images/wx_login.png' style="width: 200rpx; height: 200rpx;"></image>
   </view>
-  <view class='content'>
+  <view class='login-container__body'>
     <view>申请获取以下权限</view>
-    <text>获得你的公开信息(昵称，头像等)</text>
+    <text class="login-container__body__desc">获得你的公开信息(昵称，头像等)</text>
   </view>
 
-  <button wx:if="{{canIUseGetUserProfile}}" class='bottom' type='primary' bindtap="getUserProfile"> 授权登录 </button>
-  <button wx:else open-type="getUserInfo" class='bottom' type='primary' bindgetuserinfo="getUserInfo"> 授权登录 </button>
+  <button wx:if="{{canIUseGetUserProfile}}" class='login-container__footer' type='primary' bindtap="getUserProfile"> 授权登录 </button>
+  <button wx:else open-type="getUserInfo" class='login-container__footer' type='primary' bindgetuserinfo="getUserInfo"> 授权登录 </button>
 </view>
