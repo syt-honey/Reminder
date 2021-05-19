@@ -1,5 +1,5 @@
 // pages/home/index.js
-
+const dayjs = require("./dayjs");
 const app = getApp();
 
 Page({
@@ -10,24 +10,8 @@ Page({
     openTaskPage: false,
     taskName: "",
     remark: "",
-    defaultRule: {
-      rules: [
-          {
-            date: "1621301158251",
-            done: false
-          }, {
-            date: "1621180800000",
-            done: false
-          }, {
-            date: "1621008000000",
-            done: false
-          }, {
-            date: "1620921600000",
-            done: false
-          }
-      ],
-      count: 4,
-      done: true // 是否全部完成
+    rules: {
+      rule: [2, 3, 7, 15, 30]
     },
     taskList: [],
     count: 0,
@@ -75,7 +59,7 @@ Page({
     });
 
     app.globalData.cloud.callFunction({
-      name: "getTaskList",
+      name: "getTodayTaskList",
       data: {}
     }).then((res) => {
       const {
@@ -117,10 +101,32 @@ Page({
     this.setData({
       openTaskPage: false
     });
+
+    // 根据规则生成提醒日期列表
+    // 当前的时间
+    const now = new Date();
+    // 当前日期 00:00 的时间戳
+    const nowOfDay = new Date(dayjs(now).format('YYYY-MM-DD')).getTime();
+    // 根据时间戳生成列表
+    let dateList = [];
+    this.data.rules.rule.forEach(e => {
+      let i = {
+        done: false
+      };
+      i.date = nowOfDay + e * 24 * 60 * 60 * 1000;
+      i.dateOfDay = dayjs(new Date(i.date)).format("YYYY-MM-DD");
+      dateList.push(i);
+    });
+
+    // 请求参数
     const req = {
       taskName: this.data.taskName,
       remark: this.data.remark,
-      createTime: "" + Date.now()
+      createTime: now.getTime(),
+      rules: {
+        rule: [...this.data.rules.rule],
+        dateList: [...dateList]
+      }
     };
 
     wx.showLoading({
@@ -158,6 +164,15 @@ Page({
         },
       });
     });
+  },
+
+  queryDefaultRuleDesc() {
+    wx.showToast({
+      icon: "error",
+      title: '还没写好哦~',
+      duration: 2000,
+      mask: true
+    })
   },
 
   onClose() {
@@ -199,7 +214,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-      console.log('lala')
+    console.log('lala')
   },
 
   /**

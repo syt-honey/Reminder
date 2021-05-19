@@ -18,4 +18,5 @@
 .empty__body__title {
   margin-top: 32rpx;
   color: var(--color-gray);
+  font-size: var(--font-size__small);
 }

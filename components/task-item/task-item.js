@@ -7,6 +7,10 @@ Component({
     taskItem: {
       type: Object,
       value: {}
+    },
+    operator: {
+      type: Boolean,
+      value: true
     }
   },
 
@@ -14,30 +18,11 @@ Component({
    * 组件的初始数据
    */
   data: {
-    itemTem: [],
     openSide: "left"
   },
 
   ready() {
-    const i = this.properties.taskItem;
-    i.rules = [{
-      date: "1621301158251",
-      done: true
-    }, {
-      date: "1621180800000",
-      done: true
-    }, {
-      date: "1621008000000",
-      done: false
-    }, {
-      date: "1620921600000",
-      done: false
-    }];
-    this.setData({
-      itemTem: i
-    }, () => {
-      // console.log(this.data.itemTem)
-    });
+    console.log(this.data.taskItem)
   },
 
   /**

@@ -2,3 +2,14 @@
 .i-bg {
  background: var(--color-white) !important;
 }
+
+.history {
+ height: 100%;
+}
+
+.home__task-container {
+ display: flex;
+ flex-direction: column;
+ width: calc(100% - 40rpx);
+ margin: auto;
+}

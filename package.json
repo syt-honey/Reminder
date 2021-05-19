@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "smart reminder",
   "dependencies": {
-    "@vant/weapp": "^1.6.8"
+    "@vant/weapp": "^1.6.8",
+    "dayjs": "^1.10.4"
   }
 }

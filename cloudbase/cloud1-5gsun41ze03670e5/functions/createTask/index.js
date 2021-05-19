@@ -17,7 +17,8 @@ exports.main = async (event, context) => {
   const {
     taskName: task_name,
     remark,
-    createTime: create_time
+    createTime: create_time,
+    rules
   } = event;
 
   const res = {
@@ -31,7 +32,8 @@ exports.main = async (event, context) => {
       task_name,
       remark,
       _openid: wxContext.OPENID,
-      create_time
+      create_time,
+      rules
     }
   }).then(() => {
     res.code = CODE_STATUS.SUCCESS;

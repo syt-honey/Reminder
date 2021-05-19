@@ -7,14 +7,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isShow: null
+    isShow: null,
+    taskList: [],
+    count: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
   },
 
   /**
@@ -24,10 +25,48 @@ Page({
 
   },
 
+  getTaskList() {
+    wx.showLoading({
+      title: '获取列表...',
+    });
+
+    app.globalData.cloud.callFunction({
+      name: "getTaskList",
+      data: {}
+    }).then((res) => {
+      const {
+        list,
+        count
+      } = res.result.res.data;
+      list.length && list.map(item => {
+        item.taskName = item.task_name;
+        delete item.task_name;
+      });
+      this.setData({
+        taskList: list,
+        count: count
+      });
+      wx.hideLoading({
+        success: () => {},
+      });
+    }).catch((err) => {
+      wx.hideLoading({
+        success: () => {
+          wx.showToast({
+            title: err,
+            duration: 1000,
+            mask: true
+          });
+        },
+      });
+    });
+  },
+
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.getTaskList();
     // 每个页面都要去检查一下
     app.checkAuthorization().then(() => {
       if (app.globalData.isAuthorize) {

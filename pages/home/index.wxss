@@ -21,6 +21,18 @@
   margin: auto;
 }
 
+.task-tip {
+  display: flex;
+  justify-content: center;
+  margin-top: 40rpx;
+  color: var(--color-gray);
+  font-size: var(--font-size__smaller);
+}
+
+.task-tip .task-tip--detail {
+  text-decoration: underline;
+}
+
 .list-end {
   display: block;
   padding: 10rpx 0;
@@ -50,7 +62,7 @@ view .van-dropdown-menu__title:first-child {
 view .van-button--normal {
   width: 100%;
   padding: 0;
-  margin-top: 60rpx;
+  margin-top: 20rpx;
 }
 
 view .van-ellipsis{

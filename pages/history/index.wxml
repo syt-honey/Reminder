@@ -1,10 +1,19 @@
 <!--pages/history/index.wxml-->
-<view>
+<view class="page history">
  <custom-nav-bar
     title="历史任务"
     i-bg="i-bg"
   >
   </custom-nav-bar>
+
+  <!-- 待办列表 -->
+  <empty-page style="height: 100%" wx:if="{{taskList.length === 0}}"></empty-page>
+  <block wx:else>
+    <view class="home__task-container">
+      <task-item wx:for="{{taskList}}" wx:key="_id" taskItem="{{item}}" operator="{{false}}"></task-item>
+      <text wx:if="{{taskList.length > 7}}" class="list-end">到底啦～</text>
+    </view>
+  </block>
 
   <!-- 验证弹窗 -->
   <van-popup show="{{isShow}}" position="bottom">

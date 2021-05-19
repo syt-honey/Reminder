@@ -2,6 +2,8 @@
   "usingComponents": {
     "custom-nav-bar": "../../components/custom-nav-bar/custom-nav-bar",
     "login-com": "../../components/login/login",
+    "empty-page": "../../components/empty-page/empty-page",
+    "task-item": "../../components/task-item/task-item",
     "van-popup": "@vant/weapp/popup/index"
   }
 }

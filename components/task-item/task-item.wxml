@@ -1,23 +1,41 @@
 <!--components/task-item/task-item.wxml-->
-<van-swipe-cell class="task-swipe-cell" right-width="{{ 65 }}" left-width="{{ 65 }}" async-close bind:click="onClick" bind:open="onOpen">
+
+<!-- 可以操作的 item -->
+<van-swipe-cell wx:if="{{operator}}" class="task-swipe-cell" right-width="{{ 65 }}" left-width="{{ 65 }}" async-close
+  bind:click="onClick" bind:open="onOpen">
   <!-- TODO 根据当天完成的状态判断 -->
   <view slot="left" class="task-swipe-cell__selector {{item.done ? 'task-item--cancel' : 'task-item--finish'}}">
     {{item.done ? "取消" : "完成"}}</view>
   <van-cell-group>
     <!-- TODO 打开一边没有 -->
     <view class="task-item">
-      <view class="single-dot-overflow">{{itemTem.taskName}}</view>
+      <view class="single-dot-overflow">{{taskItem.taskName}}</view>
       <view class="task-item__chart">
-        <view wx:for="{{itemTem.rules}}" wx:key="index"
-          class="task-item__chart__grid {{item.done ? 'task-item__chart__grid--active' : 'task-item__chart__grid--default'}}">
+        <view wx:for="{{taskItem.rules.dateList}}" wx:key="index" wx:for-item="i"
+          class="task-item__chart__grid {{i.done ? 'task-item__chart__grid--active' : 'task-item__chart__grid--default'}}">
         </view>
       </view>
-      <view class="task-item__remark" wx:if="{{itemTem.remark}}">
+      <view class="task-item__remark" wx:if="{{taskItem.remark}}">
         <view>
-          备注：{{itemTem.remark}}
+          备注：{{taskItem.remark}}
         </view>
       </view>
     </view>
   </van-cell-group>
   <view slot="right" class="task-swipe-cell__selector task-item--delete">删除</view>
 </van-swipe-cell>
+
+<!-- 不可操作的 item -->
+<view class="task-item" wx:else>
+  <view class="single-dot-overflow">{{taskItem.taskName}}</view>
+  <view class="task-item__chart">
+    <view wx:for="{{taskItem.rules.dateList}}" wx:key="index" wx:for-item="i"
+      class="task-item__chart__grid {{i.done ? 'task-item__chart__grid--active' : 'task-item__chart__grid--default'}}">
+    </view>
+  </view>
+  <view class="task-item__remark" wx:if="{{taskItem.remark}}">
+    <view>
+      备注：{{taskItem.remark}}
+    </view>
+  </view>
+</view>
