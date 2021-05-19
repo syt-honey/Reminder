@@ -20,26 +20,26 @@
 
 .info__container__person-info .info__container__person-info__name {
  flex: 1;
- margin-left: 20px;
+ margin-left: 40rpx;
 }
 
 .info__container__setting {
  overflow: hidden;
  width: 80%;
- margin: 60px auto;
+ margin: 120rpx auto;
 }
 
 view .van-cell {
- margin-top: 30px;
- border-radius: 4px;
+ margin-top: 60rpx;
+ border-radius: 8rpx;
 }
 
 .info__container__feedback {
  position: absolute;
- bottom: 10px;
+ bottom: 20rpx;
  left: 50%;
- transform: translateX(-50%);
  white-space: nowrap;
- font-size: 14px;
- color: #b5b5b5;
+ font-size: var(--font-size__small);
+ color: var(--color-gray);
+ transform: translateX(-50%);
 }

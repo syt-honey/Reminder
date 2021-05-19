@@ -1,4 +1,4 @@
 /* pages/history/index.wxss */
 .i-bg {
- background: #fff !important;
+ background: var(--color-white) !important;
 }

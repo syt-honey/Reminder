@@ -11,11 +11,11 @@
     </view>
   </block>
 
-  <image bindtap="toAddTask" src="../../images/home/addTask.png" style="width: 35px; height: 35px;"
+  <image bindtap="toAddTask" src="../../images/home/addTask.png" style="width: 70rpx; height: 70rpx;"
     class="home__add-task"></image>
 
   <!-- 表单内容 -->
-  <van-popup show="{{ openTaskPage }}" position="bottom" custom-style="padding: 20px" bind:close="onClose">
+  <van-popup show="{{ openTaskPage }}" position="bottom" custom-style="padding: 40rpx" bind:close="onClose">
     <van-cell-group>
       <van-field model:value="{{ taskName }}" required clearable label="任务名" placeholder="请输入任务名称" />
       <van-field model:value="{{ remark }}" label="备注" clearable placeholder="请输入备注" border="{{ false }}" />

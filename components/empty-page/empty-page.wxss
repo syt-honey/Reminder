@@ -16,6 +16,6 @@
 }
 
 .empty__body__title {
-  margin-top: 15px;
-  color: #8a8a8a;
+  margin-top: 32rpx;
+  color: var(--color-gray);
 }

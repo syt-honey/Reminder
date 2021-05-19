@@ -40,18 +40,19 @@ App({
   getSystemInfo() {
     const sysInfo = wx.getSystemInfoSync();
     const menuInfo = wx.getMenuButtonBoundingClientRect();
-    // 获取屏幕宽高、状态栏高，计算导航栏高
+    const rate = parseInt(sysInfo.screenWidth) / 750;
+    // 获取屏幕宽高、状态栏高，计算导航栏高，同时将拿到的 px 转换为 rpx
     ;
     [
       this.globalData.screenWidth,
       this.globalData.screenHeight,
       this.globalData.statusBarHeight
     ] = [
-      sysInfo.screenWidth,
-      sysInfo.screenHeight,
-      sysInfo.statusBarHeight
+      sysInfo.screenWidth / rate,
+      sysInfo.screenHeight / rate,
+      sysInfo.statusBarHeight / rate
     ];
-    this.globalData.navbarHeight = menuInfo.height + (menuInfo.top - sysInfo.statusBarHeight) * 2;
+    this.globalData.navbarHeight = (menuInfo.height + (menuInfo.top - sysInfo.statusBarHeight) * 2)  / rate;
 
     // 获取当前设备类型
     const systems = ["ios", "android"];
@@ -66,11 +67,12 @@ App({
     }
   },
   globalData: {
+    rate: 0, // 屏幕宽度 / 750。可用于 px 和 rpx 之间的精确转换
     userInfo: null,
-    screenHeight: 300,
-    screenWidth: 350,
-    statusBarHeight: 20,
-    navbarHeight: 44,
+    screenHeight: 0,
+    screenWidth: 0,
+    statusBarHeight: 0,
+    navbarHeight: 0,
     system: "ios",
     isAuthorize: null,
     cloud: null

@@ -1,8 +1,8 @@
 <!--pages/info/index.wxml-->
 <view class="info">
-  <view class="info__container" style="padding-top: {{statusBarHeight + navbarHeight + 20}}px">
+  <view class="info__container" style="padding-top: {{statusBarHeight + navbarHeight + 20}}rpx">
     <view class="info__container__person-info">
-      <image src="{{info.avatarUrl}}" mode="aspectFit" style="width: 120px;height: 100px;">
+      <image src="{{info.avatarUrl}}" mode="aspectFit" style="width: 240rpx; height: 200rpx;">
       </image>
       <text class="info__container__person-info__name  single-dot-overflow">{{info.nickName}}</text>
     </view>

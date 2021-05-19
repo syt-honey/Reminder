@@ -19,5 +19,5 @@
 .login-container__footer {
  border-radius: 80rpx;
  margin: 50rpx 50rpx;
- font-size: 35rpx;
+ font-size: var(--font-size__large);
 }

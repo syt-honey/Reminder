@@ -21,7 +21,5 @@
 }
 
 .nav-bar__status-bar__back-icon {
-  width: 16px;
-  height: 16px;
-  margin-left: 15px;
+  margin-left: 30rpx;
 }

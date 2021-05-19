@@ -2,15 +2,22 @@
 @import "./style/common.wxss";
 
 page {
-  background: #EDEDED;
+  /* color */
+  --color-white: #fff;
+  --color-gray: #b9b9b9;
+  --color-page: #ededed;
+  --color-main: #00c261;
+  --color-task-btn__finish: #4fc08d;
+  --color-task-btn__cancel: #ababab;
+  --color-task-btn__delete: #ee0a24;
+  --color-task-grid__default: #eee;
+  --color-task-grid__done: #bef5cb;
+
+  /* font */
+  --font-size__large: 35rpx;
+  --font-size__mid: 32rpx;
+  --font-size__small: 26rpx;
+
+  background: var(--color-page);
   height: 100%;
 }
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 200rpx 0;
-  box-sizing: border-box;
-} 

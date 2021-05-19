@@ -4,33 +4,33 @@
 }
 
 .i-bg {
-  background: #fff !important;
+  background: var(--color-white) !important;
 }
 
 .home__add-task {
   position: fixed;
-  bottom: 40px;
-  right: 30px;
+  bottom: 80rpx;
+  right: 60rpx;
   z-index: 2;
 }
 
 .home__task-container {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 20px);
+  width: calc(100% - 40rpx);
   margin: auto;
 }
 
 .list-end {
   display: block;
-  padding: 5px 0;
+  padding: 10rpx 0;
   text-align: center;
-  color: #b9b9b9;
-  font-size: 14px;
+  color: var(--color-gray);
+  font-size: var(--font-size__small);
 }
 
 task-item:last-child {
-  margin-bottom: 10px;
+  margin-bottom: 20rpx;
 }
 
 view .van-dropdown-menu__title:after {
@@ -38,19 +38,19 @@ view .van-dropdown-menu__title:after {
 }
 
 view .van-dropdown-menu__title {
-  padding: 8px;
-  color: #00C261;
+  padding: 16rpx;
+  color: var(--color-main);
 }
 
 view .van-dropdown-menu__title:first-child {
-  width: 90px;
+  width: 180rpx;
   padding-left: 0;
 }
 
 view .van-button--normal {
   width: 100%;
   padding: 0;
-  margin-top: 30px;
+  margin-top: 60rpx;
 }
 
 view .van-ellipsis{

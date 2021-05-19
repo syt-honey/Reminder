@@ -1,12 +1,12 @@
-<view class="i-bg nav-bar" style="padding-top: {{statusBarHeight}}px;height:{{navbarHeight}}px">
-    <view class="nav-bar__status-bar" style="height:{{navbarHeight}}px">
+<view class="i-bg nav-bar" style="padding-top: {{statusBarHeight}}rpx;height:{{navbarHeight}}rpx">
+    <view class="nav-bar__status-bar" style="height:{{navbarHeight}}rpx">
         <view wx:if="{{showCloseIcon}}" class="nav-bar__status-bar__back-icon" bindtap="goBack">
             <!-- TODO 换成 svg -->
-            <image style="width: 16px; height: 16px;" src="../../images/back.png"></image>
+            <image style="width: 32rpx; height: 32rpx;" src="../../images/back.png"></image>
         </view>
         <view class="nav-bar__status-bar__title">{{ title }}</view>
     </view>
 </view>
 
 <!-- 占位 -->
-<view class="i-margin" style="margin-bottom: {{statusBarHeight + navbarHeight}}px"></view>
+<view class="i-margin" style="margin-bottom: {{statusBarHeight + navbarHeight}}rpx"></view>
