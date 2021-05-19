@@ -8,15 +8,6 @@
   border-radius: 8rpx;
   background: var(--color-white);
   font-size: var(--font-size__mid);
-  font-family:
-    system-ui,
-    -apple-system,
-    /* Firefox supports this but not yet `system-ui` */
-    'Segoe UI',
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif;
 }
 
 .task-swipe-cell__selector {

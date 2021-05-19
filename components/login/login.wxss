@@ -12,12 +12,12 @@
 
 .login-container__body .login-container__body__desc {
  display: block;
- color: #9d9d9d;
  margin-top: 40rpx;
+ color: #9d9d9d;
 }
 
 .login-container__footer {
  border-radius: 80rpx;
  margin: 50rpx 50rpx;
- font-size: var(--font-size__large);
+ font-size: 35rpx;
 }
