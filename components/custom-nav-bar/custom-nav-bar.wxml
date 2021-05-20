@@ -1,10 +1,11 @@
 <view class="i-bg nav-bar" style="padding-top: {{statusBarHeight}}rpx;height:{{navbarHeight}}rpx">
+
     <view class="nav-bar__status-bar" style="height:{{navbarHeight}}rpx">
-        <view wx:if="{{showCloseIcon}}" class="nav-bar__status-bar__back-icon" bindtap="goBack">
+        <view wx:if="{{showCloseIcon && !isHome}}" class="nav-bar__status-bar__back-icon" bindtap="goBack">
             <!-- TODO 换成 svg -->
             <image style="width: 32rpx; height: 32rpx;" src="../../images/back.png"></image>
         </view>
-        <view class="nav-bar__status-bar__title">{{ title }}</view>
+        <view class="{{isHome ? 'nav-bar__status-bar__home-title' : 'nav-bar__status-bar__default-title'}}">{{ title }}</view>
     </view>
 </view>
 

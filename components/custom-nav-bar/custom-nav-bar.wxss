@@ -13,13 +13,14 @@
   position: relative;
 }
 
-.nav-bar__status-bar__title {
+.nav-bar__status-bar__default-title {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
+.nav-bar__status-bar__home-title,
 .nav-bar__status-bar__back-icon {
   margin-left: 30rpx;
 }

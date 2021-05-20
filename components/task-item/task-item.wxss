@@ -4,7 +4,7 @@
 .task-item {
   margin: 20rpx auto;
   margin-bottom: 0;
-  padding: 16rpx 40rpx;
+  padding: 16rpx 20rpx 16rpx 40rpx;
   border-radius: 8rpx;
   background: var(--color-white);
   font-size: var(--font-size__mid);
@@ -31,6 +31,20 @@
   background: var(--color-task-btn__delete);
 }
 
+.task-item__name {
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-item__name__tag {
+  white-space: nowrap;
+  padding: 10rpx 20rpx;
+  border-radius: 4px;
+  background: #ebfff0;
+  color: var(--color-task-btn__finish);
+  font-size: var(--font-size__smaller);
+}
+
 .task-item__chart {
   display: flex;
   padding: 10rpx 0;
@@ -46,15 +60,21 @@
 
 .task-item__chart__grid--default {
   border: 1px solid var(--color-task-grid__default);
-  background: none;
 }
 
-.task-item__chart__grid--active {
+.task-item__chart__grid--selected {
+  border: 2px solid var(--color-task-grid__selected);
+}
+
+.task-item__chart__grid--done {
   background: var(--color-task-grid__done);
-  border: none;
 }
 
 .task-item .task-item__remark {
   color: var(--color-gray);
   font-size: var(--font-size__small);
+}
+
+.van-dialog__button button {
+  color: #111 !important
 }

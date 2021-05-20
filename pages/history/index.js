@@ -38,10 +38,6 @@ Page({
         list,
         count
       } = res.result.res.data;
-      list.length && list.map(item => {
-        item.taskName = item.task_name;
-        delete item.task_name;
-      });
       this.setData({
         taskList: list,
         count: count

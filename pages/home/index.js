@@ -11,7 +11,8 @@ Page({
     taskName: "",
     remark: "",
     rules: {
-      rule: [2, 3, 7, 15, 30]
+      rule: [0, 1, 2, 3, 7, 15, 30],
+      ruleName: "五毒刷题法"
     },
     taskList: [],
     count: 0,
@@ -53,6 +54,11 @@ Page({
     });
   },
 
+  refresh() {
+    console.log('refresh')
+    this.getTaskList();
+  },
+
   getTaskList() {
     wx.showLoading({
       title: '获取列表...',
@@ -66,10 +72,6 @@ Page({
         list,
         count
       } = res.result.res.data;
-      list.length && list.map(item => {
-        item.taskName = item.task_name;
-        delete item.task_name;
-      });
       this.setData({
         taskList: list,
         count: count
@@ -125,6 +127,7 @@ Page({
       createTime: now.getTime(),
       rules: {
         rule: [...this.data.rules.rule],
+        ruleName: this.data.rules.ruleName,
         dateList: [...dateList]
       }
     };

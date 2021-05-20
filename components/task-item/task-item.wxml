@@ -4,15 +4,18 @@
 <van-swipe-cell wx:if="{{operator}}" class="task-swipe-cell" right-width="{{ 65 }}" left-width="{{ 65 }}" async-close
   bind:click="onClick" bind:open="onOpen">
   <!-- TODO 根据当天完成的状态判断 -->
-  <view slot="left" class="task-swipe-cell__selector {{item.done ? 'task-item--cancel' : 'task-item--finish'}}">
-    {{item.done ? "取消" : "完成"}}</view>
+  <view slot="left" class="task-swipe-cell__selector {{todayStatus === 1 ? 'task-item--cancel' : 'task-item--finish'}}">
+    {{todayStatus === 1 ? "取消" : "完成"}}</view>
   <van-cell-group>
     <!-- TODO 打开一边没有 -->
     <view class="task-item">
-      <view class="single-dot-overflow">{{taskItem.taskName}}</view>
+      <view class="task-item__name">
+        <view class="single-dot-overflow">{{taskItem.taskName}}</view>
+        <view class="task-item__name__tag">{{taskItem.rules.ruleName}}</view>
+      </view>
       <view class="task-item__chart">
         <view wx:for="{{taskItem.rules.dateList}}" wx:key="index" wx:for-item="i"
-          class="task-item__chart__grid {{i.done ? 'task-item__chart__grid--active' : 'task-item__chart__grid--default'}}">
+          class="task-item__chart__grid {{i.done ? 'task-item__chart__grid--done' : 'task-item__chart__grid--default'}} {{(i.date >= todayStart && i.date < todayEnd) ? 'task-item__chart__grid--selected' : ''}}">
         </view>
       </view>
       <view class="task-item__remark" wx:if="{{taskItem.remark}}">
@@ -27,10 +30,13 @@
 
 <!-- 不可操作的 item -->
 <view class="task-item" wx:else>
-  <view class="single-dot-overflow">{{taskItem.taskName}}</view>
+  <view class="task-item__name">
+    <view class="single-dot-overflow">{{taskItem.taskName}}</view>
+    <view class="task-item__name__tag">{{taskItem.rules.ruleName}}</view>
+  </view>
   <view class="task-item__chart">
     <view wx:for="{{taskItem.rules.dateList}}" wx:key="index" wx:for-item="i"
-      class="task-item__chart__grid {{i.done ? 'task-item__chart__grid--active' : 'task-item__chart__grid--default'}}">
+      class="task-item__chart__grid {{i.done ? 'task-item__chart__grid--done' : 'task-item__chart__grid--default'}} {{(i.date >= todayStart && i.date < todayEnd) ? 'task-item__chart__grid--selected' : ''}}">
     </view>
   </view>
   <view class="task-item__remark" wx:if="{{taskItem.remark}}">
@@ -39,3 +45,4 @@
     </view>
   </view>
 </view>
+<van-dialog id="van-dialog" />

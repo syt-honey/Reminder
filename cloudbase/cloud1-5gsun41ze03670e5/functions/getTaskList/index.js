@@ -22,15 +22,25 @@ exports.main = async (event, context) => {
   }
  };
 
- await db.collection("task").where({
-  _openid: wxContext.OPENID,
- }).orderBy('create_time', 'desc').get().then((r) => {
+ await db.collection("task")
+ .aggregate()
+ .match({
+  _openid: wxContext.OPENID
+ }).project({
+  _openid: 0
+ }).sort({
+  createTime: 1
+ }).end().then((r) => {
   // 注：如果要写分页逻辑，获取长度的方法需要该
-  const list = r.data;
+  const list = r.list;
   // 不将 _openid 暴露给前端
   list.length && list.map(item => {
-   item._openid && delete item._openid;
+   let tem = item.rules.dateList;
+   tem.length && (tem = tem.sort((a, b) => {
+    return (a.date < b.date) ? -1 : (a.date > b.date) ? 1 : 0;
+   }));
   });
+
   res.code = CODE_STATUS.SUCCESS;
   res.msg = "任务查询成功";
   res.data.list = list;

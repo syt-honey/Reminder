@@ -15,9 +15,9 @@ const db = cloud.database({
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext();
   const {
-    taskName: task_name,
+    taskName,
     remark,
-    createTime: create_time,
+    createTime,
     rules
   } = event;
 
@@ -29,10 +29,10 @@ exports.main = async (event, context) => {
 
   await db.collection("task").add({
     data: {
-      task_name,
+      taskName,
       remark,
       _openid: wxContext.OPENID,
-      create_time,
+      createTime,
       rules
     }
   }).then(() => {

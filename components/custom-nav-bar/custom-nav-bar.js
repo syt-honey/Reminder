@@ -17,6 +17,10 @@ Component({
     showCloseIcon: {
       type: Boolean,
       value: false
+    },
+    isHome: {
+      type: Boolean,
+      value: true
     }
   },
   /**

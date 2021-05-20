@@ -3,6 +3,7 @@
  <custom-nav-bar
     title="规则管理"
     showCloseIcon="{{true}}"
+    isHome="{{false}}"
   >
   </custom-nav-bar>
 </view>

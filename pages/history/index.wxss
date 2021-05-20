@@ -1,6 +1,6 @@
 /* pages/history/index.wxss */
 .i-bg {
- background: var(--color-white) !important;
+ background: var(--color-page) !important;
 }
 
 .history {

@@ -31,25 +31,41 @@ exports.main = async (event, context) => {
  const tow = new Date(dayjs(now).format('YYYY-MM-DD') + " 23:59:59").getTime();
 
  await db.collection("task")
- .aggregate()
- .match({
-  _openid: wxContext.OPENID,
-  create_time: _.gte(yes).lt(tow)
- }).project({
-  _openid: 0
- }).sort({
-  create_time: 1
- }).end().then((r) => {
-  // 注：如果要写分页逻辑，获取长度的方法需要该
-  const list = r.list;
-  res.code = CODE_STATUS.SUCCESS;
-  res.msg = "任务查询成功";
-  res.data.list = list;
-  res.data.count = list.length;
- }).catch((err) => {
-  res.code = CODE_STATUS.ERROR;
-  res.msg = "任务查询失败：" + err;
- });
+  .aggregate()
+  .match({
+   _openid: wxContext.OPENID
+  }).project({
+   _openid: 0
+  }).sort({
+   createTime: 1
+  }).end().then((r) => {
+   // 注：如果要写分页逻辑，获取长度的方法需要改
+   const list = r.list;
+
+   // 筛选出有 “今日” 的项
+   let returnList = [];
+   list.length && list.map(i => {
+    let tem = i.rules.dateList;
+    tem.length && (tem.some(i2 => i2.date >= yes && i2.date < tow)) &&
+     returnList.push(i);
+   });
+
+   // 对日期进行排序
+   returnList.length && returnList.map(i => {
+    let tem = i.rules.dateList;
+    tem.length && (tem = tem.sort((a, b) => {
+     return (a.date < b.date) ? -1 : (a.date > b.date) ? 1 : 0;
+    }));
+   });
+
+   res.code = CODE_STATUS.SUCCESS;
+   res.msg = "今日任务查询成功";
+   res.data.list = returnList;
+   res.data.count = returnList.length;
+  }).catch((err) => {
+   res.code = CODE_STATUS.ERROR;
+   res.msg = "今日任务查询失败：" + err;
+  });
 
  return {
   res,

@@ -3,6 +3,7 @@
  <custom-nav-bar
     title="关于我们"
     showCloseIcon="{{true}}"
+    isHome="{{false}}"
   >
   </custom-nav-bar>
 </view>

@@ -4,7 +4,7 @@
 }
 
 .i-bg {
-  background: var(--color-white) !important;
+  background: var(--color-page) !important;
 }
 
 .home__add-task {
