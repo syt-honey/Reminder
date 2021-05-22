@@ -1,7 +1,7 @@
 <!--components/task-item/task-item.wxml-->
 
 <!-- 可以操作的 item -->
-<van-swipe-cell wx:if="{{operator}}" class="task-swipe-cell" right-width="{{ 65 }}" left-width="{{ 65 }}" async-close
+<van-swipe-cell id="swipe-cell" wx:if="{{operator}}" class="task-swipe-cell" right-width="{{ 65 }}" left-width="{{ 65 }}" async-close
   bind:click="onClick" bind:open="onOpen">
   <!-- TODO 根据当天完成的状态判断 -->
   <view slot="left" class="task-swipe-cell__selector {{todayStatus === 1 ? 'task-item--cancel' : 'task-item--finish'}}">

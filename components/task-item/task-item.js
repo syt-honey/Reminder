@@ -18,6 +18,14 @@ Component({
     }
   },
 
+  observers: {
+    'taskItem'(val) {
+      if (val) {
+        this.init();
+      }
+    }
+  },
+
   /**
    * 组件的初始数据
    */
@@ -29,26 +37,30 @@ Component({
   },
 
   ready() {
-    let now = new Date();
-    this.setData({
-      todayStart: new Date(dayjs(now).format('YYYY-MM-DD') + " 00:00:00").getTime(),
-      todayEnd: new Date(dayjs(now).format('YYYY-MM-DD') + " 23:59:59").getTime()
-    }, () => {
-      // 获取当前任务的完成状态
-      this.properties.taskItem.rules.dateList.map(i => {
-        if (i.date >= this.data.todayStart && i.date < this.data.todayEnd) {
-          this.setData({
-            todayStatus: i.done ? 1 : -1
-          });
-        }
-      });
-    });
+    this.init();
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
+    init() {
+      this.selectComponent('#swipe-cell').close();
+      let now = new Date();
+      this.setData({
+        todayStart: new Date(dayjs(now).format('YYYY-MM-DD') + " 00:00:00").getTime(),
+        todayEnd: new Date(dayjs(now).format('YYYY-MM-DD') + " 23:59:59").getTime()
+      }, () => {
+        // 获取当前任务的完成状态
+        this.properties.taskItem.rules.dateList.map(i => {
+          if (i.date >= this.data.todayStart && i.date < this.data.todayEnd) {
+            this.setData({
+              todayStatus: i.done ? 1 : -1
+            });
+          }
+        });
+      });
+    },
     onOpen(event) {
       const {
         position
@@ -68,21 +80,20 @@ Component({
     onClick({
       detail
     }) {
-      wx.showToast({
-        icon: "error",
-        title: '还没写好哦~',
-        duration: 2000,
-        mask: true
-      })
       if (detail === "left") {
         // 已经完成了，则说明要去取消
         let type = this.data.todayStatus === 1 ? 1 : 2;
-        console.log(type)
         // 完成/取消
-        // this.finishOrCancelTask(type);
+        this.finishOrCancelTask(type);
       } else if (detail === "right") {
         // 删除
         // this.deleteTask();
+        wx.showToast({
+          icon: "error",
+          title: '还没写好哦~',
+          duration: 2000,
+          mask: true
+        })
       }
     },
     deleteTask() {
@@ -115,7 +126,6 @@ Component({
           ...req
         }
       }).then(() => {
-        console.log('lal')
         this.triggerEvent('refresh');
         wx.hideLoading({
           success: () => {},
