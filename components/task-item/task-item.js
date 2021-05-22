@@ -22,6 +22,7 @@ Component({
     'taskItem'(val) {
       if (val) {
         this.init();
+        this.selectComponent('#swipe-cell').close();
       }
     }
   },
@@ -45,7 +46,6 @@ Component({
    */
   methods: {
     init() {
-      this.selectComponent('#swipe-cell').close();
       let now = new Date();
       this.setData({
         todayStart: new Date(dayjs(now).format('YYYY-MM-DD') + " 00:00:00").getTime(),
