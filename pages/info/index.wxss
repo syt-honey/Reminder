@@ -33,7 +33,7 @@
 }
 
 view .van-cell {
- margin-top: 60rpx;
+ margin-top: 40rpx;
  border-radius: 8rpx;
  padding: 30rpx 42rpx;
 }
@@ -42,7 +42,6 @@ view .van-cell {
  position: absolute;
  bottom: 20rpx;
  left: 50%;
- white-space: nowrap;
  font-size: var(--font-size__small);
  color: var(--color-gray);
  transform: translateX(-50%);

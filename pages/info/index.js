@@ -20,6 +20,9 @@ Page({
     }, {
       name: "关于我们",
       path: "/pages/about/about"
+    }, {
+      name: "获取源码",
+      path: "/pages/github/github"
     }],
     isShow: null
   },

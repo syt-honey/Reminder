@@ -1,6 +1,7 @@
 {
  "pages": [
   "pages/info/index",
+  "pages/github/github",
   "pages/home/index",
   "pages/history/index",
   "pages/rule/rule",

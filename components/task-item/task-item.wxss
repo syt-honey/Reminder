@@ -37,8 +37,8 @@
 }
 
 .task-item__name__tag {
-  white-space: nowrap;
   padding: 10rpx 20rpx;
+  white-space: nowrap;
   border-radius: 4px;
   background: #ebfff0;
   color: var(--color-task-btn__finish);
