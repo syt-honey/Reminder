@@ -30,7 +30,7 @@
 }
 
 view .van-progress {
-  background: #fff;
+  background: var(--color-white);
 }
 
 .home__add-task {

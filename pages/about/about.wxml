@@ -1,9 +1,15 @@
 <!--pages/about/about.wxml-->
-<view>
+<view class="page about">
  <custom-nav-bar
     title="关于我们"
     showCloseIcon="{{true}}"
+    i-bg="i-bg"
     isHome="{{false}}"
   >
   </custom-nav-bar>
+
+  <!-- <view class="about__main">
+    <text>嘿，你好。很高兴你能使用我们做的小工具，希望你能喜欢。</text>
+    <text>这个项目是我们的一个</text>
+  </view> -->
 </view>

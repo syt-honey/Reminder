@@ -1,6 +1,5 @@
 {
- "component": true,
- "usingComponents": {
-  "custom-nav-bar": "../../components/custom-nav-bar/custom-nav-bar"
- }
+  "usingComponents": {
+    "custom-nav-bar": "../../components/custom-nav-bar/custom-nav-bar"
+  }
 }

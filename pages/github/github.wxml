@@ -9,7 +9,10 @@
   <view class="github__main__desc">
    <text>长按保存图片去微信中扫码</text>
    <text class="nowrap">或者你也可以直接去浏览器中打开下面的链接</text>
-   <text class="nowrap">https://github.com/syt-honey/Reminder</text>
+   <view style="display: flex; align-items: center;">
+    <text class="nowrap" user-select="true">{{url}}</text>
+    <image bindtap="toCopyLink" src="../../images/github/copy.png" style="width:30rpx; height: 30rpx; margin-left: 10rpx;"></image>
+   </view>
   </view>
  </view>
 </view>

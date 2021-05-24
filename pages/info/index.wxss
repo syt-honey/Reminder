@@ -23,7 +23,7 @@
 .info__container__person-info .info__container__person-info__name {
  flex: 1;
  margin-left: 40rpx;
- color: #fff;
+ color: var(--color-white);
 }
 
 .info__container__setting {
