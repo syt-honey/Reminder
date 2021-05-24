@@ -83,13 +83,13 @@ Component({
         this.finishOrCancelTask(type);
       } else if (detail === "right") {
         // 删除
-        // this.deleteTask();
-        wx.showToast({
-          icon: "error",
-          title: '还没写好哦~',
-          duration: 2000,
-          mask: true
-        })
+        this.deleteTask();
+        // wx.showToast({
+        //   icon: "error",
+        //   title: '还没写好哦~',
+        //   duration: 2000,
+        //   mask: true
+        // })
       }
     },
     deleteTask() {
@@ -100,6 +100,46 @@ Component({
         confirmButtonColor: '#4fc08d'
       }).then(() => {
         // 调用删除接口
+        wx.showLoading({
+          title: '正在删除...',
+        });
+
+        const req = {
+          _id: this.properties.taskItem._id
+        };
+
+        app.globalData.cloud.callFunction({
+          name: "deleteTask",
+          data: {
+            ...req
+          }
+        }).then((res) => {
+          const {
+            msg
+          } = res.result.res;
+          this.triggerEvent('refresh');
+          wx.hideLoading({
+            success: () => {
+              wx.showToast({
+                title: msg,
+                duration: 1000,
+                mask: true
+              });
+            },
+          });
+        }).catch((err) => {
+          console.log(err)
+          wx.hideLoading({
+            success: () => {
+              wx.showToast({
+                title: "删除出错",
+                icon: "error",
+                duration: 1000,
+                mask: true
+              });
+            },
+          });
+        });
       });
     },
     finishOrCancelTask(type) {
@@ -132,8 +172,9 @@ Component({
         wx.hideLoading({
           success: () => {
             wx.showToast({
-              title: err,
+              title: "更新出错",
               duration: 1000,
+              icon: "error",
               mask: true
             });
           },

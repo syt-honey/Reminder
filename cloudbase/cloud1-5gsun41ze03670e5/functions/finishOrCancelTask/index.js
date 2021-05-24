@@ -58,7 +58,7 @@ exports.main = async (event, context) => {
      });
     } else {
      res.code = CODE_STATUS.SUCCESS;
-      res.msg = "更新成功";
+     res.msg = "更新成功";
     }
    }
   }).catch((err) => {
