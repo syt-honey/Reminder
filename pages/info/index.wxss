@@ -13,20 +13,23 @@
 }
 
 .info__container__person-info {
- display: flex;
- width: 80%;
- margin: 0 auto;
+ position: relative;
+ border-radius: 64rpx;
+ border-top-right-radius: 0;
+ border-top-left-radius: 0;
+ background: linear-gradient(to right, #ffc996, #ff8474);
 }
 
 .info__container__person-info .info__container__person-info__name {
  flex: 1;
  margin-left: 40rpx;
+ color: #fff;
 }
 
 .info__container__setting {
  overflow: hidden;
  width: 80%;
- margin: 120rpx auto;
+ margin: 200rpx auto;
 }
 
 view .van-cell {

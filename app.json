@@ -1,8 +1,8 @@
 {
  "pages": [
+  "pages/info/index",
   "pages/home/index",
   "pages/history/index",
-  "pages/info/index",
   "pages/rule/rule",
   "pages/log/log",
   "pages/about/about"
