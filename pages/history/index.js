@@ -83,8 +83,6 @@ Page({
     this.setData({
       historyList: [...historyList],
       doingList: [...doingList]
-    }, () => {
-      console.log(this.data.historyList, this.data.doingList)
     });
   },
 

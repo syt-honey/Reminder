@@ -7,6 +7,32 @@
   background: var(--color-page) !important;
 }
 
+.home__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 30rpx;
+  box-shadow: 3px 2px 5px #e2dcdc;
+}
+
+.home__header__date .date__main {
+  font-size: 44rpx;
+}
+
+.home__header__date .date__year {
+  margin-left: 10rpx;
+  color: #b9b9b9;
+  font-size: 26rpx;
+}
+
+.home__header__progress {
+  width: 300rpx;
+}
+
+view .van-progress {
+  background: #fff;
+}
+
 .home__add-task {
   position: fixed;
   bottom: 80rpx;

@@ -2,6 +2,8 @@
 const dayjs = require("./dayjs");
 const app = getApp();
 
+// TODO 时间获取上有重复，需要整理抽取出来
+
 Page({
   /**
    * 页面的初始数据
@@ -16,11 +18,18 @@ Page({
     },
     taskList: [],
     count: 0,
-    isShow: null
+    isShow: null,
+    DegreeOfCompletion: 0,
+    todayStart: null,
+    todayEnd: null,
+    year: "",
+    month: "",
+    day: ""
   },
 
   onShow() {
     this.getTaskList();
+    this.getTodayDate();
     // 每个页面都要去检查一下
     app.checkAuthorization().then((res) => {
       if (app.globalData.isAuthorize) {
@@ -38,7 +47,43 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function (options) {},
+
+  // 设置完成进度
+  setDegreeOfCompletion() {
+    let now = new Date();
+    this.setData({
+      todayStart: dayjs(dayjs(now).format('YYYY-MM-DD') + " 00:00:00").valueOf(),
+      todayEnd: dayjs(dayjs(now).format('YYYY-MM-DD') + " 23:59:59").valueOf()
+    }, () => {
+      let completedCount = 0;
+      this.data.taskList.map(item => {
+        const temList = item.rules.dateList;
+        for (let i = 0; i < temList.length; ++i) {
+          if (temList[i].date >= this.data.todayStart && temList[i].date < this.data.todayEnd && temList[i].done) {
+            completedCount++;
+            break;
+          }
+        }
+      });
+      this.setData({
+        DegreeOfCompletion: completedCount ? ((completedCount / this.data.taskList.length) * 100).toFixed(2) : 0
+      });
+    });
+
+  },
+
+  // 获取当天日期信息
+  getTodayDate() {
+    const now = new Date();
+    const year = "" + dayjs(now).year(),
+      month = (dayjs(now).month() + 1) < 10 ? "0" + (dayjs(now).month() + 1) : "" + (dayjs(now).month() + 1),
+      day = (dayjs(now).date() + 1) < 10 ? "0" + dayjs(now).date() : "" + dayjs(now).date();
+    this.setData({
+      year,
+      month,
+      day
+    });
   },
 
   toAddTask() {
@@ -74,6 +119,8 @@ Page({
       this.setData({
         taskList: list,
         count: count
+      }, () => {
+        this.setDegreeOfCompletion();
       });
       wx.hideLoading({
         success: () => {},
@@ -217,7 +264,6 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    console.log('lala')
   },
 
   /**

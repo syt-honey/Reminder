@@ -11,6 +11,6 @@
     "van-button": "@vant/weapp/button/index",
     "van-calendar": "@vant/weapp/calendar/index",
     "van-stepper": "@vant/weapp/stepper/index",
-    "van-skeleton": "@vant/weapp/skeleton/index"
+    "van-progress": "@vant/weapp/progress/index"
   }
 }

@@ -1,6 +1,6 @@
 <!--pages/history/index.wxml-->
 <view class="page history">
-  <custom-nav-bar title="历史任务" i-bg="i-bg">
+  <custom-nav-bar title="所有任务" i-bg="i-bg">
   </custom-nav-bar>
 
   <!-- 待办列表 -->

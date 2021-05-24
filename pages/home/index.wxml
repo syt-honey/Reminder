@@ -4,6 +4,17 @@
   <custom-nav-bar title="今日待办" i-bg="i-bg">
   </custom-nav-bar>
 
+  <view class="home__header">
+    <view class="home__header__date">
+      <text class="date__main">{{month}}-{{day}}</text>
+      <text class="date__year">{{year}}</text>
+    </view>
+    <view class="home__header__progress">
+      <van-progress stroke-width="10" pivot-color="#00c261" color="linear-gradient(to right, #00c261, #00c261)"
+        percentage="{{DegreeOfCompletion}}" />
+    </view>
+  </view>
+
   <!-- 待办列表 -->
   <empty-page style="height: 100%" title="今天还没有任务哦～" wx:if="{{taskList.length === 0}}"></empty-page>
   <block wx:else>
