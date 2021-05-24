@@ -22,7 +22,9 @@ Component({
     'taskItem'(val) {
       if (val) {
         this.init();
-        this.selectComponent('#swipe-cell').close();
+        if (this.selectComponent('#swipe-cell')) {
+          this.selectComponent('#swipe-cell').close();
+        }
       }
     }
   },

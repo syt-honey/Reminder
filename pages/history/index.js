@@ -1,4 +1,5 @@
 // pages/history/index.js
+const dayjs = require("./dayjs");
 const app = getApp();
 
 Page({
@@ -9,14 +10,15 @@ Page({
   data: {
     isShow: null,
     taskList: [],
+    doingList: [],
+    historyList: [],
     count: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-  },
+  onLoad: function (options) {},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -41,6 +43,8 @@ Page({
       this.setData({
         taskList: list,
         count: count
+      }, () => {
+        this.initList();
       });
       wx.hideLoading({
         success: () => {},
@@ -55,6 +59,32 @@ Page({
           });
         },
       });
+    });
+  },
+
+  initList() {
+    this.setData({
+      historyList: [],
+      doingList: []
+    });
+    const now = dayjs(dayjs(now).format('YYYY-MM-DD') + " 00:00:00").valueOf();
+    const historyList = [],
+      doingList = [];
+    this.data.taskList.forEach(i => {
+      const temList = i.rules.dateList;
+      let lastDay = 0; // 最后一天 23:59:59 的时间戳
+      temList && (lastDay = dayjs(temList[temList.length - 1].dateOfDay + " 23:59:59").valueOf()); // 直接获取最后一个值的这种方法依赖 dateList 升序排序
+      if (now > lastDay) {
+        historyList.push(i)
+      } else {
+        doingList.push(i)
+      }
+    });
+    this.setData({
+      historyList: [...historyList],
+      doingList: [...doingList]
+    }, () => {
+      console.log(this.data.historyList, this.data.doingList)
     });
   },
 

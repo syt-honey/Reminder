@@ -20,9 +20,9 @@ Page({
   },
 
   onShow() {
+    this.getTaskList();
     // 每个页面都要去检查一下
     app.checkAuthorization().then((res) => {
-      // console.log(app.globalData.isAuthorize)
       if (app.globalData.isAuthorize) {
         this.setData({
           isShow: false
@@ -39,7 +39,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getTaskList();
   },
 
   toAddTask() {

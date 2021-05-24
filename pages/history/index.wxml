@@ -1,17 +1,21 @@
 <!--pages/history/index.wxml-->
 <view class="page history">
- <custom-nav-bar
-    title="历史任务"
-    i-bg="i-bg"
-  >
+  <custom-nav-bar title="历史任务" i-bg="i-bg">
   </custom-nav-bar>
 
   <!-- 待办列表 -->
-  <empty-page style="height: 100%" wx:if="{{taskList.length === 0}}"></empty-page>
+  <empty-page style="height: 100%" wx:if="{{(doingList.length === 0) && (historyList.length === 0)}}"></empty-page>
   <block wx:else>
     <view class="home__task-container">
-      <task-item wx:for="{{taskList}}" wx:key="_id" taskItem="{{item}}" operator="{{false}}"></task-item>
-      <text wx:if="{{taskList.length > 7}}" class="list-end">到底啦～</text>
+      <task-item wx:if="{{doingList.length > 0}}" wx:for="{{doingList}}" wx:key="_id" taskItem="{{item}}"
+        operator="{{false}}"></task-item>
+      <view wx:if="{{historyList.length > 0}}">
+        <van-divider hairline contentPosition="center" customStyle="border-color: #dcdcdc; color: #b9b9b9; font-size: 13px;">
+          历史任务
+        </van-divider>
+        <task-item wx:for="{{historyList}}" wx:key="_id" taskItem="{{item}}" operator="{{false}}"></task-item>
+      </view>
+      <text wx:if="{{(doingList.length + historyList.length) > 7}}" class="list-end">到底啦～</text>
     </view>
   </block>
 

@@ -13,3 +13,11 @@
  width: calc(100% - 40rpx);
  margin: auto;
 }
+
+.list-end {
+ display: block;
+ padding: 10rpx 0;
+ text-align: center;
+ color: var(--color-gray);
+ font-size: var(--font-size__small);
+}

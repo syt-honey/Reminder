@@ -4,6 +4,7 @@
     "login-com": "../../components/login/login",
     "empty-page": "../../components/empty-page/empty-page",
     "task-item": "../../components/task-item/task-item",
-    "van-popup": "@vant/weapp/popup/index"
+    "van-popup": "@vant/weapp/popup/index",
+    "van-divider": "@vant/weapp/divider/index"
   }
 }
