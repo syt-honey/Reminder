@@ -37,10 +37,6 @@ Component({
     todayStatus: null // 1 已完成 -1 未完成
   },
 
-  ready() {
-    this.init();
-  },
-
   /**
    * 组件的方法列表
    */
@@ -48,8 +44,8 @@ Component({
     init() {
       let now = new Date();
       this.setData({
-        todayStart: new Date(dayjs(now).format('YYYY-MM-DD') + " 00:00:00").getTime(),
-        todayEnd: new Date(dayjs(now).format('YYYY-MM-DD') + " 23:59:59").getTime()
+        todayStart: dayjs(dayjs(now).format('YYYY-MM-DD') + " 00:00:00").valueOf(),
+        todayEnd: dayjs(dayjs(now).format('YYYY-MM-DD') + " 23:59:59").valueOf()
       }, () => {
         // 获取当前任务的完成状态
         this.properties.taskItem.rules.dateList.map(i => {
@@ -125,7 +121,8 @@ Component({
         data: {
           ...req
         }
-      }).then(() => {
+      }).then((res) => {
+        console.log(res)
         this.triggerEvent('refresh');
         wx.hideLoading({
           success: () => {},

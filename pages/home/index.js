@@ -108,7 +108,7 @@ Page({
     // 当前的时间
     const now = new Date();
     // 当前日期 00:00 的时间戳
-    const nowOfDay = new Date(dayjs(now).format('YYYY-MM-DD')).getTime();
+    const nowOfDay = dayjs(dayjs(now).format('YYYY-MM-DD')).valueOf();
     // 根据时间戳生成列表
     let dateList = [];
     this.data.rules.rule.forEach(e => {
@@ -116,7 +116,7 @@ Page({
         done: false
       };
       i.date = nowOfDay + e * 24 * 60 * 60 * 1000;
-      i.dateOfDay = dayjs(new Date(i.date)).format("YYYY-MM-DD");
+      i.dateOfDay = dayjs(dayjs(i.date).valueOf()).format("YYYY-MM-DD");
       dateList.push(i);
     });
 
@@ -125,6 +125,7 @@ Page({
       taskName: this.data.taskName,
       remark: this.data.remark,
       createTime: now.getTime(),
+      allDone: false,
       rules: {
         rule: [...this.data.rules.rule],
         ruleName: this.data.rules.ruleName,

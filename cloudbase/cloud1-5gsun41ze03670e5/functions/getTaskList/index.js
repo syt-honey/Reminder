@@ -29,7 +29,7 @@ exports.main = async (event, context) => {
  }).project({
   _openid: 0
  }).sort({
-  createTime: 1
+  createTime: -1
  }).end().then((r) => {
   // 注：如果要写分页逻辑，获取长度的方法需要该
   const list = r.list;

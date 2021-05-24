@@ -19,7 +19,7 @@ exports.main = async (event, context) => {
   type // 1 取消 2 完成
  } = event;
 
- const resquest = {
+ const res = {
   code: null,
   msg: ''
  };
@@ -34,61 +34,47 @@ exports.main = async (event, context) => {
    'rules.dateList.$.done': type === 1 ? false : true
   }
  }).then(async () => {
+  await db.collection("task").where({
+   _id: _id
+  }).get().then(async r => {
 
-  const res = await getCollectionById(_id);
-  console.log(res)
-  // await db.collection("task").where({
-  //  _id: _id
-  // }).get().then(async res => {
-
-   if (res.data.length) {
-    let o = res.data[0];
+   if (r.data.length) {
+    let o = r.data[0];
     const allDone = o.rules.dateList.every(i => i.done === true);
-    console.log(allDone, o.rules.allDone);
 
     if (allDone !== o.rules.allDone) {
-     await updateAllDoneById(_id);
-     // await db.collection("task").where({
-     //  _id: _id
-     // }).update({
-     //  data: {
-     //   'rules.allDone': allDone
-     //  }
-     // }).then(() => {
-      resquest.code = CODE_STATUS.SUCCESS;
-      resquest.msg = "更新成功";
-     // });
+     await db.collection("task").where({
+      _id: _id
+     }).update({
+      data: {
+       'rules.allDone': allDone
+      }
+     }).then(() => {
+      res.code = CODE_STATUS.SUCCESS;
+      res.msg = "更新成功";
+     }).catch((err) => {
+      res.code = CODE_STATUS.ERROR;
+      res.msg = "更新失败：" + err;
+     });
+    } else {
+     res.code = CODE_STATUS.SUCCESS;
+      res.msg = "更新成功";
     }
    }
-  // });
+  }).catch((err) => {
+   res.code = CODE_STATUS.ERROR;
+   res.msg = "更新失败：" + err;
+  });
  }).catch((err) => {
-  resquest.code = CODE_STATUS.ERROR;
-  resquest.msg = "更新失败：" + err;
+  res.code = CODE_STATUS.ERROR;
+  res.msg = "更新失败：" + err;
  });
 
  return {
   event,
-  resquest,
+  res,
   openid: wxContext.OPENID,
   appid: wxContext.APPID,
   unionid: wxContext.UNIONID,
  }
-}
-
-async function updateAllDoneById(id) {
- console.log('update alldone')
- return await db.collection("task").where({
-  _id: id
- }).update({
-  data: {
-   'rules.allDone': allDone
-  }
- });
-}
-
-async function getCollectionById(id) {
- console.log('query by id')
- return await db.collection("task").where({
-  _id: id
- }).get();
 }
