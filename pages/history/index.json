@@ -5,6 +5,8 @@
     "empty-page": "../../components/empty-page/empty-page",
     "task-item": "../../components/task-item/task-item",
     "van-popup": "@vant/weapp/popup/index",
-    "van-divider": "@vant/weapp/divider/index"
-  }
+    "van-divider": "@vant/weapp/divider/index",
+    "van-loading": "@vant/weapp/loading/index"
+  },
+  "disableScroll": true
 }

@@ -3,11 +3,13 @@
   <custom-nav-bar title="所有任务" i-bg="i-bg">
   </custom-nav-bar>
 
-
-
   <scroll-view scroll-y style="width: 100%;height:calc(100% - {{statusBarHeight}}rpx - {{navBarHeight}}rpx)"
-    refresher-enabled="{{true}}" refresher-threshold="{{100}}" refresher-default-style="black"
-    refresher-background="white" refresher-triggered="{{triggered}}" bindrefresherrefresh="onScrollRefresh">
+    refresher-enabled="{{true}}" refresher-threshold="{{80}}" refresher-default-style="none"
+    refresher-triggered="{{triggered}}" bindrefresherrefresh="onScrollRefresh">
+    <view slot="refresher" class="refresh-container"
+      style="width: 100%; height: 60px; background: #ededed; display: flex; align-items: center;justify-content: center;">
+      <van-loading type="spinner" size="24px" />
+    </view>
     <!-- 待办列表 -->
     <empty-page style="height: 100%" wx:if="{{(doingList.length === 0) && (historyList.length === 0)}}"></empty-page>
     <block wx:else>

@@ -120,7 +120,6 @@ Page({
 
     this.getTaskListInterface().then(res => {
       if (!isPullRefresh) {
-        console.log('lala')
         wx.hideLoading({
           success: () => {},
         });
