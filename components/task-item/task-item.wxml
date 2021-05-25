@@ -35,7 +35,7 @@
     <view class="task-item__name__tag">{{taskItem.rules.ruleName}}</view>
   </view>
   <view class="task-item__chart">
-    <view wx:for="{{taskItem.rules.dateList}}" wx:key="index" wx:for-item="i"
+    <view wx:for="{{taskItem.rules.dateList}}" wx:key="_id" wx:for-item="i"
       class="task-item__chart__grid {{i.done ? 'task-item__chart__grid--done' : 'task-item__chart__grid--default'}} {{(i.date >= todayStart && i.date < todayEnd) ? 'task-item__chart__grid--selected' : ''}}">
     </view>
   </view>

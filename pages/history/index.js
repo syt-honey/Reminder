@@ -21,7 +21,9 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {},
+  onLoad: function (options) {
+    this.getTaskList();
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -86,10 +88,6 @@ Page({
   },
 
   initList() {
-    this.setData({
-      historyList: [],
-      doingList: []
-    });
     const now = dayjs(dayjs(now).format('YYYY-MM-DD') + " 00:00:00").valueOf();
     const historyList = [],
       doingList = [];
@@ -113,7 +111,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getTaskList();
     // 每个页面都要去检查一下
     app.checkAuthorization().then(() => {
       if (app.globalData.isAuthorize) {
