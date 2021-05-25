@@ -25,7 +25,9 @@ Page({
     year: "",
     month: "",
     day: "",
-    triggered: false
+    triggered: false,
+    statusBarHeight: app.globalData.statusBarHeight,
+    navBarHeight: app.globalData.navbarHeight
   },
 
   onShow() {

@@ -13,7 +13,8 @@
   "navigationBarBackgroundColor": "#EDEDED",
   "navigationBarTitleText": "Smart Reminder",
   "navigationBarTextStyle": "black",
-  "navigationStyle": "custom"
+  "navigationStyle": "custom",
+  "disableScroll": true
  },
  "tabBar": {
   "color": "#6e6d6b",

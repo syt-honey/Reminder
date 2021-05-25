@@ -12,7 +12,10 @@ Page({
     taskList: [],
     doingList: [],
     historyList: [],
-    count: 0
+    count: 0,
+    triggered: false,
+    statusBarHeight: app.globalData.statusBarHeight,
+    navBarHeight: app.globalData.navbarHeight
   },
 
   /**
@@ -27,37 +30,57 @@ Page({
 
   },
 
-  getTaskList() {
-    wx.showLoading({
-      title: '获取列表...',
-    });
+  //用户下拉动作
+  onScrollRefresh: function () {
+    this.getTaskList(true);
+  },
 
-    app.globalData.cloud.callFunction({
-      name: "getTaskList",
-      data: {}
-    }).then((res) => {
-      const {
-        list,
-        count
-      } = res.result.res.data;
-      this.setData({
-        taskList: list,
-        count: count
-      }, () => {
-        this.initList();
+  getTaskList(isPullRefresh) {
+    if (!isPullRefresh) {
+      wx.showLoading({
+        title: '获取列表...',
       });
-      wx.hideLoading({
-        success: () => {},
-      });
-    }).catch((err) => {
-      wx.hideLoading({
-        success: () => {
-          wx.showToast({
-            title: err,
-            duration: 1000,
-            mask: true
-          });
-        },
+    }
+
+    this.getTaskListInterface().then(res => {
+      if (!isPullRefresh) {
+        wx.hideLoading({
+          success: () => {},
+        });
+      } else {
+        this.setData({
+          triggered: false,
+        });
+      }
+      if (res === -1) {
+        wx.showToast({
+          title: "获取历史任务列表出错",
+          duration: 1000,
+          mask: true
+        });
+      }
+    });
+  },
+
+  getTaskListInterface() {
+    return new Promise((resolve, reject) => {
+      app.globalData.cloud.callFunction({
+        name: "getTaskList",
+        data: {}
+      }).then((res) => {
+        const {
+          list,
+          count
+        } = res.result.res.data;
+        this.setData({
+          taskList: list,
+          count: count
+        }, () => {
+          this.initList();
+          resolve(1);
+        });
+      }).catch((err) => {
+        reject(-1);
       });
     });
   },
