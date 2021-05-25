@@ -15,14 +15,18 @@
     </view>
   </view>
 
-  <!-- 待办列表 -->
-  <empty-page style="height: 100%" title="今天还没有任务哦～" wx:if="{{taskList.length === 0}}"></empty-page>
-  <block wx:else>
-    <view class="home__task-container">
-      <task-item wx:for="{{taskList}}" bind:refresh="refresh" wx:key="_id" taskItem="{{item}}"></task-item>
-      <text wx:if="{{taskList.length > 7}}" class="list-end">到底啦～</text>
-    </view>
-  </block>
+  <scroll-view scroll-y style="width: 100%;height:100%;" refresher-enabled="{{true}}" refresher-threshold="{{100}}"
+    refresher-default-style="black" refresher-background="white" refresher-triggered="{{triggered}}"
+    bindrefresherrefresh="onScrollRefresh">
+    <!-- 待办列表 -->
+    <empty-page style="height: 100%" title="今天还没有任务哦～" wx:if="{{taskList.length === 0}}"></empty-page>
+    <block wx:else>
+      <view class="home__task-container">
+        <task-item wx:for="{{taskList}}" bind:refresh="refresh" wx:key="_id" taskItem="{{item}}"></task-item>
+        <text wx:if="{{taskList.length > 5}}" class="list-end">到底啦～</text>
+      </view>
+    </block>
+  </scroll-view>
 
   <image bindtap="toAddTask" src="../../images/home/addTask.png" style="width: 70rpx; height: 70rpx;"
     class="home__add-task"></image>

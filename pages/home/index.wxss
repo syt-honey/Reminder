@@ -91,6 +91,6 @@ view .van-button--normal {
   margin-top: 20rpx;
 }
 
-view .van-ellipsis{
+view .van-ellipsis {
   text-overflow: clip;
 }

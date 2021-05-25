@@ -9,8 +9,9 @@
     <view class="home__task-container">
       <task-item wx:if="{{doingList.length > 0}}" wx:for="{{doingList}}" wx:key="_id" taskItem="{{item}}"
         operator="{{false}}"></task-item>
-      <view wx:if="{{historyList.length > 0}}">
-        <van-divider hairline contentPosition="center" customStyle="border-color: #dcdcdc; color: #b9b9b9; font-size: 13px;">
+      <view wx:if="{{historyList.length > 0}}" style="margin-bottom: 20rpx;">
+        <van-divider hairline contentPosition="center"
+          customStyle="border-color: #dcdcdc; color: #b9b9b9; font-size: 13px;">
           历史任务
         </van-divider>
         <task-item wx:for="{{historyList}}" wx:key="_id" taskItem="{{item}}" operator="{{false}}"></task-item>

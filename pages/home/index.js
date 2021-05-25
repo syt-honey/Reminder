@@ -24,12 +24,11 @@ Page({
     todayEnd: null,
     year: "",
     month: "",
-    day: ""
+    day: "",
+    triggered: false
   },
 
   onShow() {
-    this.getTaskList();
-    this.getTodayDate();
     // 每个页面都要去检查一下
     app.checkAuthorization().then((res) => {
       if (app.globalData.isAuthorize) {
@@ -44,10 +43,18 @@ Page({
     });
   },
 
+  //用户下拉动作
+  onScrollRefresh: function () {
+    this.getTaskList(true);
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {},
+  onLoad: function (options) {
+    this.getTaskList();
+    this.getTodayDate();
+  },
 
   // 设置完成进度
   setDegreeOfCompletion() {
@@ -99,41 +106,56 @@ Page({
   },
 
   refresh() {
-    console.log('refresh')
     this.getTaskList();
   },
 
-  getTaskList() {
-    wx.showLoading({
-      title: '获取列表...',
-    });
+  getTaskList(isPullRefresh) {
+    if (!isPullRefresh) {
+      wx.showLoading({
+        title: '获取列表...',
+      });
+    }
 
-    app.globalData.cloud.callFunction({
-      name: "getTodayTaskList",
-      data: {}
-    }).then((res) => {
-      const {
-        list,
-        count
-      } = res.result.res.data;
-      this.setData({
-        taskList: list,
-        count: count
-      }, () => {
-        this.setDegreeOfCompletion();
-      });
-      wx.hideLoading({
-        success: () => {},
-      });
-    }).catch((err) => {
-      wx.hideLoading({
-        success: () => {
-          wx.showToast({
-            title: err,
-            duration: 1000,
-            mask: true
-          });
-        },
+    this.getTaskListInterface().then(res => {
+      if (!isPullRefresh) {
+        console.log('lala')
+        wx.hideLoading({
+          success: () => {},
+        });
+      } else {
+        this.setData({
+          triggered: false,
+        });
+      }
+      if (res === -1) {
+        wx.showToast({
+          title: "获取任务列表出错",
+          duration: 1000,
+          mask: true
+        });
+      }
+    });
+  },
+
+  getTaskListInterface() {
+    return new Promise((resolve, reject) => {
+      app.globalData.cloud.callFunction({
+        name: "getTodayTaskList",
+        data: {}
+      }).then((res) => {
+        const {
+          list,
+          count
+        } = res.result.res.data;
+        this.setData({
+          taskList: list,
+          count: count
+        }, () => {
+          this.setDegreeOfCompletion();
+          resolve(1);
+        });
+      }).catch(() => {
+        reject(-1);
       });
     });
   },

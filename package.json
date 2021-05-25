@@ -4,6 +4,7 @@
   "description": "smart reminder",
   "dependencies": {
     "@vant/weapp": "^1.6.8",
-    "dayjs": "^1.10.4"
+    "dayjs": "^1.10.4",
+    "hws-scroll": "^1.0.8"
   }
 }
