@@ -50,14 +50,6 @@ exports.main = async (event, context) => {
      returnList.push(i);
    });
 
-   // 对日期进行排序
-   returnList.length && returnList.map(i => {
-    let tem = i.rules.dateList;
-    tem.length && (tem = tem.sort((a, b) => {
-     return (a.date < b.date) ? -1 : (a.date > b.date) ? 1 : 0;
-    }));
-   });
-
    res.code = CODE_STATUS.SUCCESS;
    res.msg = "今日任务查询成功";
    res.data.list = returnList;

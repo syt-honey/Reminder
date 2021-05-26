@@ -69,7 +69,6 @@ Component({
     async login() {
       wx.showToast({
         title: '登录成功',
-        icon: 'succes',
         duration: 1000,
         mask: true
       });

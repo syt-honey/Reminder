@@ -17,7 +17,6 @@ exports.main = async (event, context) => {
   const {
     taskName,
     remark,
-    createTime,
     rules
   } = event;
 
@@ -27,13 +26,16 @@ exports.main = async (event, context) => {
     data: {}
   };
 
+  const createTime = new Date().getTime();
+
   await db.collection("task").add({
     data: {
       taskName,
       remark,
       _openid: wxContext.OPENID,
       createTime,
-      rules
+      rules,
+      updateTime: createTime
     }
   }).then(() => {
     res.code = CODE_STATUS.SUCCESS;

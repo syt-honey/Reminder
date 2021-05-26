@@ -2,8 +2,10 @@
 const dayjs = require("./dayjs");
 const app = getApp();
 
-// TODO 时间获取上有重复，需要整理抽取出来
+var isToday = require('dayjs/plugin/isToday');
+dayjs.extend(isToday);
 
+// TODO 时间获取上有重复，需要整理抽取出来
 Page({
   /**
    * 页面的初始数据
@@ -17,11 +19,11 @@ Page({
       ruleName: "五毒刷题法"
     },
     taskList: [],
+    doingList: [],
+    finishedList: [],
     count: 0,
     isShow: null,
     DegreeOfCompletion: 0,
-    todayStart: null,
-    todayEnd: null,
     year: "",
     month: "",
     day: "",
@@ -30,69 +32,12 @@ Page({
     navBarHeight: app.globalData.navbarHeight
   },
 
-  onShow() {
-    // 每个页面都要去检查一下
-    app.checkAuthorization().then((res) => {
-      if (app.globalData.isAuthorize) {
-        this.setData({
-          isShow: false
-        });
-      } else {
-        this.setData({
-          isShow: true
-        });
-      }
-    });
-  },
-
-  //用户下拉动作
-  onScrollRefresh: function () {
-    this.getTaskList(true);
-  },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.getTaskList();
     this.getTodayDate();
-  },
-
-  // 设置完成进度
-  setDegreeOfCompletion() {
-    let now = new Date();
-    this.setData({
-      todayStart: dayjs(dayjs(now).format('YYYY-MM-DD') + " 00:00:00").valueOf(),
-      todayEnd: dayjs(dayjs(now).format('YYYY-MM-DD') + " 23:59:59").valueOf()
-    }, () => {
-      let completedCount = 0;
-      this.data.taskList.map(item => {
-        const temList = item.rules.dateList;
-        for (let i = 0; i < temList.length; ++i) {
-          if (temList[i].date >= this.data.todayStart && temList[i].date < this.data.todayEnd && temList[i].done) {
-            completedCount++;
-            break;
-          }
-        }
-      });
-      this.setData({
-        DegreeOfCompletion: completedCount ? ((completedCount / this.data.taskList.length) * 100).toFixed(2) : 0
-      });
-    });
-
-  },
-
-  // 获取当天日期信息
-  getTodayDate() {
-    const now = new Date();
-    const year = "" + dayjs(now).year(),
-      month = (dayjs(now).month() + 1) < 10 ? "0" + (dayjs(now).month() + 1) : "" + (dayjs(now).month() + 1),
-      day = (dayjs(now).date() + 1) < 10 ? "0" + dayjs(now).date() : "" + dayjs(now).date();
-    this.setData({
-      year,
-      month,
-      day
-    });
   },
 
   toAddTask() {
@@ -107,10 +52,10 @@ Page({
     });
   },
 
-  refresh() {
-    this.getTaskList();
-  },
-
+  /**
+   * 
+   * @param {*} isPullRefresh 是否是下拉刷新
+   */
   getTaskList(isPullRefresh) {
     if (!isPullRefresh) {
       wx.showLoading({
@@ -131,6 +76,7 @@ Page({
       if (res === -1) {
         wx.showToast({
           title: "获取任务列表出错",
+          icon: "error",
           duration: 1000,
           mask: true
         });
@@ -152,7 +98,10 @@ Page({
           taskList: list,
           count: count
         }, () => {
-          this.setDegreeOfCompletion();
+          if (this.data.taskList.length) {
+            this.initList();
+            this.setDegreeOfCompletion();
+          }
           resolve(1);
         });
       }).catch(() => {
@@ -161,7 +110,41 @@ Page({
     });
   },
 
+  initList() {
+    const now = dayjs(dayjs(now).format('YYYY-MM-DD') + " 00:00:00").valueOf();
+    const finishedList = [],
+      doingList = [];
+    this.data.taskList.forEach(i => {
+      const temList = i.rules.dateList;
+      let todayFinished = false;
+      for (let i = 0; i < temList.length; ++i) {
+        if (dayjs(temList[i].date).isToday() && temList[i].done) {
+          todayFinished = true;
+          break;
+        }
+      }
+      if (todayFinished) {
+        finishedList.push(i);
+      } else {
+        doingList.push(i);
+      }
+    });
+    doingList.sort((a, b) => {
+      return a.createTime > b.createTime ? -1 : 1;
+    });
+    this.setData({
+      doingList: [...doingList],
+      finishedList: [...finishedList]
+    });
+  },
+
   addTask() {
+    // wx.requestSubscribeMessage({
+    //   tmplIds: ['V6OoWiI3AGE-JRdvlTQDgLZcb5666JBrMd019pABtJQ'],
+    //   success (res) { 
+    //     console.log(res)
+    //   }
+    // });
     if (!this.data.taskName) {
       wx.showToast({
         icon: "error",
@@ -193,7 +176,6 @@ Page({
     const req = {
       taskName: this.data.taskName,
       remark: this.data.remark,
-      createTime: now.getTime(),
       allDone: false,
       rules: {
         rule: [...this.data.rules.rule],
@@ -218,7 +200,6 @@ Page({
       wx.hideLoading({
         success: () => {
           wx.showToast({
-            icon: "success",
             title: msg,
             duration: 1000,
             mask: true
@@ -230,7 +211,8 @@ Page({
       wx.hideLoading({
         success: () => {
           wx.showToast({
-            title: err,
+            title: "任务创建失败",
+            icon: "error",
             duration: 1000,
             mask: true
           });
@@ -239,19 +221,64 @@ Page({
     });
   },
 
+  //用户下拉动作
+  onScrollRefresh: function () {
+    this.getTaskList(true);
+  },
+
   queryDefaultRuleDesc() {
     wx.showToast({
       icon: "error",
       title: '还没写好哦~',
       duration: 2000,
       mask: true
-    })
+    });
+  },
+
+  // 设置完成进度
+  setDegreeOfCompletion() {
+    let completedCount = this.data.finishedList.length;
+    this.setData({
+      DegreeOfCompletion: completedCount ? ((completedCount / this.data.taskList.length) * 100).toFixed(2) : 0
+    });
+  },
+
+  // 获取当天日期信息
+  getTodayDate() {
+    const now = new Date();
+    const year = "" + dayjs(now).year(),
+      month = (dayjs(now).month() + 1) < 10 ? "0" + (dayjs(now).month() + 1) : "" + (dayjs(now).month() + 1),
+      day = (dayjs(now).date() + 1) < 10 ? "0" + dayjs(now).date() : "" + dayjs(now).date();
+    this.setData({
+      year,
+      month,
+      day
+    });
+  },
+
+  refresh() {
+    this.getTaskList();
   },
 
   onClose() {
     this.setData({
       openTaskPage: false
     })
+  },
+
+  onShow() {
+    // 每个页面都要去检查一下
+    app.checkAuthorization().then((res) => {
+      if (app.globalData.isAuthorize) {
+        this.setData({
+          isShow: false
+        });
+      } else {
+        this.setData({
+          isShow: true
+        });
+      }
+    });
   },
 
   changeAuthorize(isAuthorize, reason = "授权错误") {
@@ -262,7 +289,7 @@ Page({
     } else {
       wx.showToast({
         title: reason,
-        icon: 'fail',
+        icon: 'error',
         duration: 1000,
         mask: true
       })
@@ -286,8 +313,7 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-  },
+  onPullDownRefresh: function () {},
 
   /**
    * 页面上拉触底事件的处理函数

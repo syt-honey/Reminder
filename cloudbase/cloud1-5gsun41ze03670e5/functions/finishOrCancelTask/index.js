@@ -31,7 +31,8 @@ exports.main = async (event, context) => {
   'rules.dateList.date': date
  }).update({
   data: {
-   'rules.dateList.$.done': type === 1 ? false : true
+   'rules.dateList.$.done': type === 1 ? false : true,
+   updateTime: new Date().getTime()
   }
  }).then(async () => {
   await db.collection("task").where({

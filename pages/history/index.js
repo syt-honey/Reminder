@@ -133,7 +133,7 @@ Page({
     } else {
       wx.showToast({
         title: reason,
-        icon: 'fail',
+        icon: 'error',
         duration: 1000,
         mask: true
       })
