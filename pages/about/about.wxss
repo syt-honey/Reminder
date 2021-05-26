@@ -3,3 +3,30 @@
 .i-bg {
  background: var(--color-white) !important;
 }
+
+.about {
+ height: 100%;
+ background: #fff;
+ font-size: 14px;
+}
+
+.about__tip {
+ color: var(--color-gray);
+}
+
+.about__main {
+ display: flex;
+ flex-direction: column;
+ padding: 50rpx 100rpx;
+}
+
+.about__main__img-container {
+ display: flex;
+ justify-content: center;
+ flex-wrap: wrap;
+}
+
+.about__main__img-container image {
+ margin-top: 20rpx;
+ margin-left: 20rpx;
+}

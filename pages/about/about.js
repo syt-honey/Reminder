@@ -1,11 +1,22 @@
 // pages/about/about.js
+const app = getApp();
 Page({
 
  /**
   * 页面的初始数据
   */
  data: {
-
+  statusBarHeight: app.globalData.statusBarHeight,
+  navBarHeight: app.globalData.navbarHeight,
+  imgList: [
+   "../../images/about/xiaofang.png",
+   "../../images/about/qianzhu.png",
+   "../../images/about/flyfree.png",
+   "../../images/about/zhi.png",
+   "../../images/about/quan.png",
+   "../../images/about/yanqing.png",
+   "../../images/about/peanut.png"
+  ]
  },
 
  /**
