@@ -139,12 +139,6 @@ Page({
   },
 
   addTask() {
-    // wx.requestSubscribeMessage({
-    //   tmplIds: ['V6OoWiI3AGE-JRdvlTQDgLZcb5666JBrMd019pABtJQ'],
-    //   success (res) { 
-    //     console.log(res)
-    //   }
-    // });
     if (!this.data.taskName) {
       wx.showToast({
         icon: "error",
@@ -152,72 +146,81 @@ Page({
       });
       return;
     }
-    this.setData({
-      openTaskPage: false
-    });
+    const that = this;
+    wx.requestSubscribeMessage({
+      tmplIds: ['V6OoWiI3AGE-JRdvlTQDgLZcb5666JBrMd019pABtJQ'],
+      success: (res) => {
+        console.log(res)
+        this.setData({
+          openTaskPage: false
+        });
 
-    // 根据规则生成提醒日期列表
-    // 当前的时间
-    const now = new Date();
-    // 当前日期 00:00 的时间戳
-    const nowOfDay = dayjs(dayjs(now).format('YYYY-MM-DD')).valueOf();
-    // 根据时间戳生成列表
-    let dateList = [];
-    this.data.rules.rule.forEach(e => {
-      let i = {
-        done: false
-      };
-      i.date = nowOfDay + e * 24 * 60 * 60 * 1000;
-      i.dateOfDay = dayjs(dayjs(i.date).valueOf()).format("YYYY-MM-DD");
-      dateList.push(i);
-    });
+        // 根据规则生成提醒日期列表
+        // 当前的时间
+        const now = new Date();
+        // 当前日期 00:00 的时间戳
+        const nowOfDay = dayjs(dayjs(now).format('YYYY-MM-DD')).valueOf();
+        // 根据时间戳生成列表
+        let dateList = [];
+        this.data.rules.rule.forEach(e => {
+          let i = {
+            done: false
+          };
+          i.date = nowOfDay + e * 24 * 60 * 60 * 1000;
+          i.dateOfDay = dayjs(dayjs(i.date).valueOf()).format("YYYY-MM-DD");
+          dateList.push(i);
+        });
 
-    // 请求参数
-    const req = {
-      taskName: this.data.taskName,
-      remark: this.data.remark,
-      allDone: false,
-      rules: {
-        rule: [...this.data.rules.rule],
-        ruleName: this.data.rules.ruleName,
-        dateList: [...dateList]
-      }
-    };
+        // 请求参数
+        const req = {
+          taskName: this.data.taskName,
+          remark: this.data.remark,
+          allDone: false,
+          rules: {
+            rule: [...this.data.rules.rule],
+            ruleName: this.data.rules.ruleName,
+            dateList: [...dateList]
+          }
+        };
 
-    wx.showLoading({
-      title: '任务创建中...',
-    });
+        console.log(JSON.stringify(req))
 
-    app.globalData.cloud.callFunction({
-      name: "createTask",
-      data: {
-        ...req
-      }
-    }).then((res) => {
-      const {
-        msg
-      } = res.result.res;
-      wx.hideLoading({
-        success: () => {
-          wx.showToast({
-            title: msg,
-            duration: 1000,
-            mask: true
+        wx.showLoading({
+          title: '任务创建中...',
+        });
+
+        app.globalData.cloud.callFunction({
+          name: "createTask",
+          data: {
+            ...req
+          }
+        }).then((res) => {
+          const {
+            msg
+          } = res.result.res;
+          wx.hideLoading({
+            success: () => {
+              wx.showToast({
+                title: msg,
+                duration: 1000,
+                mask: true
+              });
+            },
           });
-        },
-      });
-      this.getTaskList();
-    }).catch((err) => {
-      wx.hideLoading({
-        success: () => {
-          wx.showToast({
-            title: "任务创建失败",
-            icon: "error",
-            duration: 1000,
-            mask: true
+          this.getTaskList();
+        }).catch((err) => {
+          wx.hideLoading({
+            success: () => {
+              wx.showToast({
+                title: "任务创建失败",
+                icon: "error",
+                duration: 1000,
+                mask: true
+              });
+            },
           });
-        },
-      });
+        });
+      }
     });
   },
 
