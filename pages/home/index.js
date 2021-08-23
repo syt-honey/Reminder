@@ -196,18 +196,34 @@ Page({
           }
         }).then((res) => {
           const {
-            msg
+            msg,
+            code
           } = res.result.res;
-          wx.hideLoading({
-            success: () => {
-              wx.showToast({
-                title: msg,
-                duration: 1000,
-                mask: true
-              });
-            },
-          });
-          this.getTaskList();
+
+          if (code === 2001) {
+            wx.hideLoading({
+              success: () => {
+                wx.showToast({
+                  title: msg,
+                  duration: 1000,
+                  mask: true
+                });
+              },
+            });
+            this.getTaskList();
+          } else {
+            wx.hideLoading({
+              success: () => {
+                wx.showToast({
+                  title: "任务创建失败",
+                  icon: "error",
+                  duration: 1000,
+                  mask: true
+                });
+              },
+            });
+          }
+         
         }).catch((err) => {
           wx.hideLoading({
             success: () => {

@@ -1,4 +1,4 @@
-const ENV = "cloud1-5gsun41ze03670e5";
+const ENV = "reminder-dev-7g0lkoxg6fb8aeed";
 
 const CODE_STATUS = {
   "SUCCESS": 2001,

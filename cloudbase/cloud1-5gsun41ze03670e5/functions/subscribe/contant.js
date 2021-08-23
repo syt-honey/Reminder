@@ -1,4 +1,4 @@
-const ENV = "cloud1-5gsun41ze03670e5";
+const ENV = "reminder-dev-7g0lkoxg6fb8aeed";
 const TEMPLATE_ID = "V6OoWiI3AGE-JRdvlTQDgLZcb5666JBrMd019pABtJQ";
 
 const CODE_STATUS = {
