@@ -1,1 +1,45 @@
 /* pages/log/log.wxss */
+.log {
+ position: relative;
+ height: 100%;
+ background: #fff;
+ font-size: 14px;
+}
+
+.i-bg {
+ background: var(--color-white) !important;
+}
+
+.log-container {
+ height: 100%;
+}
+
+.log-container .calendar {
+ --calendar-height: 90%;
+}
+
+view .van-calendar__selected-day {
+ background: transparent;
+ color: var(--color-main);
+}
+
+view .van-calendar__day {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
+view .van-calendar__day view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+}
+
+.active--all {
+ border-radius: 50%;
+ border: 4px solid rgba(0, 194, 97, .2);
+}
+
+

@@ -1,12 +1,12 @@
 {
  "pages": [
+  "pages/log/log",
   "pages/home/index",
   "pages/about/about",
   "pages/github/github",
   "pages/history/index",
   "pages/info/index",
-  "pages/rule/rule",
-  "pages/log/log"
+  "pages/rule/rule"
  ],
  "window": {
   "backgroundTextStyle": "light",

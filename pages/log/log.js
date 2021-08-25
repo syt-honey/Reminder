@@ -5,7 +5,10 @@ Page({
   * 页面的初始数据
   */
  data: {
-
+    minDate: new Date(2021, 5, 6).getTime(),
+    maxDate: new Date().getTime(),
+    today: new Date().getTime(),
+    active: true
  },
 
  /**
