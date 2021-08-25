@@ -59,7 +59,8 @@ view .van-progress {
 }
 
 .task-tip .task-tip--detail {
-  text-decoration: underline;
+  color: var(--color-main);
+  /* font-weight: bold; */
 }
 
 .list-end {

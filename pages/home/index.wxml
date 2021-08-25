@@ -42,7 +42,7 @@
       <van-field model:value="{{ taskName }}" required clearable label="任务名" placeholder="请输入任务名称" />
       <van-field model:value="{{ remark }}" label="备注" clearable placeholder="请输入备注" />
       <view class="task-tip">
-        提示：将使用系统内置的
+        提示：默认
         <text class="task-tip--detail" bindtap="queryDefaultRuleDesc"> 五毒刷题 </text>规则
       </view>
     </van-cell-group>
