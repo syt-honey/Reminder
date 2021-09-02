@@ -5,6 +5,7 @@ page {
   /* color */
   --color-white: #fff;
   --color-gray: #b9b9b9;
+  --color-heavy-gray: #646566;
   --color-page: #ededed;
   --color-main: #00c261;
   --color-task-btn__finish: #4fc08d;

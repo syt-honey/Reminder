@@ -98,3 +98,10 @@ view .van-button--normal {
 view .van-ellipsis {
   text-overflow: clip;
 }
+
+view .rule-desc {
+  white-space: pre-line;
+  padding: 40rpx;
+  color: var(--color-heavy-gray);
+  font-size: var(--font-size__small);
+}

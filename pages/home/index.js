@@ -12,6 +12,7 @@ Page({
    */
   data: {
     openTaskPage: false,
+    openRuleDesc: false,
     taskName: "",
     remark: "",
     rules: {
@@ -246,11 +247,8 @@ Page({
   },
 
   queryDefaultRuleDesc() {
-    wx.showToast({
-      icon: "error",
-      title: '还没写好哦~',
-      duration: 2000,
-      mask: true
+    this.setData({
+      openRuleDesc: true
     });
   },
 
@@ -279,10 +277,16 @@ Page({
     this.getTaskList();
   },
 
-  onClose() {
+  closeTaskPage() {
     this.setData({
       openTaskPage: false
-    })
+    });
+  },
+
+  closeRuleDesc() {
+    this.setData({
+      openRuleDesc: false
+    });
   },
 
   onShow() {

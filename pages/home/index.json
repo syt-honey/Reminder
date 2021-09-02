@@ -12,7 +12,8 @@
     "van-calendar": "@vant/weapp/calendar/index",
     "van-stepper": "@vant/weapp/stepper/index",
     "van-progress": "@vant/weapp/progress/index",
-    "van-loading": "@vant/weapp/loading/index"
+    "van-loading": "@vant/weapp/loading/index",
+    "van-dialog": "@vant/weapp/dialog/index"
   },
  "disableScroll": true
 }
