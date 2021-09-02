@@ -4,16 +4,23 @@
   </custom-nav-bar>
 
   <view class="about__main">
-    <view class="about__main__img-container">
-      <image wx:for="{{imgList}}" src="{{item}}" wx:key="index"
-        style="width: 100rpx; height: 100rpx; border-radius: 50%;box-shadow: 3px 2px 5px #b5b0b0;"></image>
-    </view>
-    <view style="line-height: 18px;margin-top: 60rpx;text-align: center;">嘿，你好。很高兴你能使用我们做的产品，希望你能用的愉快。<image
-        src="../../images/ce@2x.png" style="width: 14px; height: 14px;"></image>
+   
+    <view style="line-height: 18px;">
+      <view style="white-space: pre-line;">
+      一次直播，一拍即合。
+
+      志在产品的小匚和磨炼技术的千竹，共同打造。
+
+      一路上有许多关爱关心这款小产品的朋友们，特此感谢：乔巴、FlyFree、雁卿、花生、圈圈、小杨、十二画......<image src="../../images/ce@2x.png" style="width: 14px; height: 14px;"></image>
       <image src="../../images/ce@2x.png" style="width: 14px; height: 14px;"></image>
       <image src="../../images/ce@2x.png" style="width: 14px; height: 14px;"></image>
       <text class="about__tip">（用的不愉快请轰炸反馈邮箱~）</text>
+      </view>
     </view>
+    <!-- <view class="about__main__img-container">
+      <image wx:for="{{imgList}}" src="{{item}}" wx:key="index"
+        style="width: 100rpx; height: 100rpx; border-radius: 50%;box-shadow: 3px 2px 5px #b5b0b0;"></image>
+    </view> -->
     <view style="text-align: center;margin-top: 100rpx">
       <text>开发不易，请喝奶茶～</text>
       <image src="../../images/about/wx_qrcode@2x.png" show-menu-by-longpress style="width: 450rpx; height: 450rpx;"></image>
