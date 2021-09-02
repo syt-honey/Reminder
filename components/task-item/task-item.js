@@ -134,7 +134,7 @@ Component({
           wx.hideLoading({
             success: () => {
               wx.showToast({
-                title: "删除出错",
+                title: JSON.stringify(err, Object.getOwnPropertyNames(err)),
                 icon: "error",
                 duration: 1000,
                 mask: true

@@ -40,7 +40,8 @@
    }
   ],
   "minifyWXSS": true,
-  "showES6CompileOption": false
+  "showES6CompileOption": false,
+  "minifyWXML": true
  },
  "compileType": "miniprogram",
  "libVersion": "2.16.0",
