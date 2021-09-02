@@ -11,7 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    openTaskPage: false,
+    openTaskPage: true,
     openRuleDesc: false,
     taskName: "",
     remark: "",
@@ -19,6 +19,22 @@ Page({
       rule: [0, 1, 2, 3, 7, 15, 30],
       ruleName: "五毒刷题法"
     },
+    selectedRule: 1,
+    ruleList: [
+      {
+        text: '五毒刷题法',
+        value: 1
+      }, {
+        text: '五毒刷题法2',
+        value: 2
+      }, {
+        text: '五毒刷题法3',
+        value: 3
+      }, {
+        text: '五毒刷题法4',
+        value: 4
+      }
+    ],
     taskList: [],
     doingList: [],
     finishedList: [],

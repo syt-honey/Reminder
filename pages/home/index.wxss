@@ -89,6 +89,14 @@ view .van-dropdown-menu__title:first-child {
   padding-left: 0;
 }
 
+view .van-dropdown-menu__item {
+  flex: .5;
+}
+
+view .van-dropdown-menu {
+  box-shadow: none;
+}
+
 view .van-button--normal {
   width: 100%;
   padding: 0;
