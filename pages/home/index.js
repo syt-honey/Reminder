@@ -46,7 +46,13 @@ Page({
     day: "",
     triggered: false,
     statusBarHeight: app.globalData.statusBarHeight,
-    navBarHeight: app.globalData.navbarHeight
+    navBarHeight: app.globalData.navbarHeight,
+    openRuleForm: false,
+    ruleForm: {
+      ruleName: "",
+      ruleList: []
+    },
+    columns: ['每天', '每周', '每个工作日', '每月', '湖州'],
   },
 
   /**
@@ -67,6 +73,26 @@ Page({
         openTaskPage: true
       });
     });
+  },
+
+  toAddRule() {
+    console.log('add rule')
+    this.setData({
+      ['ruleForm.ruleName']: "",
+      ['ruleForm.ruleList']: []
+    }, () => {
+      this.setData({
+        openRuleForm: true
+      });
+    });
+  },
+
+  customRule() {
+    console.log('custom rule')
+  },
+
+  onChange(e) {
+    console.log(e)
   },
 
   /**
@@ -257,6 +283,10 @@ Page({
     });
   },
 
+  addRule() {
+    console.log('add rule')
+  },
+
   //用户下拉动作
   onScrollRefresh: function () {
     this.getTaskList(true);
@@ -302,6 +332,12 @@ Page({
   closeRuleDesc() {
     this.setData({
       openRuleDesc: false
+    });
+  },
+
+  closeRuleForm() {
+    this.setData({
+      openRuleForm: false
     });
   },
 

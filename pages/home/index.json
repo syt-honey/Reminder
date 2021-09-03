@@ -13,7 +13,9 @@
     "van-stepper": "@vant/weapp/stepper/index",
     "van-progress": "@vant/weapp/progress/index",
     "van-loading": "@vant/weapp/loading/index",
-    "van-dialog": "@vant/weapp/dialog/index"
+    "van-dialog": "@vant/weapp/dialog/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-picker": "@vant/weapp/picker/index"
   },
  "disableScroll": true
 }

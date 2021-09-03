@@ -40,16 +40,29 @@
   <van-popup show="{{ openTaskPage }}" round position="bottom" custom-style="padding: 40rpx" bind:close="closeTaskPage">
     <van-cell-group>
       <van-field model:value="{{ taskName }}" required clearable label="任务名" placeholder="请输入任务名称" />
-      <van-dropdown-menu>
-        <van-dropdown-item value="{{ selectedRule }}" options="{{ ruleList }}" />
-      </van-dropdown-menu>
-      <van-field model:value="{{ remark }}" label="备注" clearable placeholder="请输入备注" />
-      <view class="task-tip">
-        提示：默认
-        <text class="task-tip--detail" bindtap="queryDefaultRuleDesc"> 五毒刷题 </text>规则
+      <view class="task-rule">
+        <text class="task-rule__label">算法规则</text>
+        <van-dropdown-menu active-color="#00c261">
+          <van-dropdown-item value="{{ selectedRule }}" options="{{ ruleList }}" />
+        </van-dropdown-menu>
+        <van-icon name="plus" color="#646566" bind:click="toAddRule" />
       </view>
+      <van-field model:value="{{ remark }}" label="备注" clearable placeholder="请输入备注" />
     </van-cell-group>
     <van-button type="primary" bindtap="addTask">确认</van-button>
+  </van-popup>
+
+   <!-- 添加规则弹窗 -->
+   <van-popup show="{{ openRuleForm }}" round position="bottom" custom-style="padding: 40rpx" bind:close="closeRuleForm">
+    <van-cell-group>
+      <van-field model:value="{{ ruleName }}" required clearable label="规则名" placeholder="请输入规则名" />
+      <view class="task-rule">
+        <text class="task-rule__label">计算设置</text>
+        <van-picker columns="{{ columns }}" item-height="44" visible-item-count="1" bind:change="onChange" />
+        <text style="flex: .5;color: #646566; font-size: 12px;text-align: end;" bindtap="customRule">自定义</text>
+      </view>
+    </van-cell-group>
+    <van-button type="primary" bindtap="addRule">添加</van-button>
   </van-popup>
 
   <!-- 规则介绍 -->

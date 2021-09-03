@@ -18,6 +18,7 @@ page {
   /* font */
   --font-size__large: 35rpx;
   --font-size__mid: 32rpx;
+  --font-size__light-mid: 28rpx;
   --font-size__small: 26rpx;
   --font-size__smaller: 24rpx;
 

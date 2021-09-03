@@ -50,19 +50,6 @@ view .van-progress {
   margin: auto;
 }
 
-.task-tip {
-  display: flex;
-  justify-content: center;
-  margin-top: 40rpx;
-  color: var(--color-gray);
-  font-size: var(--font-size__smaller);
-}
-
-.task-tip .task-tip--detail {
-  color: var(--color-main);
-  /* font-weight: bold; */
-}
-
 .list-end {
   display: block;
   padding: 10rpx 0;
@@ -80,21 +67,87 @@ view .van-dropdown-menu__title:after {
 }
 
 view .van-dropdown-menu__title {
-  padding: 16rpx;
+  padding: 0;
   color: var(--color-main);
 }
 
-view .van-dropdown-menu__title:first-child {
-  width: 180rpx;
-  padding-left: 0;
-}
-
 view .van-dropdown-menu__item {
-  flex: .5;
+  justify-content: flex-start;
 }
 
 view .van-dropdown-menu {
+  position: relative;
   box-shadow: none;
+  height: auto;
+}
+
+.task-rule {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+}
+
+.task-rule van-dropdown-menu {
+  flex: .7;
+}
+
+.task-rule van-picker {
+  flex: .5;
+}
+
+.van-picker__columns {
+  height: 44px !important;
+}
+
+.van-picker__frame {
+  right: 0 !important;
+  left: 0 !important;
+}
+
+.task-rule .van-picker .van-picker-column {
+  font-size: 12px !important;
+}
+
+.task-rule van-icon {
+  flex: .3;
+}
+
+.task-rule .task-rule__label {
+  max-width: 6.2em;
+  min-width: 6.2em;
+  margin-right: 12px;
+  font-size: var(--font-size__light-mid);
+  color: var(--field-label-color,#646566);
+}
+
+.task-rule::before {
+  position: absolute;
+  content: "*";
+  left: 8px;
+  left: var(--padding-xs, 8px);
+  font-size: 14px;
+  font-size: var(--cell-font-size, 14px);
+  color: #ee0a24;
+  color: var(--cell-required-color, #ee0a24);
+}
+
+.task-rule::after {
+  position: absolute;
+  box-sizing: border-box;
+  -webkit-transform-origin: center;
+  transform-origin: center;
+  content: " ";
+  pointer-events: none;
+  right: 16px;
+  bottom: 0;
+  left: 16px;
+  border-bottom: 1px solid #ebedf0;
+  -webkit-transform: scaleY(.5);
+  transform: scaleY(.5);
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgb(235, 237, 240);
 }
 
 view .van-button--normal {
