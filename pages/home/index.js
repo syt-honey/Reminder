@@ -11,48 +11,48 @@ Page({
    * 页面的初始数据
    */
   data: {
-    openTaskPage: true,
-    openRuleDesc: false,
-    taskName: "",
-    remark: "",
-    rules: {
-      rule: [0, 1, 2, 3, 7, 15, 30],
-      ruleName: "五毒刷题法"
-    },
-    selectedRule: 1,
-    ruleList: [
-      {
-        text: '五毒刷题法',
-        value: 1
-      }, {
-        text: '五毒刷题法2',
-        value: 2
-      }, {
-        text: '五毒刷题法3',
-        value: 3
-      }, {
-        text: '五毒刷题法4',
-        value: 4
-      }
-    ],
-    taskList: [],
+    // rules: {
+    //   rule: [0, 1, 2, 3, 7, 15, 30],
+    //   ruleName: "五毒刷题法"
+    // },
     doingList: [],
     finishedList: [],
-    count: 0,
-    isShow: null,
-    DegreeOfCompletion: 0,
-    year: "",
-    month: "",
-    day: "",
-    triggered: false,
+    showAuthoriztion: false,
+    today: { // “今天” 日期
+      year: "",
+      month: "",
+      day: "",
+    },
+    triggered: false, // 是否下拉
+    task: {
+      degreeOfCompletion: 0,
+      taskList: [],
+      taskCount: 0,
+      openTaskPage: false,
+      addTaskForm: {
+        taskName: "",
+        remark: "",
+        selectedRule: null, // 选中的规则 id
+        ruleList: [] // 所有可选择的规则
+      }
+    },
+    rule: {
+      rawRuleList: [], // 当前用户全部的规则列表
+      ruleCount: 0,
+      openAddRuleForm: false,
+      addRuleForm: { // 添加规则表单
+        ruleName: "",
+        ruleList: []
+      }
+    },
+    custom: { // 自定义规则表单
+      customList: [0, 1, 2, 3, 7, 15, 30], // 默认可选的规则表单
+      customInput: 0, // 自定义的时间规则间隔
+      columns: ['每天', '每周', '每个工作日', '每月', '每年'], // 默认的规则间隔（！！待确认）
+      selectedRule: [0, 1, 2, 3, 7] // 用户选中的规则间隔
+    },
     statusBarHeight: app.globalData.statusBarHeight,
     navBarHeight: app.globalData.navbarHeight,
-    openRuleForm: false,
-    ruleForm: {
-      ruleName: "",
-      ruleList: []
-    },
-    columns: ['每天', '每周', '每个工作日', '每月', '湖州'],
   },
 
   /**
@@ -61,28 +61,30 @@ Page({
   onLoad: function (options) {
     this.getTaskList();
     this.getTodayDate();
+    this.getRuleList();
   },
 
+  // 新增任务
   toAddTask() {
     // TODO 其他字段的 init
     this.setData({
-      remark: "",
-      taskName: ""
+      ["task.addTaskForm.remark"]: "",
+      ["task.addTaskForm.taskName"]: ""
     }, () => {
       this.setData({
-        openTaskPage: true
+        ["task.openTaskPage"]: true
       });
     });
   },
 
+  // 新增规则
   toAddRule() {
-    console.log('add rule')
     this.setData({
-      ['ruleForm.ruleName']: "",
-      ['ruleForm.ruleList']: []
+      ['rule.addRuleForm.ruleName']: "",
+      ['rule.addRuleForm.ruleList']: []
     }, () => {
       this.setData({
-        openRuleForm: true
+        ["rule.openAddRuleForm"]: true
       });
     });
   },
@@ -138,10 +140,10 @@ Page({
           count
         } = res.result.res.data;
         this.setData({
-          taskList: list,
-          count: count
+          ["task.taskList"]: list,
+          ["task.taskCount"]: count
         }, () => {
-          if (this.data.taskList.length) {
+          if (this.data.task.taskList.length) {
             this.initList();
             this.setDegreeOfCompletion();
           }
@@ -153,11 +155,12 @@ Page({
     });
   },
 
+  // 
   initList() {
     const now = dayjs(dayjs(now).format('YYYY-MM-DD') + " 00:00:00").valueOf();
     const finishedList = [],
       doingList = [];
-    this.data.taskList.forEach(i => {
+    this.data.task.taskList.forEach(i => {
       const temList = i.rules.dateList;
       let todayFinished = false;
       for (let i = 0; i < temList.length; ++i) {
@@ -195,7 +198,7 @@ Page({
       success: (res) => {
         console.log(res)
         this.setData({
-          openTaskPage: false
+          ["task.openTaskPage"]: false
         });
 
         // 根据规则生成提醒日期列表
@@ -205,7 +208,9 @@ Page({
         const nowOfDay = dayjs(dayjs(now).format('YYYY-MM-DD')).valueOf();
         // 根据时间戳生成列表
         let dateList = [];
-        this.data.rules.rule.forEach(e => {
+
+        const rules = this.data.rule.ruleList.find(v => v.value === this.data.selectedRule);
+        this.data.rules.ruleList.forEach(e => {
           let i = {
             done: false
           };
@@ -225,8 +230,6 @@ Page({
             dateList: [...dateList]
           }
         };
-
-        console.log(JSON.stringify(req))
 
         wx.showLoading({
           title: '任务创建中...',
@@ -287,22 +290,45 @@ Page({
     console.log('add rule')
   },
 
+  // 获取规则列表
+  getRuleList() {
+    app.globalData.cloud.callFunction({
+      name: "getRuleList",
+      data: {}
+    }).then((res) => {
+      const {
+        list,
+        count
+      } = res.result.res.data;
+      this.setData({
+        ["rule.rawRuleList"]: list,
+        ["rule.ruleCount"]: count
+      });
+      count && list.map(i => {
+        this.data.task.addTaskForm.ruleList.push({
+          text: i.ruleName,
+          value: i._id
+        });
+        this.setData({
+          ["task.addTaskForm.ruleList"]: [...this.data.task.addTaskForm.ruleList],
+          ["task.addTaskForm.selectedRule"]: this.data.task.addTaskForm.ruleList.length && this.data.task.addTaskForm.ruleList[0].value
+        });
+      })
+    }).catch((e) => {
+      console.log(e)
+    });
+  },
+
   //用户下拉动作
   onScrollRefresh: function () {
     this.getTaskList(true);
-  },
-
-  queryDefaultRuleDesc() {
-    this.setData({
-      openRuleDesc: true
-    });
   },
 
   // 设置完成进度
   setDegreeOfCompletion() {
     let completedCount = this.data.finishedList.length;
     this.setData({
-      DegreeOfCompletion: completedCount ? ((completedCount / this.data.taskList.length) * 100).toFixed(2) : 0
+      ["task.degreeOfCompletion"]: completedCount ? ((completedCount / this.data.task.taskList.length) * 100).toFixed(2) : 0
     });
   },
 
@@ -313,9 +339,9 @@ Page({
       month = (dayjs(now).month() + 1) < 10 ? "0" + (dayjs(now).month() + 1) : "" + (dayjs(now).month() + 1),
       day = (dayjs(now).date() + 1) < 10 ? "0" + dayjs(now).date() : "" + dayjs(now).date();
     this.setData({
-      year,
-      month,
-      day
+      ["today.year"]: year,
+      ["today.month"]: month,
+      ["today.day"]: day
     });
   },
 
@@ -325,19 +351,13 @@ Page({
 
   closeTaskPage() {
     this.setData({
-      openTaskPage: false
-    });
-  },
-
-  closeRuleDesc() {
-    this.setData({
-      openRuleDesc: false
+      ["task.openTaskPage"]: false
     });
   },
 
   closeRuleForm() {
     this.setData({
-      openRuleForm: false
+      openAddRuleForm: false
     });
   },
 
@@ -346,11 +366,11 @@ Page({
     app.checkAuthorization().then((res) => {
       if (app.globalData.isAuthorize) {
         this.setData({
-          isShow: false
+          showAuthoriztion: false
         });
       } else {
         this.setData({
-          isShow: true
+          showAuthoriztion: true
         });
       }
     });
@@ -359,7 +379,7 @@ Page({
   changeAuthorize(isAuthorize, reason = "授权错误") {
     if (isAuthorize) {
       this.setData({
-        isShow: !isAuthorize
+        showAuthoriztion: !isAuthorize
       });
     } else {
       wx.showToast({

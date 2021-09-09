@@ -93,7 +93,15 @@ view .van-dropdown-menu {
 }
 
 .task-rule van-picker {
-  flex: .5;
+  flex: 1;
+}
+
+.custom-tag-container {
+  padding: 10px 16px;
+}
+
+.custom-tag-container van-tag {
+  margin-right: 10rpx;
 }
 
 .van-picker__columns {

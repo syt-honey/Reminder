@@ -1,8 +1,7 @@
 // 云函数入口文件
 const {
   ENV,
-  CODE_STATUS,
-  TEMPLATE_ID
+  CODE_STATUS
 } = require("./contant.js");
 
 const cloud = require('wx-server-sdk');
