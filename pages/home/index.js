@@ -218,8 +218,8 @@ Page({
         const req = {
           taskName: this.data.taskName,
           remark: this.data.remark,
-          allDone: false,
           rules: {
+            allDone: false,
             rule: [...this.data.rule.selectedRule],
             ruleId: this.data.selectedRule,
             ruleName: this.data.ruleList.filter(i => i.value === this.data.selectedRule)[0].text,

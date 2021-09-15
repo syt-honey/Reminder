@@ -37,11 +37,26 @@ exports.main = async (event, context) => {
       rules,
       updateTime: createTime
     }
-  }).then(() => {
-    res.code = CODE_STATUS.SUCCESS;
-    res.msg = "任务创建成功";
+  }).then(async (r) => {
+    const taskId = r._id;
+    await db.collection("rule").where({
+      _id: rules.ruleId
+    }).get().then(async r => {
+      const list = r.data[0].taskList;
+      list.push(taskId);
+      await db.collection("rule").where({
+        _id: rules.ruleId
+      }).update({
+        data: {
+          taskList: list
+        }
+      }).then(() => {
+        res.code = CODE_STATUS.SUCCESS;
+        res.msg = "任务创建成功";
+      })
+    })
 
-    setRegular(14);
+    // setRegular(14);
     
   }).catch((err) => {
     res.code = CODE_STATUS.ERROR;

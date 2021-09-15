@@ -1,6 +1,7 @@
 {
  "component": true,
  "usingComponents": {
-  "van-swipe-cell": "@vant/weapp/swipe-cell/index"
+  "van-swipe-cell": "@vant/weapp/swipe-cell/index",
+  "van-dialog": "@vant/weapp/dialog/index"
  }
 }

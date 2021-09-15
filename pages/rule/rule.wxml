@@ -19,7 +19,7 @@
     <empty-page style="height: 100%" title="你还没有创建规则～" wx:if="{{ruleList.length === 0}}"></empty-page>
     <block wx:else>
       <view class="home__task-container">
-        <rule-item wx:for="{{ruleList}}" wx:key="index" ruleItem="{{item}}"></rule-item>
+        <rule-item wx:for="{{ruleList}}" wx:key="index" bind:refresh="refresh" ruleItem="{{item}}"></rule-item>
         <text wx:if="{{ruleList.length > 5}}" class="list-end">到底啦～</text>
       </view>
     </block>

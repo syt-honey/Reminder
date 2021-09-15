@@ -33,6 +33,7 @@ exports.main = async (event, context) => {
       ruleList,
       _openid: wxContext.OPENID,
       createTime,
+      isDeleted: false,
       updateTime: createTime
     }
   }).then(() => {

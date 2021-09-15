@@ -11,3 +11,5 @@
   </van-cell-group>
   <view slot="right" class="rule-swipe-cell__selector rule-item--delete">删除</view>
 </van-swipe-cell>
+
+<van-dialog id="van-dialog" />

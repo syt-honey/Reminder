@@ -26,6 +26,10 @@ Page({
    this.getRuleList(true);
  },
 
+ refresh() {
+  this.getRuleList();
+ },
+
  // 获取规则列表
  getRuleList(isPullRefresh) {
   if (!isPullRefresh) {
