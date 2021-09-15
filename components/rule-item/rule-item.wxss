@@ -1,0 +1,33 @@
+/* components/rule-item/rule-item.wxss */
+
+@import "../../style/common.wxss";
+
+.rule-item {
+  margin: 20rpx auto;
+  margin-bottom: 0;
+  padding: 16rpx 20rpx 16rpx 40rpx;
+  border-radius: 8rpx;
+  background: var(--color-white);
+  font-size: var(--font-size__mid);
+}
+
+.rule-item__setting{
+  font-size: var(--font-size__small);
+}
+
+.rule-item__name {
+ margin-bottom: 10rpx;
+}
+
+.rule-swipe-cell__selector {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ width: 65px;
+ height: 100%;
+ color: var(--color-white);
+}
+
+.rule-item--delete {
+ background: var(--color-task-btn__delete);
+}

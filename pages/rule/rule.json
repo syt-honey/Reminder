@@ -1,6 +1,8 @@
 {
   "usingComponents": {
-    "custom-nav-bar": "../../components/custom-nav-bar/custom-nav-bar"
+    "custom-nav-bar": "../../components/custom-nav-bar/custom-nav-bar",
+    "rule-item": "../../components/rule-item/rule-item",
+    "van-loading": "@vant/weapp/loading/index"
   },
   "disableScroll": true
 }
