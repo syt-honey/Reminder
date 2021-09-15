@@ -11,10 +11,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // rules: {
-    //   rule: [0, 1, 2, 3, 7, 15, 30],
-    //   ruleName: "五毒刷题法"
-    // },
     doingList: [],
     finishedList: [],
     showAuthoriztion: false,
@@ -29,27 +25,21 @@ Page({
       taskList: [],
       taskCount: 0,
       openTaskPage: false,
-      addTaskForm: {
-        taskName: "",
-        remark: "",
-        selectedRule: null, // 选中的规则 id
-        ruleList: [] // 所有可选择的规则
-      }
     },
+    // wxml 不支持 按照路径进行双向绑定（垃圾！）参考：https://developers.weixin.qq.com/community/develop/doc/0002e6bcea4bf09999da7c6145bc00
+    selectedRule: null, // 选中的规则 id
+    ruleList: [], // 所有可选择的规则
+    taskName: "",
+    remark: "",
+    ruleName: "",
     rule: {
       rawRuleList: [], // 当前用户全部的规则列表
       ruleCount: 0,
       openAddRuleForm: false,
-      addRuleForm: { // 添加规则表单
-        ruleName: "",
-        ruleList: []
-      }
-    },
-    custom: { // 自定义规则表单
-      customList: [0, 1, 2, 3, 7, 15, 30], // 默认可选的规则表单
-      customInput: 0, // 自定义的时间规则间隔
-      columns: ['每天', '每周', '每个工作日', '每月', '每年'], // 默认的规则间隔（！！待确认）
-      selectedRule: [0, 1, 2, 3, 7] // 用户选中的规则间隔
+      customList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 18, 20, 30], // 默认可选的规则表单
+      toSelectedList: [],
+      // 添加规则表单
+      selectedRule: [0, 1, 2, 3, 7, 15, 30], // 用户选中的规则间隔
     },
     statusBarHeight: app.globalData.statusBarHeight,
     navBarHeight: app.globalData.navbarHeight,
@@ -59,17 +49,33 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const rules = this.data.rule.customList.map(i => {
+      return {
+        count: i,
+        selected: this.data.rule.selectedRule.includes(i)
+      }
+    })
+    this.setData({
+      ["rule.toSelectedList"]: rules
+    });
+
     this.getTaskList();
     this.getTodayDate();
     this.getRuleList();
+  },
+
+  changeRule(e) {
+    this.setData({
+      selectedRule: e.detail
+    });
   },
 
   // 新增任务
   toAddTask() {
     // TODO 其他字段的 init
     this.setData({
-      ["task.addTaskForm.remark"]: "",
-      ["task.addTaskForm.taskName"]: ""
+      remark: "",
+      taskName: ""
     }, () => {
       this.setData({
         ["task.openTaskPage"]: true
@@ -80,21 +86,12 @@ Page({
   // 新增规则
   toAddRule() {
     this.setData({
-      ['rule.addRuleForm.ruleName']: "",
-      ['rule.addRuleForm.ruleList']: []
+      ruleName: ""
     }, () => {
       this.setData({
         ["rule.openAddRuleForm"]: true
       });
     });
-  },
-
-  customRule() {
-    console.log('custom rule')
-  },
-
-  onChange(e) {
-    console.log(e)
   },
 
   /**
@@ -192,11 +189,10 @@ Page({
       });
       return;
     }
-    const that = this;
-    wx.requestSubscribeMessage({
-      tmplIds: ['V6OoWiI3AGE-JRdvlTQDgLZcb5666JBrMd019pABtJQ'],
-      success: (res) => {
-        console.log(res)
+    // wx.requestSubscribeMessage({
+    //   tmplIds: ['V6OoWiI3AGE-JRdvlTQDgLZcb5666JBrMd019pABtJQ'],
+    //   success: (res) => {
+    //     console.log(res)
         this.setData({
           ["task.openTaskPage"]: false
         });
@@ -209,8 +205,7 @@ Page({
         // 根据时间戳生成列表
         let dateList = [];
 
-        const rules = this.data.rule.ruleList.find(v => v.value === this.data.selectedRule);
-        this.data.rules.ruleList.forEach(e => {
+        this.data.rule.selectedRule.forEach(e => {
           let i = {
             done: false
           };
@@ -225,8 +220,9 @@ Page({
           remark: this.data.remark,
           allDone: false,
           rules: {
-            rule: [...this.data.rules.rule],
-            ruleName: this.data.rules.ruleName,
+            rule: [...this.data.rule.selectedRule],
+            ruleId: this.data.selectedRule,
+            ruleName: this.data.ruleList.filter(i => i.value === this.data.selectedRule)[0].text,
             dateList: [...dateList]
           }
         };
@@ -282,12 +278,83 @@ Page({
             },
           });
         });
-      }
-    });
   },
 
   addRule() {
-    console.log('add rule')
+    if (!this.data.ruleName) {
+      wx.showToast({
+        icon: "error",
+        title: '规则名不能为空',
+      });
+      return;
+    }
+
+    if (!this.data.rule.selectedRule) {
+      wx.showToast({
+        icon: "error",
+        title: '计算设置不能为空',
+      });
+      return;
+    }
+
+    // 请求参数
+    const req = {
+      ruleName: this.data.ruleName,
+      ruleList: this.data.rule.selectedRule
+    };
+
+    wx.showLoading({
+      title: '规则创建中...',
+    });
+
+    app.globalData.cloud.callFunction({
+      name: "createRule",
+      data: {
+        ...req
+      }
+    }).then((res) => {
+      const {
+        msg,
+        code
+      } = res.result.res;
+
+      if (code === 2001) {
+        wx.hideLoading({
+          success: () => {
+            wx.showToast({
+              title: msg,
+              duration: 1000,
+              mask: true
+            });
+          },
+        });
+        this.getRuleList();
+        this.closeRuleForm();
+      } else {
+        wx.hideLoading({
+          success: () => {
+            wx.showToast({
+              title: "规则创建失败",
+              icon: "error",
+              duration: 1000,
+              mask: true
+            });
+          },
+        });
+      }
+     
+    }).catch((err) => {
+      wx.hideLoading({
+        success: () => {
+          wx.showToast({
+            title: "规则创建失败",
+            icon: "error",
+            duration: 1000,
+            mask: true
+          });
+        },
+      });
+    });
   },
 
   // 获取规则列表
@@ -304,19 +371,52 @@ Page({
         ["rule.rawRuleList"]: list,
         ["rule.ruleCount"]: count
       });
+      this.data.ruleList = [];
       count && list.map(i => {
-        this.data.task.addTaskForm.ruleList.push({
+        this.data.ruleList.push({
           text: i.ruleName,
           value: i._id
         });
         this.setData({
-          ["task.addTaskForm.ruleList"]: [...this.data.task.addTaskForm.ruleList],
-          ["task.addTaskForm.selectedRule"]: this.data.task.addTaskForm.ruleList.length && this.data.task.addTaskForm.ruleList[0].value
+          ruleList: [...this.data.ruleList],
+          selectedRule: this.data.ruleList.length && this.data.ruleList[0].value
         });
       })
     }).catch((e) => {
       console.log(e)
     });
+  },
+
+  closeTag(e) {
+    this.data.rule.toSelectedList.map(i => {
+      if (i.count === e.currentTarget.dataset.item.count) {
+        // 选中逻辑
+        if (!i.selected) {
+          i.selected = true;
+
+          if (!this.data.rule.selectedRule.includes(i.count)) {
+            this.data.rule.selectedRule.push(i.count);
+            this.data.rule.selectedRule.sort((a, b) => a > b ? 1 : -1);
+            this.setData({
+              ["rule.selectedRule"]: this.data.rule.selectedRule
+            })
+          }
+        } else {
+          // 去除逻辑
+          i.selected = false;
+          const index = this.data.rule.selectedRule.indexOf(i.count);
+          if (index > -1) {
+            this.data.rule.selectedRule.splice(index, 1);
+            this.setData({
+              ["rule.selectedRule"]: this.data.rule.selectedRule
+            })
+          }
+        }
+      }
+    });
+    this.setData({
+      ["rule.toSelectedList"]: this.data.rule.toSelectedList
+    })
   },
 
   //用户下拉动作
@@ -357,7 +457,7 @@ Page({
 
   closeRuleForm() {
     this.setData({
-      openAddRuleForm: false
+      ["rule.openAddRuleForm"]: false
     });
   },
 

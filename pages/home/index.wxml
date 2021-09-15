@@ -39,63 +39,47 @@
   <!-- 表单内容 -->
   <van-popup show="{{ task.openTaskPage }}" round position="bottom" custom-style="padding: 40rpx" bind:close="closeTaskPage">
     <van-cell-group>
-      <van-field model:value="{{ task.addTaskForm.taskName }}" required clearable label="任务名" placeholder="请输入任务名称" />
+      <van-field model:value="{{ taskName }}" required clearable label="任务名" placeholder="请输入任务名称" />
       <view class="task-rule">
         <text class="task-rule__label">算法规则</text>
         <van-dropdown-menu active-color="#00c261">
-          <van-dropdown-item value="{{ task.addTaskForm.selectedRule }}" options="{{ task.addTaskForm.ruleList }}" />
+          <van-dropdown-item value="{{ selectedRule }}" options="{{ ruleList }}" bind:change="changeRule"/>
         </van-dropdown-menu>
-        <van-icon name="plus" color="#646566" bind:click="toAddRule" />
+        <van-icon name="plus" color="#646566" bindtap="toAddRule" />
       </view>
-      <van-field model:value="{{ task.addTaskForm.remark }}" label="备注" clearable placeholder="请输入备注" />
+      <van-field model:value="{{ remark }}" label="备注" clearable placeholder="请输入备注" />
     </van-cell-group>
     <van-button type="primary" bindtap="addTask">确认</van-button>
   </van-popup>
 
    <!-- 添加规则弹窗 -->
-   <van-popup show="{{ rule.openRuleForm }}" round position="bottom" custom-style="padding: 40rpx" bind:close="closeRuleForm">
+   <van-popup show="{{ rule.openAddRuleForm }}" round position="bottom" custom-style="padding: 40rpx" bind:close="closeRuleForm">
     <van-cell-group>
-      <van-field model:value="{{ rule.addRuleForm.ruleName }}" required clearable label="规则名" placeholder="请输入规则名" />
+      <van-field model:value="{{ ruleName }}" required clearable label="规则名" placeholder="请输入规则名" />
       <view class="task-rule">
         <text class="task-rule__label">计算设置</text>
         <view style="flex: 1;padding: 0" class="rule-desc">
-          <!-- <van-picker columns="{{ custom.columns }}" item-height="44" visible-item-count="1" bind:change="onChange" /> -->
-          <text>隔<text wx:for="{{custom.selectedRule}}" wx:key="index">{{item}}<text wx:if="{{index===custom.selectedRule.length - 1}}">天</text><text wx:else>天、</text></text></text>提醒
+          <text>隔<text wx:for="{{rule.selectedRule}}" wx:key="index">{{item}}<text wx:if="{{index===rule.selectedRule.length - 1}}">天</text><text wx:else>天、</text></text></text>提醒
         </view>
       </view>
     </van-cell-group>
     <view class="custom-tag-container">
-      <text style="color: #646566; font-size: 12px;text-align: end;margin-right: 10rpx;" bindtap="customRule">自定义</text>
+      <text style="color: #646566; font-size: 12px;text-align: end;margin-right: 10rpx;">自定义</text>
       <van-tag
-        closeable
+        wx:for="{{ rule.toSelectedList }}"
+        wx:key="index"
         size="medium"
         id="primary"
-        bind:close="onClose"
-        color="#ebfff0"
-        text-color="#4fc08d"
-        wx:for="{{ custom.customList }}"
-        wx:key="index"
+        color="{{ item.selected ? '#ebfff0' : '#eeeeee'}}"
+        data-item="{{item}}"
+        bindtap="closeTag"
+        text-color="{{ item.selected ? '#4fc08d' : '#939393'}}"
       >
-        隔{{item}}天
+        隔{{item.count}}天
       </van-tag>
     </view>
     <van-button type="primary" bindtap="addRule">添加</van-button>
   </van-popup>
-
-  <!-- 规则介绍 -->
-  <!-- <van-dialog
-    use-slot
-    show="{{ openRuleDesc }}"
-    confirm-button-open-type="closeRuleDesc"
-    confirm-button-color="#00c261"
-    bind:close="closeRuleDesc"
-  >
-  <view class="rule-desc">
-    <text>名称：{{ rules.ruleName }}
-    计算规则：隔<text wx:for="{{rules.rule}}" wx:key="index">{{item}}<text wx:if="{{index===rules.rule.length - 1}}">天</text><text wx:else>天、</text></text>
-    </text>提醒
-  </view>
-</van-dialog> -->
 
   <!-- 验证弹窗 -->
   <van-popup show="{{showAuthoriztion}}" position="bottom">
