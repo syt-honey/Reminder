@@ -10,15 +10,15 @@ Page({
     statusBarHeight: app.globalData.statusBarHeight,
     navbarHeight: app.globalData.navbarHeight,
     info: {},
-    email: "5532064.91@163.com",
+    version: "beta-v1.0.19",
     settings: [{
       name: "提醒规则管理",
       path: "/pages/rule/rule"
     }, {
-      name: "成长日志/一览图",
+      name: "成长一览图",
       path: "/pages/log/log"
     }, {
-      name: "关于我们",
+      name: "戳一戳",
       path: "/pages/about/about"
     }, {
       name: "获取源码",
