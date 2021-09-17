@@ -8,15 +8,21 @@ Page({
  data: {
   statusBarHeight: app.globalData.statusBarHeight,
   navBarHeight: app.globalData.navbarHeight,
-  imgList: [
-   "../../images/about/xiaofang.png",
-   "../../images/about/qianzhu.png",
-   "../../images/about/flyfree.png",
-   "../../images/about/zhi.png",
-   "../../images/about/quan.png",
-   "../../images/about/yanqing.png",
-   "../../images/about/peanut.png"
-  ]
+  wxQianzhu: "Honeysyt_",
+  wxXFang: "X553206491",
+ },
+
+
+ toCopyLink(event) {
+  console.log(event.currentTarget.dataset.name)
+  wx.setClipboardData({
+   data: event.currentTarget.dataset.name,
+   success: function (res) {
+    wx.showToast({
+     title: '复制成功',
+    });
+   }
+  });
  },
 
  /**

@@ -16,7 +16,7 @@
       </van-cell-group>
     </view>
 
-    <text class="info__container__feedback nowrap">反馈与问题：{{email}}</text>
+    <text class="info__container__feedback nowrap">{{version}}</text>
   </view>
 
 
