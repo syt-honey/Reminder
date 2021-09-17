@@ -58,8 +58,8 @@
       <van-field model:value="{{ ruleName }}" required clearable label="规则名" placeholder="请输入规则名" />
       <view class="task-rule">
         <text class="task-rule__label">计算设置</text>
-        <view style="flex: 1;padding: 0" class="rule-desc">
-          <text>隔<text wx:for="{{rule.selectedRule}}" wx:key="index">{{item}}<text wx:if="{{index===rule.selectedRule.length - 1}}">天</text><text wx:else>天、</text></text></text>提醒
+        <view class="rule-desc">
+            <view>隔</view><view wx:for="{{rule.selectedRule}}" wx:key="index">{{item}}天{{index===rule.selectedRule.length - 1 ? '' : '、'}}</view><view>提醒</view>
         </view>
       </view>
     </van-cell-group>

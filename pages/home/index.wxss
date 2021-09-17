@@ -169,8 +169,10 @@ view .van-ellipsis {
 }
 
 view .rule-desc {
+  display: flex;flex-wrap: wrap;
+  flex: 1;
+  padding: 0;
   white-space: pre-line;
-  padding: 40rpx;
   color: var(--color-heavy-gray);
   font-size: var(--font-size__small);
 }
