@@ -97,11 +97,12 @@ view .van-dropdown-menu {
 }
 
 .custom-tag-container {
-  padding: 10px 16px;
+  padding: 10px 16px 0 16px;
 }
 
 .custom-tag-container van-tag {
   margin-right: 10rpx;
+  margin-bottom: 20rpx;
 }
 
 .van-picker__columns {
@@ -175,4 +176,10 @@ view .rule-desc {
   white-space: pre-line;
   color: var(--color-heavy-gray);
   font-size: var(--font-size__small);
+}
+
+.custom-tag-container .van-tag {
+  padding: 4px 9px;
+  border-radius: 24px;
+  margin-bottom: 12rpx;
 }
