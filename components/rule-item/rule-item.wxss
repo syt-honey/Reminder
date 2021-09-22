@@ -3,20 +3,28 @@
 @import "../../style/common.wxss";
 
 .rule-item {
-  margin: 20rpx auto;
+  position: relative;
   margin-bottom: 0;
-  padding: 16rpx 20rpx 16rpx 40rpx;
-  border-radius: 8rpx;
+  padding: 32rpx 20rpx 32rpx 40rpx;
   background: var(--color-white);
   font-size: var(--font-size__mid);
 }
 
-.rule-item__setting{
-  font-size: var(--font-size__small);
+.rule-item::after {
+  width: 200%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  content: "";
+  background: #eee;
+  height: 1px;
+  transform: scale(.5);
+  transform-origin: left;
 }
 
-.rule-item__name {
- margin-bottom: 10rpx;
+.rule-item__setting{
+  font-size: var(--font-size__small);
+  color: #a7a7a2;
 }
 
 .rule-swipe-cell__selector {
