@@ -1,6 +1,7 @@
 // components/rule-item/rule-item.js
 import Dialog from '@vant/weapp/dialog/dialog';
 const app = getApp();
+const dayjs = require("./dayjs");
 
 Component({
  /**
@@ -20,6 +21,9 @@ Component({
  observers: {
   'ruleItem'(val) {
     if (val) {
+      this.setData({
+        formatCreateTime: dayjs(new Date(this.properties.ruleItem.createTime)).format("YYYY-MM-DD")
+      });
       if (this.selectComponent('#swipe-cell')) {
         this.selectComponent('#swipe-cell').close();
       }
@@ -32,6 +36,7 @@ Component({
   */
  data: {
   openSide: "left",
+  formatCreateTime: null
  },
 
  /**

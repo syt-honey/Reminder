@@ -2,7 +2,7 @@
 .rule {
  position: relative;
  height: 100%;
- /* background: #fff; */
+ background: #fff;
  font-size: 14px;
 }
 
@@ -13,13 +13,13 @@
 .home__task-container {
  display: flex;
  flex-direction: column;
- width: calc(100% - 40rpx);
+ /* width: calc(100% - 40rpx); */
  margin: auto;
 }
-
+/* 
 rule-item:last-child {
  margin-bottom: 20rpx;
-}
+} */
 
 .list-end {
  display: block;

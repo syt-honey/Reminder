@@ -10,7 +10,7 @@ Page({
     statusBarHeight: app.globalData.statusBarHeight,
     navbarHeight: app.globalData.navbarHeight,
     info: {},
-    version: "beta-v1.0.20",
+    version: "beta-v1.0.21",
     settings: [{
       name: "提醒规则管理",
       path: "/pages/rule/rule"
