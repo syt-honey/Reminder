@@ -24,7 +24,7 @@
 
 .rule-item__setting{
   font-size: var(--font-size__small);
-  color: #a7a7a2;
+  color: #555F65;
 }
 
 .rule-swipe-cell__selector {
