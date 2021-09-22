@@ -11,7 +11,7 @@
    <text class="nowrap">或者你也可以直接去浏览器中打开下面的链接</text>
    <view style="display: flex; align-items: center;">
     <text class="nowrap" user-select="true">{{url}}</text>
-    <image bindtap="toCopyLink" src="../../images/github/copy.png" style="width:30rpx; height: 30rpx; margin-left: 10rpx;"></image>
+    <iconfont name="icon-copy" data-name="{{wxQianzhu}}" style="margin-left: 10rpx;" bindtap="toCopyLink"></iconfont>
    </view>
   </view>
  </view>

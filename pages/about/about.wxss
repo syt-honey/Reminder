@@ -30,11 +30,3 @@
  margin-top: 20rpx;
  margin-left: 20rpx;
 }
-
-
-.copy-img {
- width:30rpx;
- height: 30rpx;
- margin-left: 10rpx;
- vertical-align: middle;
-}

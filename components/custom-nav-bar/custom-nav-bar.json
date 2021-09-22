@@ -1,4 +1,6 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "iconfont": "../iconfont/iconfont"
+  }
 }

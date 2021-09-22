@@ -8,10 +8,10 @@
     <view style="line-height: 18px;white-space:pre-wrap">
 一次直播，一拍即合。{{ '\n' }}
 志在产品的小匚和磨炼技术的千竹，共同打造。{{ '\n' }}
-一路上有许多关爱关心这款小产品的朋友们，特此感谢：乔巴、FlyFree、雁卿、花生、圈圈、小杨、杜爆爆、十二画......<image src="../../images/ce@2x.png" style="width: 14px; height: 14px;"></image>
-<image src="../../images/ce@2x.png" style="width: 14px; height: 14px;"></image>
-<image src="../../images/ce@2x.png" style="width: 14px; height: 14px;"></image>{{ '\n' }}
-欢迎添加微信，与我们交流：<text>{{wxQianzhu}}</text><image data-name="{{wxQianzhu}}" bindtap="toCopyLink" src="../../images/github/copy.png" class="copy-img"></image>、<text>{{wxXFang}}</text><image data-name="{{wxXFang}}" bindtap="toCopyLink" src="../../images/github/copy.png" class="copy-img"></image>
+一路上有许多关爱关心这款小产品的朋友们，特此感谢：乔巴、FlyFree、雁卿、花生、圈圈、小杨、杜爆爆、十二画 <iconfont name="icon-celebration"></iconfont>
+ <iconfont name="icon-celebration"></iconfont>
+ <iconfont name="icon-celebration"></iconfont>{{ '\n' }}
+欢迎添加微信，与我们交流：<text>{{wxQianzhu}}</text><iconfont name="icon-copy" data-name="{{wxQianzhu}}" bindtap="toCopyLink"></iconfont>、<text>{{wxXFang}}</text><iconfont name="icon-copy" data-name="{{wxXFang}}" bindtap="toCopyLink"></iconfont>
     </view>
 
     <view style="text-align: center;margin-top: 60rpx">

@@ -2,8 +2,7 @@
 
     <view class="nav-bar__status-bar" style="height:{{navbarHeight}}rpx">
         <view wx:if="{{showCloseIcon && !isHome}}" class="nav-bar__status-bar__back-icon" bindtap="goBack">
-            <!-- TODO 换成 svg -->
-            <image style="width: 32rpx; height: 32rpx;" src="../../images/back.png"></image>
+            <iconfont name="icon-back"></iconfont>
         </view>
         <view class="{{isHome ? 'nav-bar__status-bar__home-title' : 'nav-bar__status-bar__default-title'}}">{{ title }}</view>
     </view>
