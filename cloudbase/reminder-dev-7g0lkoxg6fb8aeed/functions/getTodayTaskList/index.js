@@ -32,7 +32,7 @@ exports.main = async (event, context) => {
  await db.collection("task")
   .aggregate()
   .match({
-   _openid: wxContext.OPENID
+   _openid: event.openid || wxContext.OPENID
   }).project({
    _openid: 0
   }).sort({

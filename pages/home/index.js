@@ -1,6 +1,7 @@
 // pages/home/index.js
 const dayjs = require("./dayjs");
 const app = getApp();
+import CONSTANT from "../../utils/CONSTANT";
 
 var isToday = require('dayjs/plugin/isToday');
 dayjs.extend(isToday);
@@ -181,7 +182,58 @@ Page({
     });
   },
 
-  addTask() {
+  async onSubscribe(e) {
+    // 获取事件信息
+    // const item = e.currentTarget.dataset.item;
+    const item = {
+      type: "任务提醒",
+      content: "今天要来接我"
+    }
+
+    await wx.requestSubscribeMessage({
+      tmplIds: [CONSTANT.TMP_ID],
+      success: async (res) => {
+        if (res.errMsg === "requestSubscribeMessage:ok") {
+          await app.globalData.cloud.callFunction({
+            name: "subscribe",
+            data: {
+              ...item,
+              data: {
+                thing6: {value: item.content},
+                thing1: {value: item.type}
+              },
+              templateId: CONSTANT.TMP_ID
+            }
+          }).then(() => {
+            const {
+              msg,
+              code
+            } = res.result.res;
+            if (code === 2001) {
+              wx.showToast({
+                title: msg,
+                duration: 2000
+              });
+            } else {
+              wx.showToast({
+                title: msg,
+                icon: "error",
+                duration: 2000
+              })
+            }
+          }).catch(() => {
+            wx.showToast({
+              title: '订阅失败',
+              icon: "error",
+              duration: 2000
+            })
+          })
+        }
+      }
+    })
+  },
+
+  async addTask() {
     if (!this.data.taskName) {
       wx.showToast({
         icon: "error",
@@ -189,14 +241,12 @@ Page({
       });
       return;
     }
-    // wx.requestSubscribeMessage({
-    //   tmplIds: ['V6OoWiI3AGE-JRdvlTQDgLZcb5666JBrMd019pABtJQ'],
-    //   success: (res) => {
-    //     console.log(res)
-        this.setData({
-          ["task.openTaskPage"]: false
-        });
 
+    await this.onSubscribe();
+
+    this.setData({
+      ["task.openTaskPage"]: false
+    });
         // 根据规则生成提醒日期列表
         // 当前的时间
         const now = new Date();

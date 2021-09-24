@@ -34,7 +34,8 @@ exports.main = async (event, context) => {
       _openid: wxContext.OPENID,
       createTime,
       isDeleted: false,
-      updateTime: createTime
+      updateTime: createTime,
+      taskList: []
     }
   }).then(() => {
     res.code = CODE_STATUS.SUCCESS;
