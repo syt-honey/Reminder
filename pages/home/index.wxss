@@ -158,8 +158,8 @@ view .van-dropdown-menu {
   border-bottom-style: solid;
   border-bottom-color: rgb(235, 237, 240);
 }
-
-view .van-button--normal {
+.add-task-pop view .van-button--normal,
+.add-rule-pop view .van-button--normal {
   width: 100%;
   padding: 0;
   margin-top: 20rpx;

@@ -130,7 +130,6 @@ Component({
             },
           });
         }).catch((err) => {
-          console.log(err)
           wx.hideLoading({
             success: () => {
               wx.showToast({
@@ -164,13 +163,11 @@ Component({
           ...req
         }
       }).then((res) => {
-        console.log(res)
         this.triggerEvent('refresh');
         wx.hideLoading({
           success: () => {},
         });
       }).catch((err) => {
-        console.log('err')
         wx.hideLoading({
           success: () => {
             wx.showToast({

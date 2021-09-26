@@ -14,7 +14,6 @@ Page({
 
 
  toCopyLink(event) {
-  console.log(event.currentTarget.dataset.name)
   wx.setClipboardData({
    data: event.currentTarget.dataset.name,
    success: function (res) {

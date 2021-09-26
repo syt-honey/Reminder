@@ -1,0 +1,11 @@
+/* components/add-subscribe-count/add-subscribe-count.wxss */
+
+.add-subscribe-container > view {
+ text-align: center;
+ border-radius: 8px;
+ overflow: hidden;
+}
+
+.add-desc {
+ padding: 30rpx;
+}
