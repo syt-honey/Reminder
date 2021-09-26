@@ -20,29 +20,44 @@ exports.main = async (event, context) => {
   }
  };
  const wxContext = cloud.getWXContext()
+ const _ = db.command
 
  try {
+  let messages = await db
+   .collection("messages").where({
+    touser: wxContext.OPENID,
+    templateId: event.templateId,
+   })
+   .get();
 
-  let message = await db
-  .collection("messages").where({
-   touser: wxContext.OPENID,
-   templateId: event.templateId,
-  })
-  .get();
+  // 已经订阅过的用户，count + 1
+  if (messages.data.length) {
+   await db.collection("messages").doc(messages.data[0]._id).update({
+    data: {
+     count: _.inc(1)
+    }
+   });
 
-  if (message.data.length) {
+   let r = await db
+   .collection("messages").where({
+    touser: wxContext.OPENID,
+    templateId: event.templateId,
+   })
+   .get();
+
    res.code = CODE_STATUS.SUCCESS;
    res.msg = "订阅成功";
-   res.data.list = message;
+   res.data.list = r;
   } else {
    const result = await db.collection("messages").add({
     data: {
      ...event,
      touser: wxContext.OPENID,
-     page: "home"
+     page: "home",
+     count: 1
     }
    });
- 
+
    res.code = CODE_STATUS.SUCCESS;
    res.msg = "订阅成功";
    res.data.list = result;

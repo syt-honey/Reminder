@@ -12,6 +12,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    showAddCountPage: false,
+    leaveCount: 0,
     doingList: [],
     finishedList: [],
     showAuthoriztion: false,
@@ -182,54 +184,35 @@ Page({
     });
   },
 
-  async onSubscribe(e) {
-    // 获取事件信息
-    // const item = e.currentTarget.dataset.item;
-    const item = {
-      type: "任务提醒",
-      content: "今天要来接我"
-    }
-
-    await wx.requestSubscribeMessage({
-      tmplIds: [CONSTANT.TMP_ID],
-      success: async (res) => {
-        if (res.errMsg === "requestSubscribeMessage:ok") {
-          await app.globalData.cloud.callFunction({
-            name: "subscribe",
-            data: {
-              ...item,
-              data: {
-                thing6: {value: item.content},
-                thing1: {value: item.type}
-              },
-              templateId: CONSTANT.TMP_ID
-            }
-          }).then(() => {
-            const {
-              msg,
-              code
-            } = res.result.res;
-            if (code === 2001) {
-              wx.showToast({
-                title: msg,
-                duration: 2000
-              });
-            } else {
-              wx.showToast({
-                title: msg,
-                icon: "error",
-                duration: 2000
-              })
-            }
-          }).catch(() => {
-            wx.showToast({
-              title: '订阅失败',
-              icon: "error",
-              duration: 2000
-            })
-          })
-        }
+  async onSubscribe() {
+    await app.globalData.cloud.callFunction({
+      name: "subscribe",
+      data: {
+        templateId: CONSTANT.TMP_ID
       }
+    }).then((r) => {
+      const {
+        msg,
+        code,
+        data
+      } = r.result.res;
+      if (code === 2001) {
+        this.setData({
+          leaveCount: data.list.data[0].count
+        });
+      } else {
+        wx.showToast({
+          title: msg,
+          icon: "error",
+          duration: 2000
+        })
+      }
+    }).catch(() => {
+      wx.showToast({
+        title: '订阅失败',
+        icon: "error",
+        duration: 2000
+      })
     })
   },
 
@@ -242,92 +225,132 @@ Page({
       return;
     }
 
-    await this.onSubscribe();
-
     this.setData({
       ["task.openTaskPage"]: false
     });
-        // 根据规则生成提醒日期列表
-        // 当前的时间
-        const now = new Date();
-        // 当前日期 00:00 的时间戳
-        const nowOfDay = dayjs(dayjs(now).format('YYYY-MM-DD')).valueOf();
-        // 根据时间戳生成列表
-        let dateList = [];
 
-        this.data.rule.selectedRule.forEach(e => {
-          let i = {
-            done: false
-          };
-          i.date = nowOfDay + e * 24 * 60 * 60 * 1000;
-          i.dateOfDay = dayjs(dayjs(i.date).valueOf()).format("YYYY-MM-DD");
-          dateList.push(i);
+    // 根据规则生成提醒日期列表
+    // 当前的时间
+    const now = new Date();
+    // 当前日期 00:00 的时间戳
+    const nowOfDay = dayjs(dayjs(now).format('YYYY-MM-DD')).valueOf();
+    // 根据时间戳生成列表
+    let dateList = [];
+
+    this.data.rule.selectedRule.forEach(e => {
+      let i = {
+        done: false
+      };
+      i.date = nowOfDay + e * 24 * 60 * 60 * 1000;
+      i.dateOfDay = dayjs(dayjs(i.date).valueOf()).format("YYYY-MM-DD");
+      dateList.push(i);
+    });
+
+    // 请求参数
+    const req = {
+      taskName: this.data.taskName,
+      remark: this.data.remark,
+      rules: {
+        allDone: false,
+        rule: [...this.data.rule.selectedRule],
+        ruleId: this.data.selectedRule,
+        ruleName: this.data.ruleList.filter(i => i.value === this.data.selectedRule)[0].text,
+        dateList: [...dateList]
+      }
+    };
+
+    wx.showLoading({
+      title: '任务创建中...',
+    });
+
+    app.globalData.cloud.callFunction({
+      name: "createTask",
+      data: {
+        ...req
+      }
+    }).then(async (res) => {
+      const {
+        msg,
+        code,
+        data
+      } = res.result.res;
+
+      if (code === 2001) {
+        wx.hideLoading({
+          success: () => {
+            wx.showToast({
+              title: msg,
+              duration: 1000,
+              mask: true
+            });
+          },
         });
-
-        // 请求参数
-        const req = {
-          taskName: this.data.taskName,
-          remark: this.data.remark,
-          rules: {
-            allDone: false,
-            rule: [...this.data.rule.selectedRule],
-            ruleId: this.data.selectedRule,
-            ruleName: this.data.ruleList.filter(i => i.value === this.data.selectedRule)[0].text,
-            dateList: [...dateList]
-          }
-        };
-
-        wx.showLoading({
-          title: '任务创建中...',
-        });
-
-        app.globalData.cloud.callFunction({
-          name: "createTask",
+        await app.globalData.cloud.callFunction({
+          name: "getSubscribeCount",
           data: {
-            ...req
+            templateId: CONSTANT.TMP_ID
           }
-        }).then((res) => {
+        }).then(async res => {
           const {
-            msg,
-            code
+            code,
+            data
           } = res.result.res;
-
           if (code === 2001) {
-            wx.hideLoading({
-              success: () => {
-                wx.showToast({
-                  title: msg,
-                  duration: 1000,
-                  mask: true
+            if (data.isSubscribe) {
+              if (data.count <= 7) {
+                this.setData({
+                  leaveCount: data.count,
+                  showAddCountPage: true
                 });
-              },
-            });
-            this.getTaskList();
-          } else {
-            wx.hideLoading({
-              success: () => {
-                wx.showToast({
-                  title: "任务创建失败",
-                  icon: "error",
-                  duration: 1000,
-                  mask: true
-                });
-              },
-            });
-          }
-         
-        }).catch((err) => {
-          wx.hideLoading({
-            success: () => {
-              wx.showToast({
-                title: "任务创建失败",
-                icon: "error",
-                duration: 1000,
-                mask: true
+              }
+            } else {
+              await wx.requestSubscribeMessage({
+                tmplIds: [CONSTANT.TMP_ID],
+                success: async (res) => {
+                  if (res.errMsg === "requestSubscribeMessage:ok") {
+                    this.onSubscribe();
+                  }
+                }
               });
-            },
-          });
+            }
+          }
+        })
+        this.getTaskList(true);
+      } else {
+        wx.hideLoading({
+          success: () => {
+            wx.showToast({
+              title: "任务创建失败",
+              icon: "error",
+              duration: 1000,
+              mask: true
+            });
+          },
         });
+      }
+
+    }).catch((err) => {
+      wx.hideLoading({
+        success: () => {
+          wx.showToast({
+            title: "任务创建失败",
+            icon: "error",
+            duration: 1000,
+            mask: true
+          });
+        },
+      });
+    });
+  },
+
+  addCount() {
+    this.onSubscribe();
+  },
+
+  closeCount() {
+    this.setData({
+      showAddCountPage: false
+    });
   },
 
   addRule() {
@@ -392,7 +415,6 @@ Page({
           },
         });
       }
-     
     }).catch((err) => {
       wx.hideLoading({
         success: () => {

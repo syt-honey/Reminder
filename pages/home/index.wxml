@@ -10,16 +10,12 @@
       <text class="date__year">{{today.year}}</text>
     </view>
     <view class="home__header__progress" wx:if="{{task.taskList.length > 0}}">
-      <van-progress stroke-width="10" pivot-color="#00c261" color="linear-gradient(to right, #00c261, #00c261)"
-        percentage="{{task.degreeOfCompletion}}" />
+      <van-progress stroke-width="10" pivot-color="#00c261" color="linear-gradient(to right, #00c261, #00c261)" percentage="{{task.degreeOfCompletion}}" />
     </view>
   </view>
 
-  <scroll-view scroll-y style="width: 100%;height:calc(100% - {{statusBarHeight}}rpx - {{navBarHeight}}rpx - 50px)"
-    refresher-enabled="{{true}}" refresher-threshold="{{80}}" refresher-default-style="none"
-    refresher-triggered="{{triggered}}" bindrefresherrefresh="onScrollRefresh">
-    <view slot="refresher" class="refresh-container"
-      style="width: 100%; height: 60px; background: #ededed; display: flex; align-items: center;justify-content: center;">
+  <scroll-view scroll-y style="width: 100%;height:calc(100% - {{statusBarHeight}}rpx - {{navBarHeight}}rpx - 50px)" refresher-enabled="{{true}}" refresher-threshold="{{80}}" refresher-default-style="none" refresher-triggered="{{triggered}}" bindrefresherrefresh="onScrollRefresh">
+    <view slot="refresher" class="refresh-container" style="width: 100%; height: 60px; background: #ededed; display: flex; align-items: center;justify-content: center;">
       <van-loading type="spinner" size="24px" />
     </view>
     <!-- 待办列表 -->
@@ -33,17 +29,16 @@
     </block>
   </scroll-view>
 
-  <image bindtap="toAddTask" src="../../images/home/addTask.png" style="width: 70rpx; height: 70rpx;"
-    class="home__add-task"></image>
+  <image bindtap="toAddTask" src="../../images/home/addTask.png" style="width: 70rpx; height: 70rpx;" class="home__add-task"></image>
 
   <!-- 表单内容 -->
-  <van-popup show="{{ task.openTaskPage }}" round position="bottom" custom-style="padding: 40rpx" bind:close="closeTaskPage">
+  <van-popup show="{{ task.openTaskPage }}" round position="bottom" custom-style="padding: 40rpx" class="add-task-pop" bind:close="closeTaskPage">
     <van-cell-group>
       <van-field model:value="{{ taskName }}" required clearable label="任务名" placeholder="请输入任务名称" />
       <view class="task-rule">
         <text class="task-rule__label">算法规则</text>
         <van-dropdown-menu active-color="#00c261">
-          <van-dropdown-item value="{{ selectedRule }}" options="{{ ruleList }}" bind:change="changeRule"/>
+          <van-dropdown-item value="{{ selectedRule }}" options="{{ ruleList }}" bind:change="changeRule" />
         </van-dropdown-menu>
         <van-icon name="plus" color="#646566" bindtap="toAddRule" />
       </view>
@@ -52,34 +47,29 @@
     <van-button type="primary" bindtap="addTask">确认</van-button>
   </van-popup>
 
-   <!-- 添加规则弹窗 -->
-   <van-popup show="{{ rule.openAddRuleForm }}" round position="bottom" custom-style="padding: 40rpx" bind:close="closeRuleForm">
+  <!-- 添加规则弹窗 -->
+  <van-popup show="{{ rule.openAddRuleForm }}" round position="bottom" custom-style="padding: 40rpx" class="add-rule-pop" bind:close="closeRuleForm">
     <van-cell-group>
       <van-field model:value="{{ ruleName }}" required clearable label="规则名" placeholder="请输入规则名" />
       <view class="task-rule">
         <text class="task-rule__label">计算设置</text>
         <view class="rule-desc" wx:if="{{rule.selectedRule.length}}">
-            <view>隔</view><view wx:for="{{rule.selectedRule}}" wx:key="index">{{item}}天{{index===rule.selectedRule.length - 1 ? '' : '、'}}</view><view>提醒</view>
+          <view>隔</view>
+          <view wx:for="{{rule.selectedRule}}" wx:key="index">{{item}}天{{index===rule.selectedRule.length - 1 ? '' : '、'}}</view>
+          <view>提醒</view>
         </view>
       </view>
     </van-cell-group>
     <view class="custom-tag-container">
       <text style="color: #646566; font-size: 12px;text-align: end;margin-right: 10rpx;">自定义</text>
-      <van-tag
-        wx:for="{{ rule.toSelectedList }}"
-        wx:key="index"
-        size="medium"
-        id="primary"
-        color="{{ item.selected ? '#ebfff0' : '#fbf9f9'}}"
-        data-item="{{item}}"
-        bindtap="closeTag"
-        text-color="{{ item.selected ? '#4fc08d' : '#a9a4a4'}}"
-      >
+      <van-tag wx:for="{{ rule.toSelectedList }}" wx:key="index" size="medium" id="primary" color="{{ item.selected ? '#ebfff0' : '#fbf9f9'}}" data-item="{{item}}" bindtap="closeTag" text-color="{{ item.selected ? '#4fc08d' : '#a9a4a4'}}">
         隔{{item.count}}天
       </van-tag>
     </view>
     <van-button type="primary" bindtap="addRule">添加</van-button>
   </van-popup>
+
+  <add-subscribe-count show="{{ showAddCountPage }}" count="{{ leaveCount }}" bind:addCount="addCount" bind:closeCount="closeCount"></add-subscribe-count>
 
   <!-- 验证弹窗 -->
   <van-popup show="{{showAuthoriztion}}" position="bottom">

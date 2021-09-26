@@ -90,7 +90,6 @@ Component({
         },
       });
     }).catch((err) => {
-      console.log(err)
       wx.hideLoading({
         success: () => {
           wx.showToast({

@@ -1,0 +1,10 @@
+<!--components/add-subscribe-count/add-subscribe-count.wxml-->
+<van-popup show="{{show}}" class="add-subscribe-container" closeable bind:close="close">
+ <view style="padding: 40rpx 40rpx 50rpx 40rpx;">
+  <view class="add-desc">
+   <text>剩余提醒次数 </text>
+   <text>{{ count }}</text>
+  </view>
+  <van-button bindtap="addCount" icon="plus" type="primary">增加提醒次数</van-button>
+ </view>
+</van-popup>
