@@ -29,7 +29,7 @@ Page({
       taskCount: 0,
       openTaskPage: false,
     },
-    // wxml 不支持 按照路径进行双向绑定（垃圾！）参考：https://developers.weixin.qq.com/community/develop/doc/0002e6bcea4bf09999da7c6145bc00
+    // wxml 不支持按照路径进行双向绑定。参考：https://developers.weixin.qq.com/community/develop/doc/0002e6bcea4bf09999da7c6145bc00
     selectedRule: null, // 选中的规则 id
     ruleList: [], // 所有可选择的规则
     taskName: "",
@@ -184,38 +184,6 @@ Page({
     });
   },
 
-  async onSubscribe() {
-    await app.globalData.cloud.callFunction({
-      name: "subscribe",
-      data: {
-        templateId: CONSTANT.TMP_ID
-      }
-    }).then((r) => {
-      const {
-        msg,
-        code,
-        data
-      } = r.result.res;
-      if (code === 2001) {
-        this.setData({
-          leaveCount: data.list.data[0].count
-        });
-      } else {
-        wx.showToast({
-          title: msg,
-          icon: "error",
-          duration: 2000
-        })
-      }
-    }).catch(() => {
-      wx.showToast({
-        title: '订阅失败',
-        icon: "error",
-        duration: 2000
-      })
-    })
-  },
-
   async addTask() {
     if (!this.data.taskName) {
       wx.showToast({
@@ -224,6 +192,19 @@ Page({
       });
       return;
     }
+
+    wx.requestSubscribeMessage({
+      tmplIds: [CONSTANT.TMP_ID],
+      success: async (res) => {
+        if (res.errMsg === "requestSubscribeMessage:ok") {
+          await this.onSubscribe();
+          await this.getCount();
+        }
+      },
+      fail: (e) => {
+        console.log(e)
+      }
+    });
 
     this.setData({
       ["task.openTaskPage"]: false
@@ -263,17 +244,18 @@ Page({
       title: '任务创建中...',
     });
 
-    app.globalData.cloud.callFunction({
-      name: "createTask",
-      data: {
-        ...req
-      }
-    }).then(async (res) => {
+    try {
+      let taskRes = await app.globalData.cloud.callFunction({
+        name: "createTask",
+        data: {
+          ...req
+        }
+      });
+
       const {
         msg,
-        code,
-        data
-      } = res.result.res;
+        code
+      } = taskRes.result.res;
 
       if (code === 2001) {
         wx.hideLoading({
@@ -284,36 +266,6 @@ Page({
               mask: true
             });
           },
-        });
-        await app.globalData.cloud.callFunction({
-          name: "getSubscribeCount",
-          data: {
-            templateId: CONSTANT.TMP_ID
-          }
-        }).then(async res => {
-          const {
-            code,
-            data
-          } = res.result.res;
-          if (code === 2001) {
-            if (data.isSubscribe) {
-              if (data.count <= 7) {
-                this.setData({
-                  leaveCount: data.count,
-                  showAddCountPage: true
-                });
-              }
-            } else {
-              await wx.requestSubscribeMessage({
-                tmplIds: [CONSTANT.TMP_ID],
-                success: async (res) => {
-                  if (res.errMsg === "requestSubscribeMessage:ok") {
-                    await this.onSubscribe();
-                  }
-                }
-              });
-            }
-          }
         });
         this.getTaskList(true);
       } else {
@@ -328,18 +280,69 @@ Page({
           },
         });
       }
-    }).catch((err) => {
-      wx.hideLoading({
-        success: () => {
-          wx.showToast({
-            title: "任务创建失败",
-            icon: "error",
-            duration: 1000,
-            mask: true
-          });
-        },
-      });
+    } catch (err) {
+      console.log(err)
+    };
+  },
+
+
+  /**
+   * 订阅
+   */
+  async onSubscribe() {
+    await app.globalData.cloud.callFunction({
+      name: "subscribe",
+      data: {
+        templateId: CONSTANT.TMP_ID
+      }
+    }).then((r) => {
+      const {
+        msg,
+        code,
+        data
+      } = r.result.res;
+      if (code === 2001) {
+        this.setData({
+          leaveCount: data.list.data[0].count
+        });
+      } else {
+        wx.showToast({
+          title: msg,
+          icon: "error",
+          duration: 2000
+        })
+      }
+    }).catch(() => {
+      wx.showToast({
+        title: '订阅失败',
+        icon: "error",
+        duration: 2000
+      })
+    })
+  },
+
+  /**
+   * 获取订阅次数
+   */
+  async getCount() {
+    let subscribeRes = await app.globalData.cloud.callFunction({
+      name: "getSubscribeCount",
+      data: {
+        templateId: CONSTANT.TMP_ID
+      }
     });
+    const {
+      code,
+      data
+    } = subscribeRes.result.res;
+    if (code === 2001) {
+      if (data.count <= 7) {
+        this.setData({
+          leaveCount: data.count,
+          showAddCountPage: true
+        });
+      }
+    }
   },
 
   addCount() {
