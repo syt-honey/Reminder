@@ -42,7 +42,7 @@ exports.main = async (event, context) => {
     await db.collection("rule").where({
       _id: rules.ruleId
     }).get().then(async r => {
-      const list = r.data[0].taskList;
+      const list = r.data[0].taskList || [];
       list.push(taskId);
       await db.collection("rule").where({
         _id: rules.ruleId
