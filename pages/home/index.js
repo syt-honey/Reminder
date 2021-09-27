@@ -308,13 +308,13 @@ Page({
                 tmplIds: [CONSTANT.TMP_ID],
                 success: async (res) => {
                   if (res.errMsg === "requestSubscribeMessage:ok") {
-                    this.onSubscribe();
+                    await this.onSubscribe();
                   }
                 }
               });
             }
           }
-        })
+        });
         this.getTaskList(true);
       } else {
         wx.hideLoading({
@@ -328,7 +328,6 @@ Page({
           },
         });
       }
-
     }).catch((err) => {
       wx.hideLoading({
         success: () => {
