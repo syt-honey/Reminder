@@ -52,7 +52,7 @@ App({
       sysInfo.screenHeight / rate,
       sysInfo.statusBarHeight / rate
     ];
-    this.globalData.navbarHeight = (menuInfo.height + (menuInfo.top - sysInfo.statusBarHeight) * 2)  / rate;
+    this.globalData.navbarHeight = (menuInfo.height + (menuInfo.top - sysInfo.statusBarHeight) * 2) / rate;
 
     // 获取当前设备类型
     const systems = ["ios", "android"];

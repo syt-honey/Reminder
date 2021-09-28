@@ -22,7 +22,7 @@
     <empty-page style="height: 100%" title="今天还没有任务哦～" wx:if="{{task.taskList.length === 0}}"></empty-page>
     <block wx:else>
       <view class="home__task-container">
-        <task-item wx:for="{{doingList}}" bind:refresh="refresh" wx:key="_id" taskItem="{{item}}"></task-item>
+        <task-item wx:for="{{doingList}}" bind:refresh="getTaskList" wx:key="_id" taskItem="{{item}}"></task-item>
         <task-item wx:for="{{finishedList}}" bind:refresh="refresh" wx:key="_id" taskItem="{{item}}"></task-item>
         <text wx:if="{{task.taskList.length > 5}}" class="list-end">到底啦～</text>
       </view>
@@ -69,7 +69,7 @@
     <van-button type="primary" bindtap="addRule">添加</van-button>
   </van-popup>
 
-  <add-subscribe-count show="{{ showAddCountPage }}" count="{{ leaveCount }}" bind:addCount="addCount" bind:closeCount="closeCount"></add-subscribe-count>
+  <add-subscribe-count show="{{ showAddCountPage }}" count="{{ leaveCount }}" bind:addCount="onSubscribe" bind:closeCount="closeCount"></add-subscribe-count>
 
   <!-- 验证弹窗 -->
   <van-popup show="{{showAuthoriztion}}" position="bottom">

@@ -1,18 +1,10 @@
 <!--pages/rule/rule.wxml-->
 <view class="page rule">
- <custom-nav-bar
-    title="规则管理"
-    i-bg="i-bg"
-    showCloseIcon="{{true}}"
-    isHome="{{false}}"
-  >
+  <custom-nav-bar title="规则管理" i-bg="i-bg" showCloseIcon="{{true}}" isHome="{{false}}">
   </custom-nav-bar>
 
-  <scroll-view scroll-y style="width: 100%;height:calc(100% - {{statusBarHeight}}rpx - {{navBarHeight}}rpx - 50px)"
-    refresher-enabled="{{true}}" refresher-threshold="{{60}}" refresher-default-style="none"
-    refresher-triggered="{{triggered}}" bindrefresherrefresh="onScrollRefresh">
-    <view slot="refresher" class="refresh-container"
-      style="width: 100%; height: 60px; background: #fff; display: flex; align-items: center;justify-content: center;">
+  <scroll-view scroll-y style="width: 100%;height:calc(100% - {{statusBarHeight}}rpx - {{navBarHeight}}rpx - 50px)" refresher-enabled="{{true}}" refresher-threshold="{{60}}" refresher-default-style="none" refresher-triggered="{{triggered}}" bindrefresherrefresh="onScrollRefresh">
+    <view slot="refresher" class="refresh-container" style="width: 100%; height: 60px; background: #fff; display: flex; align-items: center;justify-content: center;">
       <van-loading type="spinner" size="24px" />
     </view>
     <!-- 待办列表 -->

@@ -24,16 +24,12 @@
 
 .home__header__date .date__year {
   margin-left: 10rpx;
-  color: #b9b9b9;
-  font-size: 26rpx;
+  color: var(--color-gray);
+  font-size: var(--font-size__small);
 }
 
 .home__header__progress {
   width: 300rpx;
-}
-
-view .van-progress {
-  background: var(--color-white);
 }
 
 .home__add-task {
@@ -62,25 +58,6 @@ task-item:last-child {
   margin-bottom: 20rpx;
 }
 
-view .van-dropdown-menu__title:after {
-  opacity: 0;
-}
-
-view .van-dropdown-menu__title {
-  padding: 0;
-  color: var(--color-main);
-}
-
-view .van-dropdown-menu__item {
-  justify-content: flex-start;
-}
-
-view .van-dropdown-menu {
-  position: relative;
-  box-shadow: none;
-  height: auto;
-}
-
 .task-rule {
   position: relative;
   display: flex;
@@ -88,57 +65,16 @@ view .van-dropdown-menu {
   padding: 10px 16px;
 }
 
-.task-rule van-dropdown-menu {
-  flex: .7;
-}
-
-.task-rule van-picker {
-  flex: 1;
-}
-
 .custom-tag-container {
   padding: 10px 16px 0 16px;
-}
-
-.custom-tag-container van-tag {
-  margin-right: 10rpx;
-  margin-bottom: 20rpx;
-}
-
-.van-picker__columns {
-  height: 44px !important;
-}
-
-.van-picker__frame {
-  right: 0 !important;
-  left: 0 !important;
-}
-
-.task-rule .van-picker .van-picker-column {
-  font-size: 12px !important;
-}
-
-.task-rule van-icon {
-  flex: .3;
-}
-
-.task-rule .task-rule__label {
-  max-width: 6.2em;
-  min-width: 6.2em;
-  margin-right: 12px;
-  font-size: var(--font-size__light-mid);
-  color: var(--field-label-color,#646566);
 }
 
 .task-rule::before {
   position: absolute;
   content: "*";
   left: 8px;
-  left: var(--padding-xs, 8px);
-  font-size: 14px;
-  font-size: var(--cell-font-size, 14px);
-  color: #ee0a24;
-  color: var(--cell-required-color, #ee0a24);
+  font-size: var(--font-size__light-mid);
+  color: var(--color-task-btn__delete);
 }
 
 .task-rule::after {
@@ -158,19 +94,49 @@ view .van-dropdown-menu {
   border-bottom-style: solid;
   border-bottom-color: rgb(235, 237, 240);
 }
-.add-task-pop view .van-button--normal,
-.add-rule-pop view .van-button--normal {
-  width: 100%;
-  padding: 0;
-  margin-top: 20rpx;
+
+/* 组件样式覆盖 */
+.van-picker__columns {
+  height: 44px !important;
 }
 
-view .van-ellipsis {
-  text-overflow: clip;
+.van-picker__frame {
+  right: 0 !important;
+  left: 0 !important;
+}
+
+.task-rule .van-picker .van-picker-column {
+  font-size: var(--font-size__smaller) !important;
+}
+
+.task-rule .task-rule__label {
+  max-width: 6.2em;
+  min-width: 6.2em;
+  margin-right: 12px;
+  font-size: var(--font-size__light-mid);
+  color: var(--field-label-color, #646566);
+}
+
+.task-rule van-dropdown-menu {
+  flex: .7;
+}
+
+.task-rule van-picker {
+  flex: 1;
+}
+
+.custom-tag-container van-tag {
+  margin-right: 10rpx;
+  margin-bottom: 20rpx;
+}
+
+.task-rule van-icon {
+  flex: .3;
 }
 
 view .rule-desc {
-  display: flex;flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
   flex: 1;
   padding: 0;
   white-space: pre-line;
@@ -182,4 +148,39 @@ view .rule-desc {
   padding: 4px 9px;
   border-radius: 24px;
   margin-bottom: 12rpx;
+}
+
+
+.add-task-pop view .van-button--normal,
+.add-rule-pop view .van-button--normal {
+  width: 100%;
+  padding: 0;
+  margin-top: 20rpx;
+}
+
+view .van-ellipsis {
+  text-overflow: clip;
+}
+
+view .van-progress {
+  background: var(--color-white);
+}
+
+view .van-dropdown-menu__title:after {
+  opacity: 0;
+}
+
+view .van-dropdown-menu__title {
+  padding: 0;
+  color: var(--color-main);
+}
+
+view .van-dropdown-menu__item {
+  justify-content: flex-start;
+}
+
+view .van-dropdown-menu {
+  position: relative;
+  box-shadow: none;
+  height: auto;
 }

@@ -19,5 +19,5 @@
     "van-picker": "@vant/weapp/picker/index",
     "van-tag": "@vant/weapp/tag/index"
   },
- "disableScroll": true
+  "disableScroll": true
 }

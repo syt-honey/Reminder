@@ -12,7 +12,8 @@ page {
   --color-task-btn__cancel: #ababab;
   --color-task-btn__delete: #ee0a24;
   --color-task-grid__default: #eee;
-  --color-task-grid__selected: #04ca338c;  /* 今天 */
+  --color-task-grid__selected: #04ca338c;
+  /* 今天 */
   --color-task-grid__done: #bef5cb;
 
   /* font */

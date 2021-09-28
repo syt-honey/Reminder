@@ -1,8 +1,7 @@
 <!--pages/info/index.wxml-->
 <view class="info">
   <view class="info__container">
-    <view class="info__container__person-info"
-      style="padding-top: {{statusBarHeight + navbarHeight + 140}}rpx; box-shadow: 0px 0px 20px 0px #b3b3b3;">
+    <view class="info__container__person-info" style="padding-top: {{statusBarHeight + navbarHeight + 140}}rpx; box-shadow: 0px 0px 20px 0px #b3b3b3;">
       <view style="display: flex; position: absolute; width: 80%; left: 50%; transform: translate(-50%, -50%);">
         <image src="{{info.avatarUrl}}" mode="aspectFit" style="width: 240rpx; height: 200rpx;" />
         <text class="info__container__person-info__name  single-dot-overflow">{{info.nickName}}</text>
@@ -11,14 +10,12 @@
 
     <view class="info__container__setting">
       <van-cell-group>
-        <van-cell wx:for="{{settings}}" wx:key="index" title="{{item.name}}" is-link link-type="navigateTo"
-          url="{{item.path}}" />
+        <van-cell wx:for="{{settings}}" wx:key="index" title="{{item.name}}" is-link link-type="navigateTo" url="{{item.path}}" />
       </van-cell-group>
     </view>
 
     <text class="info__container__feedback nowrap">{{version}}</text>
   </view>
-
 
   <!-- 验证弹窗 -->
   <van-popup show="{{isShow}}" position="bottom">

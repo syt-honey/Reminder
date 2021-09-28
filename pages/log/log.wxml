@@ -1,23 +1,9 @@
 <!--pages/log/log.wxml-->
 <view class="page log">
- <custom-nav-bar
-    title="成长日志"
-    showCloseIcon="{{true}}"
-    isHome="{{false}}"
-    i-bg="i-bg"
-  >
+  <custom-nav-bar title="成长日志" showCloseIcon="{{true}}" isHome="{{false}}" i-bg="i-bg">
   </custom-nav-bar>
 
   <view class="log-container">
-    <van-calendar
-      title=""
-      poppable="{{ false }}"
-      show-confirm="{{ false }}"
-      class="calendar"
-      min-date="{{ minDate }}"
-      default-date="{{ today }}"
-      max-date="{{ maxDate }}"
-      formatter="{{ formatter }}" 
-    />
+    <van-calendar title="" poppable="{{ false }}" show-confirm="{{ false }}" class="calendar" min-date="{{ minDate }}" default-date="{{ today }}" max-date="{{ maxDate }}" formatter="{{ formatter }}" />
   </view>
 </view>

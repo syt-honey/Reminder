@@ -32,12 +32,6 @@
  margin: 200rpx auto;
 }
 
-view .van-cell {
- margin-top: 40rpx;
- border-radius: 8rpx;
- padding: 30rpx 42rpx;
-}
-
 .info__container__feedback {
  position: absolute;
  bottom: 20rpx;
@@ -45,4 +39,11 @@ view .van-cell {
  font-size: var(--font-size__small);
  color: var(--color-gray);
  transform: translateX(-50%);
+}
+
+/* 组件样式覆盖 */
+view .van-cell {
+ margin-top: 40rpx;
+ border-radius: 8rpx;
+ padding: 30rpx 42rpx;
 }

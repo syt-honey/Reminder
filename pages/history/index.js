@@ -37,39 +37,40 @@ Page({
     this.getTaskList(true);
   },
 
-  getTaskList(isPullRefresh) {
+  async getTaskList(isPullRefresh) {
     if (!isPullRefresh) {
       wx.showLoading({
         title: '获取列表...',
       });
     }
 
-    this.getTaskListInterface().then(res => {
-      if (!isPullRefresh) {
-        wx.hideLoading({
-          success: () => {},
-        });
-      } else {
-        this.setData({
-          triggered: false,
-        });
-      }
-      if (res === -1) {
-        wx.showToast({
-          title: "获取历史任务列表出错",
-          duration: 1000,
-          mask: true
-        });
-      }
-    });
+    let res = await this.getTaskListInterface();
+
+    if (!isPullRefresh) {
+      wx.hideLoading({
+        success: () => {},
+      });
+    } else {
+      this.setData({
+        triggered: false,
+      });
+    }
+    if (res === -1) {
+      wx.showToast({
+        title: "获取历史任务列表出错",
+        duration: 1000,
+        mask: true
+      });
+    }
   },
 
   getTaskListInterface() {
-    return new Promise((resolve, reject) => {
-      app.globalData.cloud.callFunction({
-        name: "getTaskList",
-        data: {}
-      }).then((res) => {
+    return new Promise(async(resolve, reject) => {
+      try {
+        let res = await app.globalData.cloud.callFunction({
+          name: "getTaskList",
+          data: {}
+        });
         const {
           list,
           count
@@ -81,9 +82,9 @@ Page({
           this.initList();
           resolve(1);
         });
-      }).catch((err) => {
+      } catch (err) {
         reject(-1);
-      });
+      }
     });
   },
 

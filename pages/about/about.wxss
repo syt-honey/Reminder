@@ -6,8 +6,8 @@
 
 .about {
  height: 100%;
- background: #fff;
- font-size: 14px;
+ background: var(--color-white);
+ font-size: var(--font-size__light-mid);
 }
 
 .about__tip {

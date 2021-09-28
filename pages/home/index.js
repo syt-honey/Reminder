@@ -57,7 +57,7 @@ Page({
         count: i,
         selected: this.data.rule.selectedRule.includes(i)
       }
-    })
+    });
     this.setData({
       ["rule.toSelectedList"]: rules
     });
@@ -101,40 +101,42 @@ Page({
    * 
    * @param {*} isPullRefresh 是否是下拉刷新
    */
-  getTaskList(isPullRefresh) {
+  async getTaskList(isPullRefresh) {
     if (!isPullRefresh) {
       wx.showLoading({
         title: '获取列表...',
       });
     }
 
-    this.getTaskListInterface().then(res => {
-      if (!isPullRefresh) {
-        wx.hideLoading({
-          success: () => {},
-        });
-      } else {
-        this.setData({
-          triggered: false,
-        });
-      }
-      if (res === -1) {
-        wx.showToast({
-          title: "获取任务列表出错",
-          icon: "error",
-          duration: 1000,
-          mask: true
-        });
-      }
-    });
+    let res = await this.getTaskListInterface();
+
+    if (!isPullRefresh) {
+      wx.hideLoading({
+        success: () => {},
+      });
+    } else {
+      this.setData({
+        triggered: false,
+      });
+    }
+
+    if (res === -1) {
+      wx.showToast({
+        title: "获取任务列表出错",
+        icon: "error",
+        duration: 1000,
+        mask: true
+      });
+    }
   },
 
   getTaskListInterface() {
-    return new Promise((resolve, reject) => {
-      app.globalData.cloud.callFunction({
-        name: "getTodayTaskList",
-        data: {}
-      }).then((res) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let res = await app.globalData.cloud.callFunction({
+          name: "getTodayTaskList",
+          data: {}
+        });
         const {
           list,
           count
@@ -149,13 +151,13 @@ Page({
           }
           resolve(1);
         });
-      }).catch(() => {
+      } catch (e) {
         reject(-1);
-      });
-    });
+      };
+    })
   },
 
-  // 
+  // 初始化已完成、待完成的列表
   initList() {
     const now = dayjs(dayjs(now).format('YYYY-MM-DD') + " 00:00:00").valueOf();
     const finishedList = [],
@@ -193,39 +195,13 @@ Page({
       return;
     }
 
-    wx.requestSubscribeMessage({
-      tmplIds: [CONSTANT.TMP_ID],
-      success: async (res) => {
-        if (res.errMsg === "requestSubscribeMessage:ok") {
-          await this.onSubscribe();
-          await this.getCount();
-        }
-      },
-      fail: (e) => {
-        console.log(e)
-      }
-    });
+    this.requestSubscribeMessage();
 
     this.setData({
       ["task.openTaskPage"]: false
     });
 
-    // 根据规则生成提醒日期列表
-    // 当前的时间
-    const now = new Date();
-    // 当前日期 00:00 的时间戳
-    const nowOfDay = dayjs(dayjs(now).format('YYYY-MM-DD')).valueOf();
-    // 根据时间戳生成列表
-    let dateList = [];
-
-    this.data.rule.selectedRule.forEach(e => {
-      let i = {
-        done: false
-      };
-      i.date = nowOfDay + e * 24 * 60 * 60 * 1000;
-      i.dateOfDay = dayjs(dayjs(i.date).valueOf()).format("YYYY-MM-DD");
-      dateList.push(i);
-    });
+    const dateList = this.initRules();
 
     // 请求参数
     const req = {
@@ -285,22 +261,66 @@ Page({
     };
   },
 
+  /**
+   * 根据规则生成提醒日期列表
+   */
+  initRules() {
+    // 当前的时间
+    const now = new Date();
+
+    // 当前日期 00:00 的时间戳
+    const nowOfDay = dayjs(dayjs(now).format('YYYY-MM-DD')).valueOf();
+
+    // 根据时间戳生成列表
+    let dateList = [];
+
+    this.data.rule.selectedRule.forEach(e => {
+      let i = {
+        done: false
+      };
+      i.date = nowOfDay + e * 24 * 60 * 60 * 1000;
+      i.dateOfDay = dayjs(dayjs(i.date).valueOf()).format("YYYY-MM-DD");
+      dateList.push(i);
+    });
+
+    return dateList;
+  },
+
+  /**
+   * 确认订阅
+   */
+  requestSubscribeMessage() {
+    wx.requestSubscribeMessage({
+      tmplIds: [CONSTANT.TMP_ID],
+      success: async (res) => {
+        if (res.errMsg === "requestSubscribeMessage:ok") {
+          await this.onSubscribe();
+          await this.getCount();
+        }
+      },
+      fail: (e) => {
+        console.log(e)
+      }
+    });
+  },
 
   /**
    * 订阅
    */
   async onSubscribe() {
-    await app.globalData.cloud.callFunction({
+    let res = await app.globalData.cloud.callFunction({
       name: "subscribe",
       data: {
         templateId: CONSTANT.TMP_ID
       }
-    }).then((r) => {
+    });
+
+    try {
       const {
         msg,
         code,
         data
-      } = r.result.res;
+      } = res.result.res;
       if (code === 2001) {
         this.setData({
           leaveCount: data.list.data[0].count
@@ -312,13 +332,13 @@ Page({
           duration: 2000
         })
       }
-    }).catch(() => {
+    } catch {
       wx.showToast({
-        title: '订阅失败',
+        title: '函数执行出错，订阅失败',
         icon: "error",
         duration: 2000
-      })
-    })
+      });
+    }
   },
 
   /**
@@ -345,17 +365,7 @@ Page({
     }
   },
 
-  addCount() {
-    this.onSubscribe();
-  },
-
-  closeCount() {
-    this.setData({
-      showAddCountPage: false
-    });
-  },
-
-  addRule() {
+  async addRule() {
     if (!this.data.ruleName) {
       wx.showToast({
         icon: "error",
@@ -382,12 +392,14 @@ Page({
       title: '规则创建中...',
     });
 
-    app.globalData.cloud.callFunction({
+    let res = await app.globalData.cloud.callFunction({
       name: "createRule",
       data: {
         ...req
       }
-    }).then((res) => {
+    });
+
+    try {
       const {
         msg,
         code
@@ -417,7 +429,7 @@ Page({
           },
         });
       }
-    }).catch((err) => {
+    } catch (err) {
       wx.hideLoading({
         success: () => {
           wx.showToast({
@@ -428,15 +440,17 @@ Page({
           });
         },
       });
-    });
+    };
   },
 
   // 获取规则列表
-  getRuleList() {
-    app.globalData.cloud.callFunction({
+  async getRuleList() {
+    let res = await app.globalData.cloud.callFunction({
       name: "getRuleList",
       data: {}
-    }).then((res) => {
+    });
+
+    try {
       const {
         list,
         count
@@ -456,9 +470,9 @@ Page({
           selectedRule: this.data.ruleList.length && this.data.ruleList[0].value
         });
       })
-    }).catch((e) => {
+    } catch (e) {
       console.log(e)
-    });
+    };
   },
 
   closeTag(e) {
@@ -493,11 +507,6 @@ Page({
     })
   },
 
-  //用户下拉动作
-  onScrollRefresh: function () {
-    this.getTaskList(true);
-  },
-
   // 设置完成进度
   setDegreeOfCompletion() {
     let completedCount = this.data.finishedList.length;
@@ -519,10 +528,6 @@ Page({
     });
   },
 
-  refresh() {
-    this.getTaskList();
-  },
-
   closeTaskPage() {
     this.setData({
       ["task.openTaskPage"]: false
@@ -533,6 +538,17 @@ Page({
     this.setData({
       ["rule.openAddRuleForm"]: false
     });
+  },
+
+  closeCount() {
+    this.setData({
+      showAddCountPage: false
+    });
+  },
+
+  //用户下拉动作
+  onScrollRefresh: function () {
+    this.getTaskList(true);
   },
 
   onShow() {
